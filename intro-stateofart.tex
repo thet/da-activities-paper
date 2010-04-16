@@ -1,0 +1,27 @@
+\chapter{Aktuelle Ansätze zur Metamodellierung und ausführbaren Modellen}\label{state-of-art}
+Stephen A. White untersucht in "Process Modeling Notations and Workflow Patterns" die Anwendung von Geschäftsprozess Patterns nach Wil van der Aalst et al.
+\footnote{Siehe auch: \url{http://is.ieis.tue.nl/research/patterns/patterns.htm}}
+auf die Notationssprachen \emph{Business Process Modeling Notation} (BPMN) und UML2 Aktivitätsdiagramme. Er kommt zum Schluss, dass sich beide Notationssprachen eignen, gängige Geschäftsprozessmuster zu modellieren (vgl. \citep{White2004}).
+
+Im Bereich der Metamodellierung ist mit dem Eclipse Modeling Framework (EMF) ein umfangreiches Toolkit entstanden, das auch die Erstellung von Modelleditoren und Codegenerierung unterstützt. Mit Ecore existiert eine Meta-Metamodell Implementierung, die an EMOF (Essential MOF) angelehnt ist. Das UML2 Eclipse Projekt hat ein Mapping der OMG UML2-Spezifikation zu Ecore zum Ziel (vgl. \citep{EMF2009}).
+
+% http://mde.abo.fi/confluence/display/CRL/
+In seiner Dissertation "A Metamodeling Framework for Software Engineering" stellt Marcus Alanen das Coral Framework als generisches Meta\-mo\-del\-lierungs-Framework vor, das in den Implementierungssprachen Python und C entwickelt wurde. Es implementiert einen eigenen Meta-Metasprachenkern mit dessen Hilfe Metasprachen definiert werden können. Für diesen Kern existieren Mappings auf UML2, XMI, Ecore und anderen Modellierungssprachen in unterschiedlicher Implementierungstiefe (vgl. \citep{Alanen2007}).
+
+Michelle L. Crane hat in ihrer PhD Thesis "Slicing UML’s Three-layer Architecture: A Semantic Foundation for Behavioural Specification" eine Formalisierung der Ausführungssemantik von UML-Aktionen vorgestellt, da die UML-Spezifikation diesen Bereich unzureichend formalisiert hat. Die Arbeit kann als Ergänzung bzw. Alternative zum \emph{Request for Proposal} (RFP) "Semantics of a Foundational Subset for Executable UML Models (FUML)" dienen (vgl. \citep{OMG2008}). Zur Validierung der Arbeit wurde von Crane ein Interpreter für Aktionen und Aktivitäten erstellt, der die komplexe Token-Passing-Semantik berücksichtigt. Der Interpreter unterstützt die Konstruktion, Validierung und Ausführung von Aktivitäten (vgl. \citep{Crane2009}).
+
+Mit der Web Services Business Process Execution Language (WS-BPEL) existiert ein Standard, mit dem die Interaktion zwischen Webservices definiert werden kann und Geschäftsprozesse erstellt werden können (vgl. \citep{OASIS2007}, S.8). WS-BPEL basiert auf XML und kann mit anderen Standards aus der WS-* Familie (bsp. WS-Policy) kombiniert werden. WS-BPEL operiert in einem SOA (Service Oriented Architecture) Umfeld (vgl. \citep{BPEL1}, S.313-315).
+
+Mit jBPM von JBoss existiert eine Open-Source Plattform für ausführbare Prozesssprachen\footnote
+{Website: http://www.jboss.org/jbossjbpm/}.
+Die beiden implementierten Prozesssprachen BPEL und jPDL (eine JBoss Eigenentwicklung) trennen die Aktionssemantik von der Modell-Semantik \footnote
+{Website: http://jboss.org/jbossjbpm/jpdl/}.
+jBPM in Version 3 verwendet Tokens als Zustandsmarker.
+
+Weitere Plattformen für ausführbare Geschäftsprozesse werden unter anderem von SAP mit der SAP NetWeaver BPM Komponente\footnote
+{Website: http://www.sap.com/platform/netweaver/components/sapnetweaverbpm/index.epx} und von Intalio angeboten. Intalio hat eine BPEL Execution Engine unter dem Namen Apache ODE\footnote
+{Website: http://ode.apache.org/} unter einer Open-Source Lizenz veröffentlicht.
+
+
+
+% END OF DOCUMENT

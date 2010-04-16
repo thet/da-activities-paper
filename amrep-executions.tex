@@ -1,0 +1,60 @@
+\section{Executions als Implementierung von Aktionen}\label{amrep-executions}
+
+\subsection{Einführung}
+
+Im AMREP Metamodell ist nur die Aktion OpaqueAction als konkrete, instantiierbare Aktion definiert. Die Granularität der in der UML Spezifikation definierten Aktionen sind im AMREP Metamodell nicht umgesetzt. Stattdessen wird die Aus\-füh\-rungslogik getrennt in Python-Callables\footnote
+{In Python sind \emph{callable types} Instanzen, die Funktionsaufrufoperationen in der Form \texttt{function-object(arguments)} unterstützen. Dies können normale Funktionen, Typen, Objekte und Methoden von Objekten sein (vgl. \citep{Martelli2006}, S.45 und S.73).}
+implementiert, die hier \emph{Executions} genannt werden.
+
+Executions können granulare Aufgaben erledigen sowie umfassende Tätigkeiten ausführen, die Benutzerinteraktionen und den Aufruf von weiteren Aktivitäten beinhalten können.
+
+Executions sind dabei keine Artefakte, die von einer Person erstellt werden, die Aktivitäten modelliert und nicht mit der Programmierung vertraut ist. Executions und Modellprofile, mithilfe denen Executions geladen werden, werden vielmehr von einer Entwicklungsabteilung bereitgestellt. Dabei kann ein Pool an Executions für verschiedene Einsatzzwecke, Problemstellungen und Domänen, angelegt werden. Dieser Pool an Executions kann durch Modellprofile organisiert beziehungsweise kategorisiert werden. Personen, die Aktivitäten modellieren, können sich dann aus bereitgestellten Profilen bedienen, diese an \emme{Packages}, in denen \emme{Activities} definiert sind, anwenden und Modellelemente mit \emme{Stereotypen} annotieren, um so die Tätigkeiten, die Aktionen ausführen sollen, zu definieren.
+
+In der Tabelle \ref{tab:amrep-exe-ele} wird der Zusammenhang zwischen Aktivitätsmodellelementen und Executions dargestellt. In den Zeilen sind die Elemente einer Execution angegeben und in den Spalten die Modellelemente. Das Modellelement Profil definiert das Python Paket beziehungsweise Modul, in dem Executions definiert sind. Stereotypen geben den Namen der für eine Aktion zu ladenden Execution an. Mit Tagged Values können schließlich Übergabeparameter modelliert werden, die gemeinsam mit dem Daten-Payload von Tokens und dem Kontext der Aktivität an die Execution übergeben werden.
+
+\begin{table}[h]
+\small{
+\begin{tabular}{r|c|c|c|c|c}
+& Profil & Stereotyp & Tagged Value & Daten-Payload & Aktivitätskontext\\
+\hline
+Python Paket & X & & & &\\
+\hline
+Execution & & X & & &\\
+\hline
+Parameter & & & X & X & X \\
+\hline
+\end{tabular}
+}
+\caption{Zusammenhang zwischen Executions und Modellelementen}
+\label{tab:amrep-exe-ele}
+\end{table}
+
+\subsection{Trennung zwischen Modell und Implementierung}
+
+Executions sind getrennt vom Modell implementiert. Mithilfe von Stereotypen, die für Knoten des Typs \emph{OpaqueAction} definiert sind, werden die Executions geladen und von der Runtime gestartet. Executions implementieren das Interface \emme{IExecutions} und werden in der Zope Component Registry als \emph{Named-Utility} registriert. Der Name der Named-Utility entspricht dabei genau dem Namen des Stereotyps, der für die \emph{OpaqueAction} angewandt wird. Wird nun eine \emph{OpaqueAction} ausgeführt und ist ein Stereotyp für diese vorhanden, wird der Name des Stereotyps für das Laden der Execution aus der Registry verwendet.
+
+Die Runtime übernimmt das Registrieren der Executions beim Aufruf der \emph{start}-Methode. Hierbei wird über alle Profile, die für das Package der Aktivität definiert sind, iteriert. Der Name jedes Profils wird der Python-Funktion \emph{\_\_import\_\_} übergeben, die ein Modul importiert, das genau dem Namen des Profils entspricht. Dieses Modul muss dann die \emph{Executions} als Named Utilities mit der Methode \emph{registerUtility} des \emph{GlobalSiteManager} aus dem Modul \emph{zope.component} registrieren.
+
+Wird eine Execution aufgerufen, wird ihr ein \emph{ActionInfo} Objekt mit Informationen über die ausgeführte Aktion, ein \emph{TaggedValueDict} Objekt, das alle Tagged Values der Aktion beinhaltet und die zusammengeführten Daten der Tokens der Aktion übergeben.
+
+Die beschriebene Trennung zwischen Modell und der Aktionsimplementierung wird im wesentlichen mit einer Variante des \emph{Command Pattern} ermöglicht. In der Abbildung \ref{fig:activities-runtime-executions} werden die involvierten Akteure dargestellt.
+
+\imgS{activities-runtime/activities-runtime-executions}{fig:activities-runtime-executions}{Anwendung des Command Pattern für Executions}{Anwendung des Command Pattern für Executions}{0.7}
+
+Der \emph{Client} im Sinne des Command Patterns, der für die Instantiierung der konkreten Implementierung der Executions (nach dem Command Pattern: \emph{ConcreteCommand}) zuständig ist, ist das Python Modul, in dem die Executions als Named-Utilities registriert werden. Im Unterschied zum Command Pattern besitzt der Client aber keine Referenz auf die zu manipulierenden Daten, die nach der Nomenklatur des Command Patterns dem Reciever entsprechen. Diese Referenz besitzt die ActivityRuntime, die dem \emph{Invoker} des Command Patterns entspricht. Für ActivityRuntime ist die Implementierung der Execution unbekannt. Sie lädt mithilfe des Stereotyps der Aktion die konkrete Implementierung des Execution aus der Zope Component Registry und ruft diese direkt auf.
+
+
+\subsection{Beispiel}
+
+Im folgenden Listing \ref{amrep-executions} wird beispielhaft gezeigt, wie AMREP-Executions definiert werden können.
+
+\pyinc{Definition von Executions in Python}{amrep-executions}{resources/amrep-executions.py}
+
+\begin{description}
+\item[5-14] Definition einer Execution mit dem Namen "execution1". Der Name der Klasse ist nicht von Bedeutung. Die Klasse implementiert das IExecution-Interface und stellt deswegen das Klassenattribut \texttt{name} und die \texttt{\_\_call\_\_}-Methode mit der im Interface definierten Signatur bereit\footnote{Es sei hierbei angemerkt, dass der Python Sprachkern keine Interfaces definiert. Sie sind eine Erweiterung des Zope Component Frameworks. Es wird auch nicht überprüft, ob die Implementierung der Interfaces mit ihrer Deklaration übereinstimmen. Interfaces werden hauptsächlich dazu verwendet, um eine lose Kopplung der Komponenten zu erzielen und registrierte Komponenten anhand ihrer Interfaces anzusprechen.}. In diesem Beispiel verändert die {\_\_call\_\_}-Methode den Wert des Dictionary-Schlüssels "test" der Variable \texttt{data}, aber gibt \texttt{data} ansonsten der aufrufenden \emph{Action} unverändert zurück. Alle anderen Schlüssel des Dictionaries bleiben hier unverändert.
+\item[16-22] Definition einer weiteren Execution mit dem Namen "execution2". Hier wird in der \texttt{\_\_call\_\_}-Methode der aufrufenden Aktion ein neues \empy{Dictionary} zurückgegeben, was zur Folge hat, dass die von der Aktion produzierten Tokens einen neuen Daten-Payload zugewiesen bekommen.
+\item[25-27] Registrierung der beiden Executions. Die Angabe des Interfaces ist dabei nicht notwendig, da die Executions jeweils nur ein Interface implementieren und das implementierte Interface hier eindeutig ermittelt werden kann. Die Executions können danach anhand ihres Namens und des Interfaces von der Registry geholt werden.
+\end{description}
+
+
+% END OF DOCUMENT

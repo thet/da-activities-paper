@@ -1,0 +1,19 @@
+\chapter{Ziele und Abgrenzungen der Diplomarbeit}\label{intro-ziele}
+Ziel der Diplomarbeit war die Erstellung einer prototypischen Implementierung eines maschinellen Interpreters für Aktivitätsmodelle in der Programmiersprache Python, der eine Änderung der Modelle zur Laufzeit zulässt und den Standard für UML2 Aktivitätsdiagramme als Grundlage hat. Dieser Interpreter und das zugehörige Metamodell wird in Folge "Activity Runtime Engine für Python", kurz AMREP, genannt.
+
+
+Die Abgrenzungen und Einschränkungen sind:
+\begin{itemize}
+\item Die Diplomarbeit konzentriert sich auf eine prototypische Implementierung. Die Implementierung ist kein fertig einsetzbares Framework, kann aber als Basis für ein solches dienen.
+\item Die Funktionalität ist durch Unit-Tests bewiesen. Es wird kein graphisches User Interface zur Verfügung gestellt.
+\item Es wurde ein relevantes Subset des Standards für UML2 Aktivitätsmodelle umgesetzt. Auf eine vollständige Umsetzung des Standards wurde aufgrund der hohen Komplexität verzichtet. Es wurden einige Vereinfachungen durchgeführt, die die Implementierung des Standards im Metamodell nicht mehr vollständig kompatibel zur UML2 Spezifikation macht. Auf die Unterschiede wird im Kapitel \rref{amrep-metamodel-diff} hingewiesen.
+\item Modelle werden als Python-Modelle durch Instantiierung von Python-Metamodellklassen erstellt.
+\item Es existiert eine XMI Modellimport-Komponente, die einen Import durch kompatible UML2 Modellierungswerkzeuge erstellte Modelle ermöglicht.
+\item Die Activity Model Runtime Engine ist für die Steuerung des Prozessablaufs zuständig. Die eigentlichen Tätigkeiten bzw. Aktionen wurden als Business Objekte außerhalb der Activity Model Runtime Engine definiert.
+\end{itemize}
+
+Die Activity Runtime Engine für Python wurde in der Programmiersprache Python erstellt und verwendet das Zope Component Architecture\footnote
+{Die Zope Component Architecture ist eine Python Bibliothek zur Entwicklung wiederverwertbarer Softwarekomponenten durch Interfaces. In Python gibt es kein natives Sprachkonstrukt für Interfaces. Interfaces sind aber für die Erstellung komplexer Software hilfreich, indem sie durch die Beschreibung von Schnittstellen eine lose Kopplung zwischen kooperierenden Komponenten, die diese Schnittstellen implementieren, ermöglichen (vgl. \citep{BaijuM2009}).}
+(ZCA) Framework. Python und das ZCA Framework sind Kerntechnologien der Partnerfirma BlueDynamics Alliance, für die diese Diplomarbeit erstellt wurde.
+
+Für Python existiert noch keine Software für ausführbare Aktivitätsmodelle. Die BlueDynamics Alliance arbeitet an einem Framework für modellbasierte Datenstrukturen, das von einer Activity Runtime Engine profitieren kann. Dies sind die Grundmotivationen, die zur Konzeption der vorliegenden Arbeit geführt haben.

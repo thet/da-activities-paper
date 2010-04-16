@@ -1,0 +1,66 @@
+\chapter{Verwendung der Activity Model Runtime Engine für Python}\label{amrep-use}
+
+\section{Modellerstellung mit Python}
+Im folgenden wird der im Kapitel \rref{intro-usecase} skizzierte Usecase hier als Python Modell nachgebildet. Es folgen Erklärungen der wichtigsten Programmteile.
+
+\pyinc{Usecase \emph{Patientenversorgung in einem Krankenhaus} als Python-Modell}{testcase-hospital-model}{resources/testcase-hospital-model.py}
+
+
+\begin{description}
+\item[1] Import des Package \texttt{activites.metamodel} und Zuweisung des Alias \texttt{mm} für einen schnellen Zugriff. Das \texttt{\_\_init\_\_.py}-Modul des Packages importiert alle konkreten Metaklassen und alle notwendigen Methoden, weshalb dieser Import den Zugriff darauf erlaubt.
+\item[3-6] Definition der Hilfsklasse Patient, die Patientenrelevante Daten beinhaltet.
+\item[8] Definition eines Profils mit dem Namen eines Moduls, das vom Python Interpreter importiert werden kann.
+\item[10] Instantiierung der Metaklasse \emph{Package}.
+\item[11] Dem Modellelement \emph{Package} wird ein Profil zugewiesen. Da alle Metamodellelemente von \emph{Node} erben und die \emph{Dictionary}-API unterstützen, muss dem Modellelement ein Schlüssel zugewiesen werden. In diesem Fall muss dem Konstruktor von \emph{Profil} aber kein Name übergeben werden, da der Schlüssel als Name für das Node-Element verwendet wird. Der Schlüssel bzw. Name des Profils muss einem Package entsprechen, das geladen werden kann, und das Executions registriert (siehe auch \rref{amrep-executions}).
+\item[12] Die Aktivität mit dem Namen "main" wird dem Package zugewiesen.
+\item[13] Es wird eine Variable definiert, die in weiterer Folge einen komfortablen Zugriff auf die Aktivität erlaubt.
+\item[15-17] Vor- und Nachbedingungen für die Aktivität werden definiert.
+\item[20-51] Definition der Modellelemente, Zuweisung von Stereotypen und Definition von TaggedValues.
+\item[54-94] Definition der Kanten und Verbindung mit den Knoten.
+\item[96] Validierung des Modells.
+\end{description}
+
+
+\section{Verwendung der Runtime}
+Die zuvor modellierte Aktivität wird im folgenden ausgeführt und manipuliert. Der gesamte Testcase inklusive Definition der Executions, ausführlich mit Kommentaren versehen, ist im Paket \empy{activities.test.hospital} zu finden.
+
+\plinc{Verwendung der Runtime}{testcase-hospital-runtime}{resources/testcase-hospital-runtime.py}
+
+\begin{description}
+\item[3] Import des Modells und der Klasse, die den Patienten repräsentiert.
+\item[4] Import der Runtime Engine
+\item[5] Instantiierung der Runtime Engine
+\item[9] Start der Runtime Engine mit dem Patienten als Übergabeparameter. Der Tokenstatus inklusive dem Daten-Payload wird mit dem Befehl \empy{ts()} angezeigt. Die Zahl am Beginn zeigt hierbei den Namen der Kante an, die der Token referenziert.
+\item[13] Aufruf der nächsten Iteration. Die erste Diagnose wird durchgeführt.
+\item[22] Aufgrund des niedrigen Gesundheitswertes wird eine Akute Therapie durchgeführt. Die Entscheidung wurde aufgrund der Kantenbedingungen wie im Modell definiert getroffen. Im Modell wurde "acute therapy" mit dem TaggedValue "variation = acute" versehen. In der Execution ist ein Logik implementiert, die anhand dieses TaggedValues den Gesundheitszustand entsprechend verbessert. Das Modellelement "normal therapy" ist mit dem TaggedValue "variation = normal" konfiguriert und unternimmt dementsprechend andere Maßnahmen.
+\item[36-39] Aufteilung des Tokenfluss durch den Forknode.
+\item[41-46] Abarbeitung paralleler Aktionen. Die Execution der Aktion "data acquisition" löscht dabei das Diagnoseergebnis aus dem Daten-Payload des Tokens. Ansonsten würde bei der Synchronisation und dem Zusammenführen des Daten-Payloads ein Konflikt entstehen, da zwei unterschiedliche Werte mit dem selben Schlüssel zusammengeführt würden.
+\item[70-97] Da im Modell die Schleife, die den Patienten die Therapie solange durchlaufen lässt, bis der Gesundheitszustand besser als 90\% ist, nicht implementiert ist, wird diese in diesen Zeilen zur Laufzeit modelliert.
+\item[126-137] Demonstration der Evaluierung von Nachbedingungen für die Aktivität.
+\end{description}
+
+\section{Modellerstellung mit einem UML-Editor}\label{amrep-use-umleditor}
+Da sich das Metamodell der AMREP an der UML2-Spezifikation orientiert, ist es prinzipiell möglich Modelle mit einem UML2-Editor zu erstellen und anschließend mit dem Package \texttt{activities.transform.xmi} zu importieren. Dabei müssen aber die im Kapitel \rref{amrep-metamodel-konv} angegebenen Besonderheiten beachtet werden.
+
+Die Tests im Package \texttt{activities.transform.xmi} zeigen, dass ein in XMI definieres Modell zu einem AMREP-Modell transformiert werden kann. Das Listing \ref{amrep-xmi-import} zeigt, wie Modelle mit dem XMI Importer importiert werden können. Die Abbildung \ref{fig:amrep-xmi-import-model} stellt das Modell, das importiert wurde dar.
+
+Der XMI Import Mechanismus hat folgende Einschränkungen:
+\begin{itemize}
+\item Als UML-Editor wurde der Eclipse UML2-Editor des \emph{Model Development Tools}-Projekt verwendet\footnote
+{Website: http://www.eclipse.org/modeling/mdt/}.
+Es wurde das aktuelle Modeling Package der Eclipse-Galileo-Distribution (3.5) verwendet\footnote
+{Website: http://www.eclipse.org/downloads/packages/eclipse-modeling-tools-includes-incubating-components/galileor}.
+\item Der Eclipse UML2-Editor erlaubt keine Definition von \emph{guard}-Bedingungen auf Kanten und keine \emph{preconditions} und \emph{postconditions} für Aktivitäten und Aktionen. % TODO bugreport
+\item Die Definition von Profilen erfolgt in einer seperaten XMI Datei. Das verwendete Transformations Framework \emph{AGX}\footnote
+{Website: http://svn.plone.org/svn/archetypes/AGX/}
+unterstützt keine XMI-Referenzen über verschiedene Dateien hinweg. Es können somit keine Profile importiert werden und keine Stereotypen auf Modellelementen angewandt werden.
+\end{itemize}
+
+\plinc{Import von XMI Dateien}{amrep-xmi-import}{resources/amrep-xmi-import.py}
+
+\imgS{resources/amrep-xmi-import-model}{fig:amrep-xmi-import-model}{Modell für den XMI Import}{Modell für den XMI Import}{0.7}
+
+Ein vollständiges XMI Import Framework für AMREP Modelle konnte aufgrund von Inkompatibilitäten mit den verwendeten Tools nicht implementiert werden. Weiters wäre eine solche Implementierung über den Rahmen und die Ziele der Diplomarbeit hinausgegangen.
+
+
+% END OF DOCUMENT

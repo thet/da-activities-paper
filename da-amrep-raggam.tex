@@ -1,0 +1,353 @@
+\documentclass[a4paper,12pt,oneside]{book}
+\usepackage{a4}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx} % Images, etc
+
+% SYMBOLS
+\usepackage{textcomp}
+\usepackage{dsfont} % math symbole
+\usepackage{pifont}
+
+% EURO DEF
+%\usepackage[gen]{eurosym}
+\usepackage[official]{eurosym}
+%\let € = \euro
+
+% FONT DEF
+%\usepackage[scaled=0.92]{helvet}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+%\usepackage{resources/inconsolata/inconsolata} % Monospace Font
+%\usepackage{fontspec}
+%\setmonofont[LetterSpace=100]{Monaco}
+
+% GEOMETRY
+\usepackage[onehalfspacing]{setspace} % \singlespacing \onehalfspacing \doublespacing
+\usepackage[left=3.5cm,top=3cm,right=3cm,bottom=3cm,includehead,includefoot]{geometry}
+%\usepackage[left=3.5cm,top=3cm,right=3cm,bottom=3cm]{geometry}
+
+% HEADER / FOOTER
+\usepackage{fancyhdr}
+%\pagestyle{fancy}
+\pagestyle{fancyplain}
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\thechapter.\ #1}}{}}
+\renewcommand{\sectionmark}[1]{\markright{\MakeUppercase{\thesection.\ #1}}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+\newcommand{\helv}{\fontfamily{phv}\fontseries{b}\fontsize{9}{11}\selectfont}
+\fancyhf{}
+\fancyhead[LE,RO]{\helv \thepage}
+\fancyhead[LO]{\helv \rightmark}
+\fancyhead[RE]{\helv \leftmark}
+\cfoot[]{}
+
+% see http://texblog.wordpress.com/2007/11/07/headerfooter-in-latex-with-fancyhdr/
+%\pagestyle{fancyplain}
+%\lhead[\fancyplain{E}{EE}]{\fancyplain{O}{OO}}
+%\chead[\fancyhead{}{}]{\fancyplain{}{}}
+%\cfoot[]{}
+
+
+% CITATIONS
+% \usepackage{cite}
+% see: http://www.andy-roberts.net/misc/latex/latextutorial3.html
+\usepackage[square]{natbib} % natbib citation package
+\bibpunct{[}{]}{,}{a}{}{,} % natbib customization
+
+% COLOR DEFINITIONS
+\usepackage{color}
+\definecolor{gray}{gray}{0.5}
+\definecolor{green}{rgb}{0,0.5,0}
+\definecolor{LinkColor}{rgb}{0,0,0.5}
+
+% HYPERREF AND PDF SETUP
+\usepackage[pdftex]{hyperref}
+\hypersetup{
+    pdftitle={Activity Model Runtime Engine für Python},
+    pdfsubject={},
+    pdfauthor={Johannes Raggam},
+    ps2pdf=true,
+    bookmarks=true,
+    bookmarksopen=true,
+    colorlinks=true,
+    linkcolor=LinkColor,
+    citecolor=LinkColor,
+    filecolor=LinkColor,
+    menucolor=LinkColor,
+    pagecolor=LinkColor,
+    urlcolor=LinkColor,
+    breaklinks=true
+}
+
+% NOMENCLATURE
+% \usepackage[noprefix]{nomencl}
+\usepackage{nomencl}
+\let\abk\nomenclature % Befehl umbenennen in abk
+\renewcommand{\nomname}{Abkürzungsverzeichnis} % Deutsche Überschrift
+\setlength{\nomlabelwidth}{.20\hsize} % Punkte zw. Abkürzung und Erklärung
+\renewcommand{\nomlabel}[1]{#1 \dotfill}
+%\setlength{\nomitemsep}{-\parsep} % Zeilenabstände verkleinern
+\makenomenclature
+
+
+% PYTHON CODE LISTING
+% see http://en.wikibooks.org/wiki/LaTeX/Packages/Listings
+\usepackage{listings} % Code Listings
+\lstset{
+    aboveskip=0.5cm,
+    backgroundcolor=\color{white},  % choose the background color.
+    basicstyle=\footnotesize\ttfamily,  % the size of the fonts that are used for the code
+    breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+    breaklines=true,               % sets automatic line breaking
+    captionpos=b,                   % sets the caption-position to bottom
+    % escapeinside={\%*}{*)}          % if you want to add a comment within your code
+    frame=single,	                % adds a frame around the code
+    numbersep=5pt,                  % how far the line-numbers are from the code
+    numbers=left,                   % where to put the line-numbers
+    numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
+    showspaces=false,               % show spaces adding particular underscores
+    showstringspaces=false,         % underline spaces within strings
+    showtabs=false,                 % show tabs within strings adding particular underscores
+    stepnumber=1,                   % the step between two line-numbers. If it's 1 each line will be numbered
+    tabsize=2,	                    % sets default tabsize to 2 spaces
+}
+% \lstset{extendedchars=false} % special chars hack
+\lstset{
+    language=python,                % choose the language of the code
+    alsoletter={1234567890},
+    commentstyle=\color{gray}\slshape,
+    emph={access,and,break,class,continue,def,del,elif,else,%
+        except,exec,finally,for,from,global,if,import,in,is,%
+        lambda,not,or,pass,print,raise,return,try,while},
+    emph={[2]True, False, None, self},
+    emph={[3]from, import, as},
+    emph={[4]1, 2, 3, 4, 5, 6, 7, 8, 9, 0},
+    emphstyle=\color{black}\bfseries,
+    emphstyle=[2]\color{green},
+    emphstyle=[3]\color{blue},
+    emphstyle=[4]\color{blue},
+    keywordstyle=\color{blue},
+    literate=*{:}{{\textcolor{blue}:}}{1}%
+	    {=}{{\textcolor{blue}=}}{1}%
+	    {-}{{\textcolor{blue}-}}{1}%
+	    {+}{{\textcolor{blue}+}}{1}%
+	    {*}{{\textcolor{blue}*}}{1}%
+	    {!}{{\textcolor{blue}!}}{1}%
+	    {(}{{\textcolor{blue}(}}{1}%
+	    {)}{{\textcolor{blue})}}{1}%
+	    {[}{{\textcolor{blue}[}}{1}%
+	    {]}{{\textcolor{blue}]}}{1}%
+	    {<}{{\textcolor{blue}<}}{1}%
+	    {>}{{\textcolor{blue}>}}{1},%
+    morecomment=[s]{"""}{"""},
+    otherkeywords={\ , \}, \{},
+    stringstyle=\color{red},
+    upquote=true,
+    lineskip={0pt},
+}
+\def\pyinc#1#2#3{
+    \renewcommand{\baselinestretch}{1}
+    \lstset{caption=#1, label=#2}
+    \lstinputlisting{#3}
+}
+\def\plinc#1#2#3{
+    \renewcommand{\baselinestretch}{1}
+    \lstset{language={},caption=#1, label=#2}
+    \lstinputlisting{#3}
+}
+
+
+
+% CONTEXTUAL EMPHASIZING
+\def\empy#1{ % PYTHON emphasize
+    \emph{#1}
+}
+\def\emme#1{ % AMREP emphasize
+    \emph{#1}
+}
+% REFERENCES SHORTHAND
+\def\rref#1{
+    \ref{#1}, S.\pageref{#1}
+}
+
+
+% IMAGES SHORTHAND
+% #1 image location
+% #2 figure label
+% #3 caption
+% #4 index caption
+\def\img#1#2#3#4{
+    \begin{figure}[h]
+    \centering
+    \includegraphics[scale=1]{#1}
+    \caption[#4]{#3}
+    \label{#2} % LABEL NACH CAPTION!
+    \end{figure}
+}
+
+% IMAGES SHORTHAND FORCE HERE
+% #1 image location
+% #2 figure label
+% #3 caption
+% #4 index caption
+% see texlive-doc/latex/nonfloat/nonfloat.pdf
+\usepackage{float}
+\def\imgH#1#2#3#4{
+    \begin{figure}[H]
+    \centering
+    \includegraphics[scale=1]{#1}
+    \caption[#4]{#3}
+    \label{#2}
+    \end{figure}
+}
+
+% IMAGES SHORTHAND WITH SCALE
+% #1 image location
+% #2 figure label
+% #3 caption
+% #4 index caption
+% see texlive-doc/latex/nonfloat/nonfloat.pdf
+\usepackage{float}
+\def\imgS#1#2#3#4#5{
+    \begin{figure}[h]
+    \centering
+    \includegraphics[scale=#5]{#1}
+    \caption[#4]{#3}
+    \label{#2}
+    \end{figure}
+}
+
+% ABSOLUTE POSITIONING
+\usepackage[absolute]{textpos}
+\setlength{\TPHorizModule}{1mm}
+\setlength{\TPVertModule}{\TPHorizModule}
+\textblockorigin{0mm}{0mm}
+
+
+
+% LINE SPACING OF LISTINGS
+\let\origitemize=\itemize
+\let\origitemizeend=\enditemize
+\renewenvironment{itemize} %
+    {\begin{singlespacing}\origitemize{}} %
+    {\origitemizeend\end{singlespacing}}
+
+\let\origdesc=\description
+\let\origdescend=\enddescription
+\renewenvironment{description} %
+    {\begin{singlespacing}\origdesc{}} %
+    {\origdescend\end{singlespacing}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+
+\begin{document}
+\shorthandoff{"} % Let the usage of normal quotation marks
+\selectlanguage{ngerman}
+%\renewcommand{\baselinestretch}{1.5} % 1.5 line height
+
+\renewcommand{\thepage}{\roman{page}}
+
+
+\title{Activity Model Runtime Engine für Python}
+\author{Johannes Raggam}
+%\maketitle
+
+\thispagestyle{empty}
+\include{pre-cover}
+\newpage
+
+\thispagestyle{empty}
+%\addcontentsline{toc}{chapter}{Eidesstattliche Erklärung}
+\include{pre-eidesstattliche-erklaerung}
+\newpage
+
+
+%%%
+\fancyhf{}
+\fancyhead[LE,RO]{\helv \thepage}
+\cfoot[]{}
+%%%
+
+%\addcontentsline{toc}{chapter}{Inhaltsverzeichnis}
+\tableofcontents
+\newpage
+
+
+%\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
+\listoffigures
+\newpage
+
+%\addcontentsline{toc}{chapter}{Tabellenverzeichnis}
+\listoftables
+\newpage
+
+%\addcontentsline{toc}{chapter}{Code Listings}
+\lstlistoflistings
+\newpage
+
+%\addcontentsline{toc}{chapter}{Abkürzungsverzeichnis}
+\include{abkuerzungsverzeichnis}
+%\markboth{\nomname}{\nomname}
+%\printnomenclature
+\newpage
+
+%\addcontentsline{toc}{chapter}{Danksagung}
+\include{pre-danke}
+\newpage
+
+%\addcontentsline{toc}{chapter}{Abstract}
+\include{pre-abstract}
+\newpage
+
+\renewcommand{\thepage}{\arabic{page}}
+\setcounter{page}{1}
+
+\include{preface}
+
+%%%
+\fancyhf{}
+\fancyhead[LE,RO]{\helv \thepage}
+\fancyhead[LO]{\helv \rightmark}
+\fancyhead[RE]{\helv \leftmark}
+\cfoot[]{}
+%%%
+
+\part{Einleitung}
+\include{intro-gegenstand}
+\include{intro-stateofart}
+\include{intro-forschungsleitende}
+\include{intro-ziele}
+
+\part{Theoretische Grundlagen}
+\include{mod-modellierung}
+\include{modellierung-petrinetze}
+\include{modellierung-aktivitaetsdiagramme}
+\include{modellierung-bpmn}
+\include{modellierung-zusammenfassung}
+
+\part{Activity Model Runtime Engine für Python}
+\include{amrep-metamodell}
+\include{amrep-runtime}
+\include{amrep-tokenfluss}
+\include{amrep-executions}
+\include{amrep-testcase}
+
+\include{ausblick}
+
+\part{Anhang}
+\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+%\bibliographystyle{plainnat}
+%\bibliographystyle{natdin}
+\bibliographystyle{dinat}
+\bibliography{bibliographie}
+\newpage
+
+% \include{amrep-aufbau}
+% \include{amrep-installation}
+% \include{amrep-metamodell-elemente}
+
+\end{document}

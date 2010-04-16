@@ -1,0 +1,138 @@
+\section{Business Process Modeling Notation}\label{mod-bpmn}
+
+\subsection{Hintergrund}
+Die Business Process Modeling Notation (BPMN) ist eine graphische Notationssprache zur Beschreibung von Geschäftsprozessen.
+
+% - Motivation
+Das Ziel der Entwicklung des BPMN Standards ist eine allgemein verständliche Notation von Geschäftsprozessen zu bieten, die als gemeinsame Sprache zwischen verschiedenen Organisationseinheiten wie Technik und Betriebswirtschaft in einem Unternehmen dienen kann und somit Lücken zwischen Prozess-Analyse und Definition und Implementierung schließt.
+
+Ein weiteres Ziel der BPMN ist die Bereitstellung einer Möglichkeit zur Visualisierung von XML basierten Prozessausführungssprachen wie die \emph{Web Services Business Process Execution Language} (WS-BPEL) (vgl. \citep{BPMN2009}, S.1). Die BPMN Spezifikation beschreibt auch ein informelles Mapping von BMPN zu WS-BPEL (vgl. \citep{BPMN2009}, S.143ff).
+
+% - Entstehung und Organisationen
+Die BPMN wurde der Öffentlichkeit im Mai 2004 von der \emph{Business Process Management Initiative} (BPMI) in der Version 1.0 präsentiert (vgl. \citep{White2004}, S.1). Im Juni 2005 haben die BPMI und die \emph{Object Management Group} (OMG) die Zusammenlegung ihrer Aktivitäten im Bereich des \emph{Business Process Management} in der \emph{Business Modeling \& Integration} (BMI) \emph{Domain Task Force} (DTF) verkündet. Die Entwicklung der BPMN wird nun von der OMG koordiniert. Der aktuelle Standard trägt die Version 1.2 und ist im Jänner 2009 erschienen.
+
+% - Basierend auf MOF Metamodell
+Als ein Grund für den Zusammenschluss wird das Fehlen eines Meta-Metamodells für den Standard BPMN genannt, was eine Reihe praktischer Probleme (Speicherung, Datenaustausch, Transformation, Versionierung) mit sich bringt, die die OMG mit MOF-basierten Sprachen schon gelöst hat (vgl. \citep{Gilbert2007}). Es existiert noch kein formalisiertes Meta-Metamodell für die BPMN. Der im November 2008 verabschiedete Standard \emph{Business Process Definition Meta Model} (BPDM) soll dieses Problem beheben. BPMN beschreibt ein Metamodell und Serialisierungs-Modell für BPMN und basiert selbst auf dem OMG Standard MOF (vgl. \citep{BPDM2008}, S.1).
+
+% - Zukunft
+Die Standards BPDM und BPMN sollen in der kommenden Version 2.0 des BPMN Standards zusammengeführt werden (vgl. \citep{Gilbert2007}). Von Juni 2007 bis Februar 2008 wurde ein Request for Proposal (RFP) ausgerufen (vgl. \citep{BPMN2007}). Trotz der Ähnlichkeiten zwischen Aktivitätsdiagrammen und der BPMN sieht das RFP keine Angleichung oder Zusammenführung der beiden Standards vor (vgl. \citep{BPMN2007}, S.23).
+
+\subsection{Tokens als Zustandsmarker}
+Wie in den UML Aktivitätsdiagrammen werden bei der BPMN Tokens als Zustandsmarker verwendet. Ein Token ist dabei ein beschreibendes Konstrukt und wie bei den UML Aktivitätsdiagrammen kein Modellelement. Tokens haben eine eindeutige Identität, damit multiple Tokens voneinander unterschieden werden können (vgl. \citep{BPMN2009}, S.290).
+
+\subsection{Flow Objects}
+
+\subsubsection{Event}
+Ein Event ist ein Ereignis, das während des Ablaufs eines Geschäftsprozesses eintreten kann oder ausgelöst wird. Im Sinne der BPMN werden nur jene Events betrachtet, die den Prozessfluss oder den zeitlichen Ablauf beeinflussen. Events können eine Ursache (engl. \emph{Trigger}) haben und empfangen (engl. \emph{Catching}) werden, wie zum Beispielder Start eines Prozesses bei Empfang einer Nachricht. Andererseits können Events auch ein Ergebnis (engl. \emph{Result}) produzieren indem Sie einen Event auslösen (engl. \emph{Throwing}), wie zum Beispiel das Senden einer Nachricht bei Beendigung eines Prozesses. Es werden drei Typen von Events unterschieden: \emph{Start}, \emph{Intermediate} und \emph{End}. Start Events beginnen einen Prozessfluss und können nur Ereignisse empfangen, Intermediate Events können während des Prozessablaufs passieren und Ereignisse empfangen oder senden und End Events beenden den Prozessfluss und können nur Ergeignisse senden. Events werden durch einen Kreis dargestellt, wobei in der Mitte des Kreises ein Zeichen platziert werden kann, das eine Unterscheidung verschiedener Eventarten erlaubt. Die Stärke des Striches gibt hierbei an, ob es sich um Start, Intermediate oder End Events handelt (vgl. \citep{White2004}, S.2 und \citep{BPMN2009}, S.35ff.)).
+
+\img{modeling-diagrams/bpmn-events}{fig:bpmn-events}{Verschiede Arten von Events}{Verschiede Arten von Events in BPMN}
+
+In der Abbildung \ref{fig:bpmn-events} werden verschiedene Arten von Events aufgelistet. Events 1a - 1d sind Events, die Nachrichten senden und Empfangen können. 1a ist hierbei ein Start Event, 1b ein Intermediate Catching, 1c ein Intermediate Throwing und 1d ein End Event. Die Events 2a und 2b sind \emph{Conditional Events}, die auf geänderte Geschäftsbedingungen reagieren, wobei 2a ein Start und 2b ein Intermediate Catching Event ist. Der Event 3a ist ein Intermediate Catching Event und reagiert auf abgebrochene Transaktionen, während 3b ein End Event ist und den Abbruch von Transaktionen anstößt. Der Event 4 ist ein End Event, der den sofortigen Abbruch des Prozesses bewirkt.
+
+
+\subsubsection{Activity}
+Eine Aktivität ist die Arbeit, die in einem Geschäftsprozess verrichtet wird. Der Start von Aktivitäten wird nicht nur durch eingehende Tokens angestoßen, sondern kann auch von Events, Nachrichten oder anderen Faktoren beeinflusst werden (vgl. \citep{BPMN2009}, S.98). Es können folgende Typen von Aktivitäten unterschieden werden (vgl. \citep{BPMN2009}, S.52):
+
+\begin{description}
+\item[Process] Ein Prozess hat in der BPMN keine eigene graphische Darstellung, sondern setzt sich aus mehreren Flow Objects zusammen. Er ist also die Gesamtheit des dargestellten Ablaufs.
+\item[Sub-Process] Ein Subprozess ist eine zusammengesetzte Aktivität und wird als abgerundetes Rechteck mit einem Plus-Zeichen dargestellt. Vom Betrachtungspunkt des Subprozesses selbst ist dieser einem Prozess gleichzusetzen (vgl. \citep{BPMN2009}, S.56). Siehe Abbildung \ref{fig:bpmn-subprocess}.
+\img{modeling-diagrams/bpmn-subprocess}{fig:bpmn-subprocess}{Sub-Process}{Sub-Process in BPMN}
+
+\item[Task] Ein Task ist eine atomare Aktivität, die in einem Prozess verrichtet wird. Tasks werden verwendet, wenn die Arbeit in einem Prozess nicht auf eine feinere Granularität herunter gebrochen wird. In der Regel verrichtet eine Person, eine Maschine oder ein Programm die Arbeit, wenn der Task ausgeführt wird. Es werden drei Kategorien unterschieden: \emph{Loop}, \emph{Multi-Instance Loop} und \emph{Compensation}. Ein Task wird als abgerundetes Rechteck dargestellt, wobei ein Zeichen die Kategorie angeben kann (vgl. \citep{BPMN2009}, S.64). Siehe Abbildung \ref{fig:bpmn-task}.
+\img{modeling-diagrams/bpmn-task}{fig:bpmn-task}{Task}{Task in BPMN}
+
+\end{description}
+
+
+%TODO: GRAPHIK
+
+
+\subsubsection{Gateway}
+Gateways steuern den Fluss in Prozessen indem sie ihn aufspalten oder zusammenführen. Ein Gateway wird als Raute dargestellt. Um die unterschiedlichen Arten voneinander unterscheiden zu können, werden entsprechenden Zeichen verwendet (vgl. \citep{BPMN2009}, S.70). Gateways können den Fluss aufteilen (engl. \emph{Split}) oder zusammenführen(engl.  \emph{Merge}). Es werden folgende Gateways voneinander unterschieden:
+\begin{description}
+\item[Exclusive Gateway:] \emph{Split:} Wird das Exclusive Gateway durch einen Token einer eingehenden Kante aktiviert, kann dieser nur einen der ausgehenden Pfade traversieren. Die Entscheidung basiert auf  Kantenbedingungen. Wenn keine Bedingungen zutreffen, kann eine als \emph{Default} markierte ausgehende Kante (siehe Abbildung \ref{fig:bpmn-sequence-flow}, c) traversiert werden. \emph{Merge:} Ein Token auf einer eingehenden Kante wird auf die ausgehenden Kante weitergeleitet. Hier findet keine Synchronisation statt (vgl. \citep{BPMN2009}, S.73-80). Die Situation mehrerer gleichzeitig eintreffender Tokens wird nicht explizit beschrieben. Aufgrund der XOR Semantik ist jedoch zu erwarten, dass nur ein eintreffender Token zu einem Zeitpunkt weitergeleitet werden kann (vgl. \citep{BPMN2009}, S.75-76).
+% TODO: oder mergen die, die tokens?
+Bei \emph{Data-Based Exclusive Gateways} wird die Entscheidung aufgrund von Kantenbedingungen getroffen, die auf Prozessdaten zugreifen können (siehe Abbildung \ref{fig:bpmn-gateway-databased-exclusive}).
+% graphic
+\imgH{modeling-diagrams/bpmn-gateway-databased-exclusive}{fig:bpmn-gateway-databased-exclusive}{Databased Exclusive Gateway}{Databased Exclusive Gateway in BPMN}
+
+Bei \emph{Event-Based Exclusive Gateways} wird die Entscheidung durch unterschiedliche Events ausgelöst. Auf den ausgehenden Kanten dieser Entscheidungsknoten können keine Bedingungen definiert werden und es kann keine Kante als \emph{Default} markiert werden (siehe Abbildung \ref{fig:bpmn-gateway-eventbased-exclusive}).
+% graphic
+\imgH{modeling-diagrams/bpmn-gateway-eventbased-exclusive}{fig:bpmn-gateway-eventbased-exclusive}{Eventbased Exclusive Gateway}{Eventbased Exclusive Gateway in BPMN}
+
+\item[Inclusive Gateway:] \emph{Split:} Tokens können eine oder mehrere ausgehende Kanten traversieren, basierend auf Kantenbedingungen. Eine ausgehende Kante, die als \emph{Default} markiert ist (siehe Abbildung \ref{fig:bpmn-sequence-flow}, c), wird nur traversiert, wenn keine anderen Bedingungen zutreffen. Kann keine Kante aufgrund der Kantenbedingungen traversiert werden, wird das Modell als invalide angesehen. Für die Semantik dieses Entscheidungsknoten gibt es eine alternative Darstellungsform als Task mit ausgehenden Entscheidungskanten (\ref{fig:bpmn-sequence-flow}, b)) . \emph{Merge:} Es werden die Tokens der eingehenden Kanten synchronisiert, aber maximal ein Token pro eingehender Kante (vgl. \citep{BPMN2009}, S.80-83). Siehe Abbildung \ref{fig:bpmn-gateway-inclusive}.
+% graphic
+\imgH{modeling-diagrams/bpmn-gateway-inclusive}{fig:bpmn-gateway-inclusive}{Inclusive Gateway}{Inclusive Gateway in BPMN}
+
+\item[Parallel Gateway:] Ermöglicht die Synchronisation und Erzeugung von parallelen Flüssen (vgl. \citep{BPMN2009}, S.85-86). Siehe Abbildung \ref{fig:bpmn-gateway-parallel}.
+% graphic
+\imgH{modeling-diagrams/bpmn-gateway-parallel}{fig:bpmn-gateway-parallel}{Parallel Gateway}{Parallel Gateway in BPMN}
+
+\item[Complex Gateway:] Wird verwendet, um Situationen zu modellieren, die mithilfe der anderen Gateways nicht modelliert werden können. Es können komplexe Bedingungen auf Basis verbaler Sprache definiert werden. Als Evaluierungsgrundlage können der Status der eingehenden Kanten und Daten des Prozesses herangezogen werden. Auch können Split- und Merge-Verhalten definiert werden (vgl. \citep{BPMN2009}, S.83-85). Siehe Abbildung \ref{fig:bpmn-gateway-complex}.
+% graphic
+\imgH{modeling-diagrams/bpmn-gateway-complex}{fig:bpmn-gateway-complex}{Complex Gateway}{Complex Gateway in BPMN}
+
+\end{description}
+Inclusive- und Parallel-Gateway synchronisieren eingehende Kanten im Merge-Fall.
+
+
+\subsection{Connecting Objects}
+
+\subsubsection{Sequence Flow}
+Eine Sequence Flow Kante ist eine gerichtete Kante mit einer Quelle und einem Ziel, verbindet Flow Objects und definiert so eine geordnete Sequenz (siehe Abbildung \ref{fig:bpmn-sequence-flow}, a).
+
+Kanten können Bedingungen besitzen, erfüllt werden müssen, damit Token diese Kante traversieren können. Die Bedingung muss evaluiert werden, bevor der Token für die Kante produziert wird. Kanten mit Bedingungen müssen entweder Entscheidungsknoten oder Aktivitäten als Quelle haben. Im Falle von Aktivitäten kann somit die Semantik von Inclusive Gateways modelliert werden. Die Kante muss hierbei aber wie in Abbildung \ref{fig:bpmn-sequence-flow} b dargestellt, mit einer kleinen Raute am Quellknoten notiert werden.
+
+Kanten können für die Entscheidungsknotensemantik der Data Based Exclusive Gateways und Inclusive Gateways als \emph{Default} markiert werden  (siehe Abbildung \ref{fig:bpmn-sequence-flow}, c). Eine solche Kante wird dann traversiert, wenn keine anderen Bedingungen zutreffen (vgl. \citep{BPMN2009}, S.97-98). Siehe Abbildung \ref{fig:bpmn-sequence-flow}.
+% graphic
+\img{modeling-diagrams/bpmn-sequence-flow}{fig:bpmn-sequence-flow}{Sequence Flows}{Sequence Flows in BPMN}
+
+\subsubsection{Message Flow}
+Ein Message Flow zeigt den Nachrichtenfluss zwischen verschiedenen Entitäten, die diesen Nachrichten senden oder empfangen können (vgl. \citep{BPMN2009}, S.99-100). Siehe Abbildung \ref{fig:bpmn-message-flow}.
+% graphic
+\img{modeling-diagrams/bpmn-message-flow}{fig:bpmn-message-flow}{Message Flow}{Message Flow in BPMN}
+
+\subsubsection{Association}
+Eine Assoziation verbindet Informationen und Artefakte mit Flow Objects. Gerichtete Assoziationen können Aktivitäts-Input und -Output von Datenobjekten anzeigen. Weiters werden Assoziationen für die Verbindung von Text Annotationen mit Modellelementen verwendet (vgl. \citep{BPMN2009}, S.101-102). Abbildung \ref{fig:bpmn-association} a zeigt eine ungerichtete, b eine gerichtete und c eine bidirektional gerichtete Assoziation.
+% graphic
+\img{modeling-diagrams/bpmn-association}{fig:bpmn-association}{Assoziationen}{Assoziationen in BPMN}
+
+
+\subsection{Swimlanes}
+Mithilfe von Swimlanes können Aktivitäten unterteilt bzw. organisiert werden (vgl. \citep{BPMN2009}, S.86-91).
+
+\subsubsection{Pool}
+Ein Pool repräsentiert einen \emph{Participant} bzw. Teilnehmer eines Geschäftsprozesses, eine spezifische Entität (zum Beispiel ein Unternehmen) oder eine allgemeine Rolle (Käufer, Verkäufer, Produzent, etc.). Ein Pool kann auch als \emph{Black Box} ohne Flow Objects dargestellt werden. Dabei ist es aber möglich, einen Message Flow zwischen Black Boxes zu modellieren, indem die Kanten jeweils nur bis zum äußeren Rand des Pools gezeichnet werden.
+
+\subsubsection{Lane}
+Lanes sind alle weiteren Subpartitionen eines Pools und werden zur Organisation und Unterteilung von Aktivitäten verwendet. Die Semantik ist hierbei nicht vorgegeben, sondern kann selbst festgelegt werden (siehe Abbildung \ref{fig:bpmn-pool-lanes}).
+% graphic
+\img{modeling-diagrams/bpmn-pool-lanes}{fig:bpmn-pool-lanes}{Pool und Lanes}{Pool und Lanes in BPMN}
+
+\subsection{Artifacts}
+Die BPMN ermöglicht mit den Artefakten, zusätzliche Informationen zu modellieren, die nicht direkt im Zusammenhang mit dem Sequence Flow oder Message Flow stehen. In der BPMN Version 1.2 werden drei Artefakte unterstützt. Toolhersteller können weitere Artefakte anbieten (vgl. \citep{BPMN2009}, S.92).
+
+\subsubsection{Data Object}
+Datenobjekte sind in der BPMN keine Flow Objects, da sie keine Auswirkungen auf den Sequence Flow oder Message Flow haben. Datenobjekte können physische wie elektronische Objekte darstellen. Sie zeigen wie Dokumente, Daten und andere Objekte während des Ablaufs verwendet und aktualisiert werden (vgl. \citep{BPMN2009}, S.93). Siehe Abbildung \ref{fig:bpmn-dataobject}.
+% graphic
+\img{modeling-diagrams/bpmn-dataobject}{fig:bpmn-dataobject}{Data Object}{Data Object in BPMN}
+
+
+\subsubsection{Text Annotation}
+Mit Text Annotationen können zusätzliche Informationen zum Modell bereitgestellt werden, die bei der Interpretation des Modells behilflich sein können (vgl. \citep{BPMN2009}, S.94). Siehe Abbildung \ref{fig:bpmn-textnotation}.
+% graphic
+\img{modeling-diagrams/bpmn-textannotation}{fig:bpmn-textannotation}{Text Annotation}{Text Annotation in BPMN}
+
+\subsubsection{Group}
+Mithilfe von Gruppen steht neben den Swimlanes ein weiterer Mechanismus zur informellen Gruppierung und Kategorisierung von Flow Objects zur Verfügung (vgl. \citep{BPMN2009}, S.95). Siehe Abbildung \ref{fig:bpmn-group}.
+% graphic
+\img{modeling-diagrams/bpmn-group}{fig:bpmn-group}{Group}{Group in BPMN}
+
+
+\subsection{Beispiel für das BPMN Diagramm \emph{PatientInnenversorgung in einem Krankenhaus}}
+
+In Abbildung \ref{fig:bpmn-usecase} wird der im Kapitel \rref{intro-usecase} vorgestellte Usecase für eine PatientInnenversorgung in einem Krankenhaus als BPMN Diagramm dargestellt. Es wurden die Zuständigkeiten, die in der Beschreibung des Usecase nicht definiert sind, exemplarisch in Pools und Swimmlanes organisiert. Die Ähnlichkeit mit der Darstellung als Aktivitätsdiagramm sind offensichtlich da viele Elemente eine gleiche oder ähnliche Darstellungsweise haben. Einerseits liegt das an der Einfachheit des Beispiels, in dem keine komplexen Geschäftsprozesse modelliert wurden, andererseits sind die Darstellungsweisen von Aktivitätsdiagrammen und BPMN Diagrammen per Definitionen und absichtlich sehr ähnlich. Die Unterschiede liegen im Detail und werden im folgenden Kapitel diskutiert.
+
+\img{modeling-diagrams/bpmn-usecase}{fig:bpmn-usecase}{PatientInnenversorgung in einem Krankenhaus}{PatientInnenversorgung in einem Krankenhaus in BPMN Darstellung}
+
+% END OF DOCUMENT

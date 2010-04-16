@@ -1,0 +1,671 @@
+\chapter{Metamodellelemente der Activity Model Runtime Engine für Python}\label{amrep-metamodel-elemente}
+
+\section{Aufbau des Kapitels}
+Die Struktur der Erläuterung der einzelnen Metamodellelemente orientiert sich an der Struktur der UML2 Spezifikation (vgl. \citep{OMG2009}, S.15-17) und ist wie folgt aufgebaut:
+\begin{itemize}
+
+\item In der Überschrift zu jedem Modellelement wird dessen Name, wie in der Implementierung definiert, angegeben.
+
+\item Es folgt eine Beschreibung des Zwecks des Modellelements.
+
+\item Der Abschnitt \emph{Generalisierung} gibt die direkte Superklasse eines Modellelements an, also die Klasse, von der das Modellelement abgeleitet ist und die in der Hierarchie direkt über dem Modellelement steht. In der AMREP-Implementierung des Metamodells haben alle Klassen nur eine Superklasse.
+
+\item Der Abschnitt \emph{Attribute} listet die Attribute des Modellelements mit formalen Namen (hervorgehoben) und einer Beschreibung auf.
+
+\item Unter \emph{Assoziationen} werden Referenzen des Modellelements auf andere Modellelemente aufgelistet.
+
+\item Der Abschnitt \emph{Methoden} gibt den Namen der Methoden der Metaklasse und deren Beschreibung an. Übergabeparameter werden in Klammern am Ende des Methodennamens angegeben.
+
+\item Das Unterkapitel \emph{Einschränkungen} (englisch: \emph{constraints}) beschreibt alle Bedingungen, die erfüllt sein müssen, damit das Modell valide ist.
+
+\item Der Abschnitt \emph{Unterschiede zur UML2-Spezifikation} untersucht die Änderungen des AMREP-Metamodellelements zur den originalen Modellelementen aus der UML2-Spezifikation und begründet diese Änderungen. Dabei werden auch die nicht oder anders implementierten Attribute und Assoziationen beschrieben.
+\end{itemize}
+
+Bis auf den Abschnitt \emph{Generalisierung} wurden alle anderen mit dem Plural bezeichnet, um eine einheitliche Benennung zu schaffen. Bei Modellelementen, die keine Attribute, Assoziationen, Einschränkungen oder Unterschiede zur UMl2-Spezifikation haben, wurden diese Abschnitte nicht angeführt.
+
+
+
+
+\section{Abstrakte Basisklassen des Metamodells}\label{amrep-meta-abstrakt}
+%XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+Die abstrakten Basisklassen dienen als Superklassen für die eigentlichen Modellelemente und dürfen nicht direkt instantiiert werden. Überprüft wird dies zum Zeitpunkt der Modellvalidierung mit der Methode \texttt{check\_model\_constraints()}.
+
+Python unterstützt zwar seit Version 2.6 bzw 3 \emph{abstract base classes}\footnote{Siehe: \url{http://docs.python.org/library/abc.html}}, die bei direkter Instantiierung einen \emph{TypeError} erzeugen, allerdings können solche als abstrakt konfigurierten Klassen nicht von primitiven Datentypen erben (vgl. \citep{Bug1}). Da die allen Metamodell Elementen gemeinsame Superklasse \emph{Node} vom primitiven Datentyp \emph{dict} erbt, können \emph{abstract base classes} nicht in der AMREP-Metamodellimplementierung verwendet werden.
+
+
+\subsection{Node}
+%================
+Die Klasse \emph{Node} aus dem Package \emph{zodict}\footnote{Siehe: \url{http://pypi.python.org/pypi/zodict/}}
+stellt die Basisfunktionalität für die AMREP-Metamodellimplementierung bereit. Node-Elemente sind geordnete Hashtables (\emph{ordered dictionary})\footnote{In Python ist ein \emph{dictionary} ein Hashtable, dessen Elemente Objektreferenzen und in Konsequenz beliebige Datentypen beinhalten können (vgl. \citep{Martelli2006}, S.44). Python stellt einen Iterator über die Elemente des Dictionaries zur Verfügung, der aber keine definierte Ordnung der Elemente sicherstellen kann. Es gibt deshalb mehrere Implementierungen eines geordneten Dictionaries. \emph{Node} verwendet die Implementierung \emph{odict} (Siehe: \url{http://pypi.python.org/pypi/odict/}).},
+die selbst nur Node-Elemente aufnehmen können. Node implementiert das Zope \emph{Location Interface}\footnote{Das Location Interface \texttt{ILocation} ist im package \texttt{zope.location} definiert. Es definiert die API einer hierarchischen Datenstruktur (siehe \url{http://pypi.python.org/pypi/zope.location}).},
+sodass zu jedem Element ein Name und eine Referenz auf das Elternelement definiert ist.
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{zodict.zodict}
+\end{itemize}
+
+\subsubsection{Attribute}
+\begin{description}
+\item[\_\_name\_\_:] Name des Node-Elements und Schlüsselwort in der Hashtable.
+\item[\_\_parent\_\_:] Elternelement in der Node-Hierarchie.
+\item[uuid:] Eindeutiger Bezeichner\footnote{uuid ist ein Python Modul, das Methoden zur Generierung von eindeutigen Bezeichnern - \emph{universal unique identifiers} - definiert.}
+des Node-Elements. Wird automatisch bei Instantiierung vergeben.
+\end{description}
+
+\subsubsection{Methoden}
+\begin{description}
+\item[path():] Gibt den Pfad als Liste der Elementnamen vom Wurzelelement zum Element selbst in der Node-Struktur zurück.
+\item[root():] Gibt das Wurzelelement selbst in der Node-Struktur zurück.
+\item[node(uuid):] Gibt das Element mit gegebener uuid aus der gesamten Node-Struktur zurück - unabhängig von der Position des Elements im Pfad, auf dem die Methode aufgerufen wird.
+\item[filtereditems(interface):] Gibt einen Iterator\footnote{Im speziellen Fall wird der Iterator durch einen Generator erzeugt, der das nächste Element erst berechnet, wenn die \texttt{next}-Methode des Iterators aufgerufen wird. Somit kann das Laufzeitverhalten bei der Erzeugung von Iteratoren (zum Beispiel Listen) optimiert werden (Siehe: \url{http://docs.python.org/reference/expressions.html\#yield-expressions})}
+über die Liste aller Elemente in der Node-Struktur, die das gegebene Interface implementieren, vom aktuellen Node-Element ausgehend zurück.
+\end{description}
+
+\subsubsection{Einschränkungen}
+\begin{itemize}
+\item Es können nur Node-Elemente hinzugefügt werden.
+\end{itemize}
+
+
+\subsection{Element}
+%===================
+Die Klasse \emph{Element} ist die Superklasse aller Metamodellelemente und definiert die grundlegenden Eigenschaften dieser Metamodellelemente.
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{zodict.node.Node}
+\end{itemize}
+
+\subsubsection{Attribute}
+\begin{description}
+\item[abstract:] Definiert, ob die Klasse eine abstrakte Klasse ist, die nicht instantiiert werden darf. Ist in \emph{Element} auf Boolean-\texttt{True} gesetzt und muss in konkreten Subklassen mit \texttt{False} überladen werden.
+\item[xmiid:] Die \emph{xmi-id} des entsprechenden Elements aus der XMI Datei. Wird zum Beispiel für den Zugriff auf bereits erzeugte Elemente des Zielmodells bei einem Modellimport verwendet. Mit der in \texttt{activities.metamodel.elements} definierten Funktion \texttt{get\_element\_by\_xmiid(node, xmiid)} kann auf ein Element mit gegebener xmi-id aus der \emph{Node}-Datenstruktur zugegriffen werden.
+\end{description}
+
+\subsubsection{Methoden}
+\begin{description}
+\item[check\_model\_constraints():] Implementiert die Regeln, die ein valides Modell definieren. Subklassen, die eigene Regeln definieren, überladen die Methode \texttt{check\_model\_constraints} der Superklasse, müssen aber dafür sorgen, dass die Methode der Superklasse aufgerufen wird, so dass alle \texttt{check\_model\_constraints} Methoden in der Vererbungshierarchie kaskadiert aufgerufen werden. Mit der in \texttt{activities.metamodel.elements} definierten Funktion \texttt{validate} werden die Methoden \texttt{check\_model\_constraints()} des der \texttt{validate} Funktion übergebenen Metamodellelements und dessen Subelemente aufgerufen. Wird eine Regel nicht erfüllt, so wird eine \emph{ModelIllFormedException} erzeugt.
+\end{description}
+
+\subsubsection{Assoziationen}
+\begin{description}
+\item[stereotypes:] Liste aller Stereotypen, die das entsprechende Modellelement besitzt. Stereotypen werden von der Runtime verwendet, um \emph{Executions} als Implementierungen der Aktionen zu starten (siehe auch: \rref{amrep-executions}).
+\end{description}
+
+\subsubsection{Einschränkungen}
+\begin{itemize}
+\item Es können keine abstrakten Klassen instantiiert werden.
+\end{itemize}
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+Diese Klasse teilt sich einige Eigenschaften mit den Klassen \emph{Element} und \emph{NamedElement} aus der UML2-Spezifikation.
+
+Durch die Ableitung von \emph{Node} hat Element wie das UML2 Pendant die Eigenschaft, andere Elemente hierarchisch zu organisieren. Allerdings ist die API anders als in der UML2-Spezifikation: \emph{ownedElement} (UML2) entspricht der Methode der Python Dictionary API \texttt{values}, \emph{owner} (UML2) enspricht dem Attribut \texttt{\_\_parent\_\_}, \emph{ownedComment}(UML2) wird nicht unterstützt.
+
+Weiters wird durch die Superklasse \emph{Node} Eigenschaften des UML2-Elements \emph{NamedElement} unterstützt. Das Attribut \emph{name} (UML2) entspricht dem Node-Attribut \texttt{\_\_name\_\_}, \emph{qualifiedName} (UML2) entspricht \texttt{path}, \emph{visibility} (UML2) wird nicht unterstützt. Die Assoziation \emph{namespace} (UML2) wird nicht unterstützt, aber die grundsätzliche Eigenschaft eines Namespaces Elemente per Namen zu identifizieren ist durch die Superklasse \emph{Node} gegeben.
+
+
+\subsection{Behavior}
+%====================
+Behavior hat in der \texttt{activites.metamodel} Implementierung nur eine Subklasse: \emph{Activity}. In der UML2-Spezifikation wird \emph{behavior} aber als \emph{activity}, \emph{interaction} oder \emph{state machine} spezialisiert. Um zukünftige Erweiterungen bzw. eine Integration in ein UML2-Framework zu ermöglichen, wurde Behavior auch in das AMREP-Metamodell aufgenommen.
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.Element}
+\end{itemize}
+
+\subsubsection{Attribute}
+\begin{description}
+\item[context:] Der \emph{classifier}, in dessen Kontext \emph{behavior} ausgeführt wird (vgl. \citep{OMG2009}, S. 431). \emph{behavior} bzw. die Spezialisierung \emph{activity} hat Zugriff auf die Input Parameter, Attribute und Assoziationen des \emph{contexts}.
+\end{description}
+
+\subsubsection{Assoziationen}
+\begin{description}
+\item[preconditions:] Liste von Vorbedingungen (\emph{PreConstraint}), die erfüllt sein müssen, damit Behavior ausgeführt werden kann (vgl. \citep{OMG2009}, S. 431).
+\item[postconditions:] Liste von Nachbedingungen (\emph{PostConstraint}), die erfüllt sein müssen, damit Behavior ausgeführt werden kann (vgl. \citep{OMG2009}, S. 431).
+\end{description}
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+Ein Behavior in UML2 definiert wie sich der Zustand des \emph{Context}-Classifiers im Laufe der Zeit ändert. Der Classifier des Behaviors kann entweder eine konkrete Instanz oder eine \emph{collaboration} - eine Beziehungsspezifikation zwischen Instanzen - sein. Start und Lebensdauer des Behavior sind eng mit der Lebensdauer des Kontext-Classifiers verknüpft. Es können auch Parameter definiert werden, die dem Behavior bei Instantiierung übergeben werden müssen und die als Rückgabewerte bei Beendigung wieder zurückgegeben werden (vgl. \citep{RumbaughJacobsonBooch2005}, S.190-191, S.227 und \citep{OMG2009}, S.430-432). Nach (vgl. \citep{RumbaughJacobsonBooch2005}, S. 152) wird Behavior im Kontext von Aktivitäten ausgeführt, sobald der \emph{Context}-Classifier initialisiert wird und beendet, wenn der Kontext zerstört wird.
+
+Der \emph{context} ist in der AMREP Implementierung wie in der UML2-Spezifikation  optional. Das Modell hat vollen Zugriff auf das Context-Objekt da Python keine unterschiedlichen Sichtbarkeiten von Attributen oder Methoden kennt. Context ist aber nicht weiter formalisiert und kann jedes beliebiges Objekt sein. Es ist daher auch keine Semantik spezifiziert, die den Behavior startet, sobald Context instantiiert wird oder eine entsprechende Methode des Context aufgerufen wird. Behavior muss explizit über die Runtime gestartet werden. Das Context-Objekt kann eine Methode implementieren, die den Behavior zur Ausführung bringt.
+
+Das Attribut \emph{isReentrant} wird nicht unterstützt. Aktive Behaviors können nicht nochmals gestartet werden. Ist ein erneuter Start des Behaviors erforderlich, muss eine neue Instanz der Runtime mit dem entsprechenden Modell gestartet werden.
+
+Die Assoziation \emph{specification} enthält eine Referenz auf ein \emph{BehavioralFeature} des \emph{context-Classifiers}. Das ist in der Regel eine Methode, die \emph{Behavior} aufruft und startet und deren Parameter mit den Parametern von \emph{Behavior} übereinstimmen müssen. Die Assoziation \emph{specification} ist nicht implementiert, da die Ausführung eines Behaviors explizit über die \texttt{start}-Methode der Runtime erfolgt (vgl. \citep{OMG2009}, S.430).
+
+Die Assoziation \emph{ownedParameter} ist nicht implementiert, da Parameter nicht Teil des Modells sind, sondern der Runtime als Python-Dictionary übergeben werden und in den Tokens\footnote{Tokens sind wie in Petri-Netzen Zustandsmarker einer Aktivität.} als Daten-Payload gespeichert werden (siehe \rref{amrep-token}). Behavior kann mit den Bedingungen \emph{preconditions} und \emph{postconditions} die notwendigen Daten aus den Tokens zu Beginn und am Ende der Laufzeit abfragen.
+
+Die Assoziation \emph{redefinedBehavior}, die ein erweitertes oder überschriebenes Behavior referenziert, ist nicht implementiert, da dieser Erweiterungsmechanismus für die grundlegende Funktionalität einer Activity Model Runtime nicht notwendig ist. Erweiterungen von Behaviors bzw. Modellen müssen durch Änderung des Modells oder der Kopie des Modells erfolgen.
+
+
+\subsection{ActivityNode}
+%========================
+Ein ActivityNode ist ein allgemeines Knotenelement in Aktivitäten, das durch Kanten mit anderen Knoten verbunden werden kann (vgl. \citep{OMG2009}, S.333). \emph{AktivityNode} ist die Abstraktion aller Knoten im Metamodell.
+
+Die Ausführung von Knoten hängt von dem Vorhandensein von Tokens ab. Die Token-Ausführungssemantik ist im Detail in Kapitel \rref{amrep-token} erläutert.
+
+Die abstrakte Klasse \emph{ActivityNode} wird in folgenden Knoten spezialisiert:
+OpaqueAction, InitialNode, ActivityFinalNode, FlowFinalNode, DecisionNode, ForkNode, JoinNode und MergeNode.
+
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.Element}
+\end{itemize}
+
+\subsubsection{Assoziationen}
+\begin{description}
+\item[activity:] Die Aktivität bzw. das Elternelement, in der die \emph{ActivityNode} definiert ist.
+\item[incoming\_edges:] Liste von eingehenden Kanten.
+\item[outgoing\_edges:] Liste von ausgehenden Kanten.
+\end{description}
+
+\subsubsection{Einschränkungen}
+\begin{itemize}
+\item Eine \emph{ActivityNode} muss eine \emph{Activity} als Elternelement besitzen.
+\end{itemize}
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+Entgegen der UML2-Spezifikation müssen \emph{ActivityNodes}, wie alle Elemente die in der \emph{Node}-Datenstruktur gespeichert werden, einen eindeutigen Namen haben (vgl. \citep{OMG2009}, S.334).
+
+\emph{ActivityNodes} müssen in einer Aktivität definiert sein und können nicht außerhalb einer Aktivität stehen.
+
+Die Assoziationen \texttt{incoming\_edges} und \texttt{outgoing\_edges} wurden aufgrund der Anpassung an Namenskonventionen und besserer Ausdrucksstärke anders als im Standard benannt (vgl. \citep{PEP20}).
+
+Die Assoziationen inGroup, redefinedNode, inPartition, inInterruptibleRegion und inStructuredNode werden nicht unterstützt, da die entsprechenden Elemente ActivityGroup, RedefinableElement, Partition, InterruptableActivityRegion und StructuredActivityNode nicht implementiert sind.
+
+
+\subsection{Action}
+%==================
+Eine Aktion ist ein Knoten dessen Ausführung eine Zustandsänderung des Systems bewirkt oder einen Rückgabewert erzeugt (vgl. \citep{RumbaughJacobsonBooch2005}, S.136). Die Implementierung von Aktionen bzw. die Semantik der Ausführung wird in den \emph{Executions} definiert (siehe: \rref{amrep-executions}).
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.ActivityNode}
+\end{itemize}
+
+\subsubsection{Attribute}
+\begin{description}
+\item[context:] Der Kontext der Aktivität. (vgl. \citep{OMG2009}, S.236)
+\end{description}
+
+\subsubsection{Assoziationen}
+\begin{description}
+\item[preconditions:] Liste von Vorbedingungen (\emph{PreConstraint}), die erfüllt sein müssen, damit die Aktion ausgeführt werden kann (vgl. \citep{OMG2009}, S.311)
+\item[postconditions:] Liste von Nachbedingungen (\emph{PostConstraint}), die erfüllt sein müssen, damit  die Aktion ausgeführt werden kann (vgl. \citep{OMG2009}, S.311)
+\end{description}
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+Die Assoziationen \emph{preconditions} (UML2) und \emph{postconditions} (UML2) wurden anders als im Standard benannt.
+
+Die Trennung der \emph{Execution} von der Action durch die Definition von Stereotypen ist im UML2-Standard nicht vorgesehen.
+
+Auf die Implementierung von \emph{Pins} wurde verzichtet, da keine Unterscheidung zwischen Objekttokens und Kontrolltokens stattfindet (siehe: \rref{amrep-token}).
+
+Aktionen sind nicht von \emph{ExecutableNode} abgeleitet, die im wesentlichen die Definition von \emph{ExceptionHandler} erlauben. Eine modellierbare Fehlerbehandlung ist nicht implementiert.
+
+
+\subsection{ControlNode}
+%=======================
+Ein ControlNode ist ein Kontrollknoten, der den Fluss von \emph{Tokens} in der Aktivität steuert (vgl. \citep{OMG2009}, S.356).
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.ActivityNode}
+\end{itemize}
+
+
+\subsection{FinalNode}
+%=====================
+Ein FinalNode ist ein Kontrollknoten, der den Tokenfluss stoppt. Es werden alle Tokens eingehender Kanten akzeptiert und gelöscht (vgl. \citep{OMG2009}, S.373).
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.ControlNode}
+\end{itemize}
+
+\subsubsection{Einschränkungen}
+\begin{itemize}
+\item \texttt{FinalNodes} haben keine ausgehenden Kanten.
+\end{itemize}
+
+
+
+\section{Konkrete Klassen des Metamodells}\label{amrep-meta-konkret}
+% XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+Die konkreten Metamodellklassen sind die eigentlichen Bausteine der Aktivitätsmodelle und werden für die Erstellung von Aktivitätsmodellen direkt instantiiert.
+
+
+\subsection{Package}
+%===================
+Ein Package ist ein obligatorisches Modellelement, das zur Gruppierung von Aktivitäten und zum Laden von \emph{Executions} über Profile (siehe: \rref{amrep-executions}) verwendet wird.
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.Element}
+\end{itemize}
+
+\subsubsection{Assoziationen}
+\begin{description}
+\item[activities:] Liste der im Package definierten Aktivitätsmodelle.
+\item[profiles:] Liste der dem Package hinzugefügten Profile.
+\end{description}
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+Entgegen dem UML2-Standard werden Profile nicht über \emph{ProfileApplication} referenziert (vgl. \citep{OMG2009}, S.670), sondern direkt hinzugefügt.
+
+Die Assoziation \emph{activities} ist nicht im UML2-Standard definiert. In der \texttt{activites.metamodel} Implementierung ist diese Assoziation ein komfortabler Zugriff auf die im Package definierten Aktivitäten.
+
+% TODO: reasons?
+Nicht implementierte Assoziationen:
+\begin{description}
+\item[ownedType:] \emph{Type} wird nicht unterstützt.
+\item[nestedPackage:] Verschachtelte Packages können über die \emph{Node}-API abgefragt werden.
+\item[nestingPackage:] Das Elternelement eines Packages kann über die \emph{Node}-API abgefragt werden.
+\item[packageMerge:] Das Referenzieren und Einbinden externer Packages wird nicht unterstützt.
+\item[packagedElement:] Die im Package definierten Elemente werden entweder über die \emph{Node}-API oder über die Assoziation \emph{activities} abgefragt.
+\end{description}
+
+Nicht implementierte Ableitungen:
+\begin{description}
+\item[PackageableElement:] Jedes Element im Metamodell kann in einem Package definiert werden, solange es die Modelleinschränkungen erlauben (z.B. können Aktionen nicht außerhalb Aktivitäten definiert werden). Auf eine Implementierung von \emph{PackageableElement} wurde deshalb verzichtet.
+\end{description}
+
+
+\subsection{Activity}
+%====================
+Aktivitäten sind Spezifikationen parametrisierten, ausführbaren Verhaltens als sequentiell und nebenläufig koordinierte untergeordnete Einheiten wie verschachtelten Aktivitäten und letztendlich individuellen Aktionen, die durch Kanten verbunden sind. Aktivitäten werden in Aktivitätsdiagrammen dargestellt. (vgl. \citep{OMG2009}, S.315 und \citep{RumbaughJacobsonBooch2005}, S.149)
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.Behavior}
+\end{itemize}
+
+\subsubsection{Assoziationen}
+\begin{description}
+\item[package:] Das \emph{Package}, in dem die Aktivität definiert ist.
+\item[nodes:] Liste der Knoten, die in der Aktivität definiert sind.
+\item[edges:] Liste der Kanten, die in der Aktivität definiert sind.
+\item[actions:] Liste der Aktionen, die in der Aktivität definiert sind.
+\end{description}
+
+\subsubsection{Einschränkungen}
+\begin{itemize}
+\item Eine Aktivität muss ein \emph{Package} als Elternelement haben.
+\end{itemize}
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+Es werden keine verschachtelte Aktivitäten unterstützt - jedoch können die Implementierungen der Aktionen - die \emph{Executions} - andere Aktivitäten starten.
+
+Nicht in UML2 definierte Assoziationen:
+\begin{description}
+\item[actions:] Komfortabler Zugriff auf die in der Aktivität definierten Aktionen
+\end{description}
+
+Anders benannte Assoziationen sind \emph{node} und \emph{edge}.
+
+Nicht implementierte Assoziationen:
+\begin{description}
+\item[isReadOnly:] Wenn \texttt{isReadOnly == True}, darf die Aktivitäten keine Änderungen an Variablen oder Objekten ausserhalb der Aktivität vornehmen (Siehe (vgl. \citep{OMG2009}, S.317)). Aktivitäten in der \texttt{activites.metamodel} Implementierung dürfen immer Objekte und Variablen, zu denen sie Zugriff haben, ändern.
+\item[isSingleExecution:]  Wenn \texttt{isSingleExecution == True}, werden alle Aufrufe der Aktivität von der selben Instanz abgehandelt (vgl. \citep{OMG2009}, S.317). In der AMREP-Implementierung kann eine aktive Runtime-Engine-Instanz nicht mehr gestartet werden. Es kann aber eine neue Runtime-Engine-Instanz mit dem selben Modell instantiiert werden.
+\item[variable:] Top-Level-Variablen für eine Aktivität (vgl. \citep{OMG2009}, S.317) werden nicht unterstützt. Daten, mit denen die Aktivität operieren soll, werden der \texttt{start}-Methode der Runtime Engine übergeben.
+\end{description}
+Die Assoziationen \emph{group}, \emph{partition} und \emph{structuredNode} werden aufgrund der fehlenden Metamodellelemente \emph{ActivityGroup}, \emph{Partition} und \emph{StructuredActivityNode} nicht unterstützt.
+
+
+\subsection{OpaqueAction}
+%========================
+\label{meta-opaque}
+OpaqueAction ist eine Aktion mit Implementierungs-spezifischer Semantik (vgl. \citep{OMG2009}, S.262).
+
+In der \texttt{activites.metamodel} Implementierung werden ausschließlich \emph{OpaqueActions} verwendet um Aktionen in Aktivitäten zu modellieren. Die eigentliche Ausführungslogik wird von \emph{Executions} implementiert. Dieser Mechanismus ist in Kapitel \rref{amrep-executions} im Detail erklärt.
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.Action}
+\end{itemize}
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+Die \texttt{activites.metamodel} Implementierung verfolgt mit der Entkoppelung der Ausführungslogik von den Aktionen durch Executions mithilfe von Stereotypen eine gänzlich andere Strategie, als es der UML2-Standard für \emph{OpaqueAction} vorsieht. \emph{OpaqueAction} aus UML2 entspricht funktional aber dennoch der Implementierung in \texttt{activites.metamodel}, da die Semantik der Aktionsausführung implementierungsspezifisch gestaltet ist. Nicht zuletzt rechtfertigt sich dieses Metaelement, da in UML-Editoren keine abstrakten Aktionen zur Modellierung verwendet werden können.
+% TODO: diese aussage widerspricht der implementierung von ActivityEdge
+
+Nicht implementierte Attribute:
+\begin{description}
+\item[body:] Die Anweisungen in der Implementierungssprache als String. \emph{Body} ist auf aufgrund anderer Semantik nicht notwendig.
+\item[language:] Der Name der Implementierungssprache als String. \emph{Language} ist aufgrund anderer Semantik nicht notwendig.
+\end{description}
+
+Nicht implementierte Assoziationen:
+\begin{description}
+\item[inputValue:] Eingabedaten für die Aktion. Diese werden in der \texttt{activites.metamodel} Implementierung als Daten-Payload von Tokens den \emph{Executions} übergeben.
+\item[outputValue:] Ausgabedaten von der Aktion. Diese werden in der \texttt{activites.metamodel} Implementierung als Daten-Payload neu erzeugter Tokens übergeben.
+\end{description}
+
+
+\subsection{ActivityEdge}
+%========================
+Eine \emph{ActivityEdge} ist eine Klasse für gerichtete Verbindungen zwischen zwei Knoten (vgl. \citep{OMG2009}, S.325).
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.Element}
+\end{itemize}
+
+\subsubsection{Attribute}
+\begin{description}
+\item[guard:] Boolescher Ausdruck, definiert als Python-Expression, der zur Laufzeit evaluiert wird. Evaluiert \texttt{guard} nach \texttt{True}, kann ein Token für die Kante produziert werden und die Kante somit traversiert werden. Ist die spezielle \texttt{guard} Bedingung \texttt{else} definiert, wird für diese Kante ein Token produziert, wenn dies für keine andere ausgehende Kante eines Knoten möglich war. \texttt{Guard} hat Zugriff auf den Daten-Payload des Tokens.
+\end{description}
+
+\subsubsection{Assoziationen}
+\begin{description}
+\item[source:] Der Knoten, von der die Kante ausgeht.
+\item[target:] Der Knoten, zu der die Kante führt.
+\end{description}
+
+\subsubsection{Einschränkungen}
+\begin{itemize}
+\item Eine Kante muss \texttt{source} und \texttt{target} gesetzt haben.
+\item \texttt{Source} und \texttt{target} müssen zur selben Aktivität gehören.
+\item Einer Kante muss eine Aktivität als Elternelement zugeordnet sein.
+\item Eine Kante muss einem Knoten als \texttt{source} zugeordnet sein.
+\item Eine Kante muss einem Knoten als \texttt{target} zugeordnet sein.
+\end{itemize}
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+In der \texttt{activites.metamodel} Implementierung gibt es keine Unterscheidung zwischen \emph{ControlFlow} und \emph{ObjectFlow}, da die Unterscheidung zwischen \emph{ControlToken} und \emph{ObjectToken} ebenfalls nicht getroffen wird. Diese Entscheidung ist unter Kapitel \rref{amrep-token} näher erläutert.
+
+Nicht implementierte Ableitungen:
+\begin{description}
+\item[RedefinableElement:] Eine Vererbungshierarchie von Kanten wird nicht unterstützt.
+\end{description}
+
+% TODO: reasons?
+Nicht implementierte Assoziationen:
+\begin{description}
+\item[weight:] Modellierbare Kantengewichte, die minimale Anzahl an Tokens, die über eine Kante fließen müssen, werden nicht unterstützt (vgl. \citep{OMG2009}, S.326). Das Kantengewicht in der \texttt{activites.metamodel} Implementierung ist mit \emph{eins} festgesetzt.
+\end{description}
+Die Assoziationen \emph{inGroup}, \emph{inPartition}, \emph{inStructuredNode}, \emph{interrupts} und \emph{redefinedEdge} werden aufgrund der fehlenden Metamodellelemente \emph{ActivityGroup}, \emph{Partition}, \emph{StructuredActivityNode}, \emph{InterruptibleActivityRegion} und \emph{RedefinableElement} nicht unterstützt.
+
+
+\subsection{InitialNode}
+%=======================
+\label{meta-initial}
+Ein InitialNode ist ein Kontrollknoten bei dem der Ablauf beginnt, wenn die Aktivität gestartet wird (vgl. \citep{OMG2009}, S.378).
+
+Es können mehrere Knoten vom Typ \emph{InitialNode} in einer Aktivität existieren. Bei Start der Aktivität wird für jeden dieser Knoten ein Token, mit dem der Daten-Payload der \texttt{start}-Methode der Runtime übergeben wurde, erzeugt.
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.ControlNode}
+\end{itemize}
+
+\subsubsection{Einschränkungen}
+\begin{itemize}
+\item Eine \emph{InitialNode} kann keine eingehenden Kanten haben.
+\end{itemize}
+
+
+\subsection{ActivityFinalNode}
+%=============================
+\label{meta-activityfinal}
+Erreicht ein Token einen Knoten vom Typ \emph{ActivityFinalNode}, werden alle Tokens, die in der Aktivität zu diesem Zeitpunkt vorhanden sind, gelöscht und die Aktivität somit gestoppt  (vgl. \citep{OMG2009}, S.330).
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.FinalNode}
+\end{itemize}
+
+
+\subsection{FlowFinalNode}
+%=========================
+\label{meta-flowfinal}
+Ein FlowFinalNode ist ein Kontrollknoten, der den Tokenfluss auf den eingehenden Kanten stoppt (vgl. \citep{OMG2009}, S.375). Die Tokens auf den eingehenden Kanten werden gelöscht und es gibt keine weitere Auswirkung auf die Ausführung der Aktivität (vgl. \citep{RumbaughJacobsonBooch2005}, S.364).
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.FinalNode}
+\end{itemize}
+
+
+\subsection{DecisionNode}
+%========================
+\label{meta-decision}
+Ein DecisionNode ist ein Kontrollknoten, der aufgrund von Kanten-Bedingungen den Tokenfluss auf eine von mehreren ausgehenden Kanten weiterleitet (vgl. \citep{OMG2009}, S.360).
+
+Die Bedingungen, die der Wahl der möglichen ausgehenden Kanten zugrunde liegen, werden auf den Kanten selbst als \emph{Guard}-Bedingungen modelliert und zur Laufzeit evaluiert. Ein Token kann aber nur für eine ausgehende Kante produziert werden. Dies entspricht einer \texttt{XOR}-Semantik.
+
+Ein \emph{token-competition} bzw. \texttt{XOR}-Verhalten wie unter Kapitel \rref{token-kanten} beschrieben, muss in der AMREP-Implementierung mit einem Knoten vom Typ \emph{DecisionNode} modelliert werden.
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.ControlNode}
+\end{itemize}
+
+\subsubsection{Einschränkungen}
+\begin{itemize}
+\item Ein Knoten vom Typ \emph{DecisionNode} hat eine eingehende Kante und mindestens eine ausgehende Kante.
+\end{itemize}
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+In der AMREP-Implementierung haben \emph{Guard}-Bedingungen der Kanten nur Zugriff auf den Daten-Payload des Tokens.
+% TODO: zugriff auf CONTEXT der aktivität erlauben?
+Die notwendigen Variablen müssen von der vorhergehenden Aktion bzw. \emph{execution} zur Verfügung gestellt werden oder beim Start der Runtime übergeben werden. Deshalb sind folgende Assoziationen aus der UML2-Spezifikation nicht implementiert, die beide dazu dienen, zusätzliche Informationen zur Evaluierung der \emph{guard}-Bedingungen zur Verfügung zu stellen (vgl. \citep{OMG2009}, S.361):
+\begin{description}
+\item[decisionInput:] Referenziert ein Behavior, dem ein Token übergeben wird, um Informationen zum Evaluieren der \emph{Guard}-Bedingungen zur Verfügung zu stellen ohne Seiteneffekte zu verursachen, also ohne Objekte zu ändern.
+\item[decisionInputFlow:] Eine zusätzliche eingehende Kante, die einen Wert zur Evaluierung der \emph{Guard}-Bedingungen zur Verfügung stellt.
+\end{description}
+
+
+\subsection{ForkNode}\label{meta-fork}
+%====================
+Ein ForkNode ist ein Kontrollknoten, der einen eingehenden Token auf mehrere ausgehende Kanten kopiert und somit nebenläufige Tokenflüsse erstellt (vgl. \citep{OMG2009}, S.376).
+
+Die Kopien des Daten-Payloads der Tokens sind hierbei nicht Kopien mit unterschiedlichen Identitäten (\emph{deepcopy}), sondern die Tokens halten eine Referenz auf den Daten-Payload (vgl. \citep{Crane2009}, S.24).
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.ControlNode}
+\end{itemize}
+
+\subsubsection{Einschränkungen}
+\begin{itemize}
+\item Ein Knoten vom Typ \emph{ForkNode} hat eine eingehende Kante und mindestens eine ausgehende Kante.
+\end{itemize}
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+Nach der UML2-Spezifikation werden die Kopien der Tokens in einer \emph{FIFO-Queue} gehalten, wenn die Kanten bzw. die Zielknoten keine Token aufnehmen können (vgl. \citep{OMG2009}, S.376). Da das \emph{Traverse-To-Completion}-Prinzip nicht implementiert ist, sondern Tokens auf Kanten referenziert werden, stellt sich dieses Problem nicht (siehe Kapitel \rref{token-kanten}).
+
+
+\subsection{JoinNode}
+%====================
+\label{meta-join}
+Ein JoinNode ein Kontrollknoten, der mehrere nebenläufige Flüsse synchronisiert und somit die Anzahl nebenläufiger Tokens reduziert (vgl. \citep{OMG2009}, S.381 und \citep{RumbaughJacobsonBooch2005}, S.429).
+
+Aufgrund des Synchronisationsverhaltens müssen an allen eingehenden Kanten Token vorhanden sein.
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.ControlNode}
+\end{itemize}
+
+\subsubsection{Einschränkungen}
+\begin{itemize}
+\item Ein Knoten vom Typ \emph{JoinNode} hat eine ausgehende Kante und mindestens eine eingehende Kante.
+\end{itemize}
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+
+Nicht implementierte Attribute:
+\begin{description}
+\item[isCombineDuplicate:] Boolescher Wert, der, wenn er den Wert \texttt{True} einnimmt, Objekte mit der selben Identität aus dem Daten-Payload der Tokens zu einem Objekt vereinigt. Dieses Verhalten lässt sich in der \texttt{activites.metamodel} Implementierung nicht steuern. Es wird immer versucht, Objektidentitäten zusammenzufassen (Siehe auch Kapitel \rref{amrep-token}).
+\end{description}
+
+Nicht implementierte Assoziationen:
+\begin{description}
+\item[joinSpec:] Definiert die boolesche Bedingungslogik, die für die Erzeugung von Tokens angewandt wird. Der Standardwert ist: \texttt{and} (vgl. \citep{OMG2009}, S.382). Diese Bedingungslogik kann in der \texttt{activites.metamodel} Implementierung nicht gesteuert werden. Es müssen immer an allen eingehenden Kanten Tokens vorhanden sein. Das entspricht einer expliziten Und-Verknüpfung (vgl. \citep{WeilkiensOestereich2004}, S.90).
+\end{description}
+
+
+\subsection{MergeNode}
+%=====================
+\label{meta-merge}
+Ein MergeNode ist ein Kontrollknoten, der mehrere eingehende Flüsse zusammenbringt aber, nicht synchronisiert (vgl. \citep{OMG2009}, S.387).
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.ControlNode}
+\end{itemize}
+
+\subsubsection{Einschränkungen}
+\begin{itemize}
+\item Ein Knoten vom Typ \emph{MergeNode} hat eine ausgehende Kante und mindestens eine eingehende Kante.
+\end{itemize}
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+Die UML2-Spezifikation sieht vor, dass alle Tokens der eingehenden Kanten an der ausgehenden Kante angeboten werden und keine Synchronisation oder Zusammenführung der Tokens stattfindet (vgl. \citep{OMG2009}, S.387). Die \texttt{activites.metamodel} Implementierung führt alle gleichzeitig eingehenden Tokens zusammen und bietet nur ein Token an der ausgehenden Kante an. Es findet dabei aber keine Synchronisation statt (Und-Semantik), sondern es ist eine Oder-Semantik implementiert.
+
+
+\subsection{Constraint}\label{amrep-meta-constraint}
+%======================
+Ein Constraint ist eine als Python-Expression definierte Bedingung mit der Einschränkungen von Modellelementen modelliert werden können und die zur Laufzeit ausgewertet und überprüft werden. Für die Evaluierung des Constraints wird zur Laufzeit der gerade verfügbare Daten-Payload der Tokens oder die Eingabeparameter der Aktivität der Evaluierungsfunktion übergeben.
+
+Ein Modell wird als \emph{ill formed} angesehen und es wird ein \emph{ActivityRuntimeError} erzeugt, wenn die Bedingungen nicht erfüllt werden können (vgl. \citep{RumbaughJacobsonBooch2005}, S. 285).
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.Element}
+\end{itemize}
+
+\subsubsection{Attribute}
+\begin{description}
+\item[specification:] Python Expression, die zu Boolean \texttt{True} ausgewertet werden muss, damit der \emph{constraint} erfüllt wird.
+\end{description}
+
+\subsubsection{Assoziationen}
+\begin{description}
+\item[constrained\_element:] Das Elternelement, für das der \emph{constraint} definiert ist.
+\end{description}
+
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+Die Definition des Constraint im Attribut \texttt{specification} ist auf die Programmiersprache Python eingeschränkt (vgl. \citep{OMG2009}, S.58).
+
+Nicht implementierte Ableitungen:
+\begin{description}
+\item[PackageableElement:] Jedes Element im Metamodel kann in einem Package definiert werden, solange es die Model-Constraints erlauben (Bsp. können Aktionen nicht außerhalb von Aktivitäten definiert werden). Auf eine Implementierung von \emph{PackageableElement} wurde deshalb verzichtet.
+\end{description}
+
+Nicht implementierte Assoziationen:
+\begin{description}
+\item[context:] Der Namespace, der als Kontext für die Evaluierung des \emph{constraint} dient. In der \texttt{activites.metamodel} Implementierung wird der \emph{Constraint} im zur Zeitpunkt der Evaluierung verfügbaren Namespace ausgeführt. Es stehen somit neben dem Daten-Payload alle Variablen zur Verfügung, auf die die Python \texttt{eval}-Methode Zugriff hat.
+\end{description}
+
+
+\subsection{PreConstraint}
+%=========================
+Ein PreConstraint ist ein \emph{Constraint}, der beim Start der Aktivität oder Aktion evaluiert wird (vgl. \citep{RumbaughJacobsonBooch2005}, S. 531).
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.Constraint}
+\end{itemize}
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+Die UML2-Spezifikation sieht ein solches Modellelement nicht vor. Es ist in der AMREP-Implementierung definiert, um zwischen Pre- und Post-Bedingungen unterscheiden zu können.
+
+
+\subsection{PostConstraint}
+%==========================
+Ein PostConstraint ist ein \emph{constraint}, der bei Beendigung der Aktivität oder Aktion evaluiert wird (vgl. \citep{RumbaughJacobsonBooch2005}, S. 528).
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.Constraint}
+\end{itemize}
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+Die UML2-Spezifikation sieht ein solches Modellelement nicht vor.
+
+
+\subsection{Profile}
+%===================
+\label{meta-profile}
+Ein Profil definiert limitierte Erweiterungen zu einem Metamodell, um dieses einer spezifischen Plattform oder Domäne anzupassen (vgl. \citep{OMG2009}, S.663).
+
+In der \texttt{activites.metamodel} Implementierung werden Profile direkt einem \emph{Package} zugeordnet und nicht als separates Metamodell definiert.
+
+Die \texttt{activites.metamodel} Implementierung von Profilen hat den Zweck, Python Module zu importieren, damit Executions registriert werden, die die Ausführungslogik implementiert haben (siehe Kapitel \rref{amrep-executions}).
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.Element}
+\end{itemize}
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+Es werden keine anderen Profile als zum Laden von \emph{Executions} unterstützt.
+
+Stereotypen werden nicht als Metaklassen in Profilen definiert, da dies eine dynamische Erzeugung von Klassen notwendig gemacht hätte, um Instanzen der modellierten Metaklassen auf Instanzen von Metamodellelementen anzuwenden (vgl. \citep{OMG2009}, S.673). Dynamische Klassenerzeugung ist in Python möglich (vgl. \citep{Py26Type}), aber problematisch bezüglich der Wartbarkeit des Codes.
+
+Profile können in der \texttt{activites.metamodel} Implementierung selbst keine anderen Profile anwenden oder durch Stereotypen erweitert werden. Damit Profile zum Laden von \emph{Executions} von anderen Profilen unterschieden werden können, sollten diese mit einem Stereotyp versehen werden, der sie explizit als solche ausweist. Eine solcher Mechanismus ist aufgrund der oben beschriebenen Problematik noch nicht integriert.
+
+Die Änderungen an der Profilsemantik beeinträchtigen die Zielstellung der Diplomarbeit nicht, sollten aber in einer zukünftigen Erweiterung der \texttt{activites.metamodel} Implementierung gelöst werden.
+
+Aufgrund der oben ausgeführten Umsetzung der Profil-Metaklassen werden folgende Assoziationen nicht unterstützt (vgl. \citep{OMG2009}, S.663):
+\begin{description}
+\item[metaclassReference:] Metaklasse, die durch Stereotype erweitert wird.
+\item[metamodelReference:] \emph{Package}, das die zu erweiternden Metaklassen enthält.
+\item[ownedStereotype:] Stereotypen, die im Profil definiert sind.
+\end{description}
+
+Da Profile selbst keine Profile anwenden und nicht durch Stereotypen erweitert werden können, ist die Ableitung \emph{Package} nicht implementiert.
+
+
+\subsection{Stereotype}
+%======================
+Ein Stereotyp definiert, wie ein Metamodellelement erweitert wird und erlaubt die Verwendung plattform- oder domänenspezifischer Terminologie (vgl. \citep{OMG2009}, S.672).
+In der \texttt{activites.metamodel} Implementierung wird ein Stereotyp direkt auf einem \emph{Action}-Modellelement definiert. Der Name des Stereotyps muss dem Namen einer \emph{execution} entsprechen, die beim Aufruf der Action geladen und ausgeführt werden kann. Durch diesen Mechanismus werden die Implementierungen der Aktionen vom Metamodell getrennt (siehe Kapitel \rref{amrep-executions}).
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.Element}
+\end{itemize}
+
+\subsubsection{Assoziationen}
+\begin{description}
+\item[taggedvalues:] Liste der \emph{TaggedValues}, die in diesem Stereotyp definiert sind.
+\end{description}
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+Stereotypen können anders als in der UML2-Spezifikation nicht in Profilen definiert und am zu erweiternden Modellelement instantiiert werden. Sie werden direkt am zu erweiternden Modellelement (in der \texttt{activites.metamodel} Implementierung immer Aktionen) definiert, wobei eine mehrmalige Definition an unterschiedlichen Modellelementen notwendig sein kann. Der Grund für diese Umsetzung des Metaklassen Erweiterungsmechanismus ist unter \ref{meta-profile} beschrieben.
+
+Nicht implementierte Assoziation:
+\begin{description}
+\item[icon:] Ein Bild, das die graphische Darstellung des erweiterten Metamodellelements im Diagramm ändert. Die Assoziation \emph{icon} Wird nicht unterstützt.
+\end{description}
+
+
+\subsection{TaggedValue}
+%=======================
+\emph{TaggedValue} wird in der \texttt{activites.metamodel} Implementierung verwendet um Modellelemente über Stereotypen um zusätzliche Informationen die in \emph{Executions} verwendet werden zu erweitern. TaggedValues bestehen aus einem Namen für den Parameter, den sie darstellen (\emph{Tag}) und dem Wert, den sie speichern (\emph{Value}) (vgl. \citep{RumbaughJacobsonBooch2005}, S.636).
+
+Mit Hilfe von \emph{TaggedValues} können zusätzliche statische Informationen modelliert werden, die den \emph{Executions} zur Laufzeit übergeben werden und von diesen verwendet werden können.
+
+\subsubsection{Generalisierung}
+\begin{itemize}
+\item \texttt{activities.metamodel.elements.Element}
+\end{itemize}
+
+\subsubsection{Attribute}
+\begin{description}
+\item[value:] Der Wert des TaggedValues.
+\end{description}
+
+
+\subsubsection{Unterschiede zur UML2-Spezifikation}
+In der UML2-Spezifikation werden \emph{TaggedValues} durch die von \emph{Class} vererbte Assoziation \emph{ownedAttribute} realisiert. Es steht keine explizite \emph{TaggedValue} Metaklasse zur Verfügung.
+
+
+
+% END OF DOCUMENT

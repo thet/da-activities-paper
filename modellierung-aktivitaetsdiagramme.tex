@@ -1,0 +1,183 @@
+\section{UML Aktivitätsdiagramme}\label{mod-activity}
+Mit Aktivitätsdiagrammen kann das dynamische Verhalten von Anwendungsfällen modelliert werden. Aktivitäten beschreiben Aktionen, die in nebenläufigen Handlungssträngen in einem gerichteten Graph organisiert sind, ihre Synchronisation sowie gegebenenfalls beteiligte Objekte. Neben der Modellierung von Abläufen in Softwaresystemen eignen sich  Aktivitätsdiagramme insbesondere auch für die Beschreibung und Analyse von realen Geschäftsprozessen (vgl. \citep{BernroiderStix2006}, S.79).
+
+In UML1 waren Aktivitätsdiagramme Spezialfälle von Zustandsdiagrammen und dadurch in der Ausdrucksstärke zur Modellierung von Abläufen beschränkt. In UML2 wurden die Metamodelle von Zustandsdiagrammen und Aktivitätsdiagrammen getrennt, wobei Aktionen weiterhin als gemeinsame Basis verwendet werden. Aktivitätsdiagramme in UML2 basieren auf den Konzepten von Petri-Netzen und sind durch moderne Geschäftsprozess-Modellierungssprachen beeinflusst (vgl. \citep{RumbaughJacobsonBooch2005}, S.157).
+
+
+\subsection{Activities}
+Eine Aktivität ist ein Verhalten, dass sich aus mehreren Aktionen zusammensetzt. Eine Aktion ist eine Tätigkeit, die im Diagramm nicht weiter zerlegt wird (vgl. \citep{PilonePitman2005}, S.104).
+
+Wenn eine Aktivität das Verhalten eines \emph{classifiers}
+\footnote{Ein \emph{classifier} ist eine Abstrakte Basisklasse im Metamodell von UML, von der viele andere Klassen (über eine spezialisierte Classifier-Hierarchie) abgeleitet werden. \emph{Classifier} beschreiben strukturelle und verhaltensmäßige Eigenschaften wie Namensraum, Typ, Operationen und Attribute. Die Metaklasse \emph{class}, die in Klassendiagrammen zum Einsatz kommt, ist ein Beispiel für einen Classifier (vgl. \citep{HitzEtAl2005}, S.390 und \citep{RumbaughJacobsonBooch2005}, S.222).}
+beschreibt, wird der Classifier als der \emph{Kontext} der Aktivität bezeichnet. Die Aktivität hat dann Zugriff auf alle Attribute und Methoden des Classifiers. Wenn Business-Prozesse modelliert werden, werden diese Daten als prozessrelevante Daten bezeichnet (vgl. \citep{PilonePitman2005}, S.105).
+
+Es gibt drei Möglichkeiten, wie Aktivitäten auftreten können (vgl. \citep{HitzEtAl2005}, S.188):
+\begin{description}
+\item[Im Kontext eines Classifiers, als Methode des Classifiers:] Die Aktivität wird dann ausgeführt, wenn die entsprechende Methode des Classifiers aufgerufen wird.
+\item[Im Kontext eines Classifiers, diesem direkt zugeordnet:] Die Ausführung der Aktivität beginnt mit der Instantiierung des Classifiers. Am Ende der Aktivität wird das Classifier-Objekt gelöscht. Umgekehrt, wenn das Classifier-Objekt vor dem Ende der Aktivität gelöscht wird, wird die Aktivität unterbrochen.
+\item[Ohne Zuordnung zu einem Classifier:] Die Aktivität kann auch ``autonom'' definiert werden, ohne einem Classifier zugeordnet zu sein. In diesem Fall muss die vordefinierte Aktion \emph{CallBehaviorAction} verwendet werden, um die Aktivität zu starten. % Dieses Konzept steht außerhalb des objektorientierten Paradigmas, in dem stets eine Einheit zwischen Struktur und Verhalten existiert.
+\end{description}
+
+% Eine Aktivität wird als abgerundetes Rechteck dargestellt. Der Name der Aktivität wird oben Links angegeben.
+
+% Unter dem Namen können die involvierten Parameter angegeben werden (vgl. \citep{PilonePitman2005}, S.105). Alternativ dazu können die Parameter als Objektknoten notiert werden. Eingabeparameter werden hierbei überlappend am linken oder oberen Rand der Aktivität notiert und Ausgabeparameter überlappend am rechten oder unteren Rand der Aktivität (vgl. \citep{HitzEtAl2005}, S.189).
+
+Zu einer Aktivität können die involvierten Eingabeparameter angegeben werden (vgl. \citep{PilonePitman2005}, S.105) sowie Vor- und Nachbedingungen definiert werden, die jeweils vor Ausführung oder bei Beendigung gelten müssen. Diese Bedingungen werden mit den Schlüsselwörtern \emph{precondition} und \emph{postcondition} notiert, denen jeweils die Definition der Bedingung als Pseudocode, \emph{Object Constraint Language} (OCL) Ausdruck
+\footnote{Die \emph{Object Constraint Language} (OCL) ist eine Spezifikation der OMG, die in Verbindung mit UML eine Möglichkeit bietet, in Modellen Bedingungen und Logiken auszudrücken. OCL wurde bereits mit UML 1.4 eingeführt. Mit der UML 2.0 Spezifikation wurde die OCL 2.0 Spezifikation auf Basis von MOF bzw. UML formal definiert. Bestandteile von OCL sind Typen (Boolean, Integer, Real, String und jeder Classifier des betroffenen UML Modells), Operatoren mit Rangfolge, If-Else-Bedingungen, Variablendefinitionen usw. OCL ist aber eine \emph{Query-Only} Sprache und kann keine Kontrollflüsse definieren, keine Programmlogik ausdrücken und das Modell nicht verändern (vgl. \citep{PilonePitman2005}, S.192-200).}
+oder beschreibender Bedingungstext folgt. Die UML Spezifikation schreibt hier keine Form für die Notation der Bedingung vor, da dies als Implementierungsdetail angesehen wird (vgl. \citep{PilonePitman2005}, S.106-107). Abbildung \ref{fig:activities-aktivitaet} stellt eine Aktivität mit zwei Eingangsparametern, einem Ausgangsparameter, einer Precondition und einer Postcondition dar.
+
+Weiters bilden Aktivitäten einen Namensraum, der die Sichtbarkeit der Elemente der Aktivität beschränkt (vgl. \citep{HitzEtAl2005}, S.189).
+
+\img{modeling-diagrams/activities-aktivitaet}{fig:activities-aktivitaet}{Aktivität mit Parametern und Bedingungen}{Aktivität mit Parametern und Bedingungen}
+
+\subsection{Actions}
+Aktionen sind Aktivitätsknoten und die elementaren Bausteine einer Aktivität. Sie repräsentieren die eigentlichen Tätigkeiten. Eine Aktion kann als eine der vordefinierten UML Aktionen modelliert werden (siehe weiter unten) oder selbst in Pseudocode bzw. in der Implementierungssprache definiert werden.
+
+% graphik
+\img{modeling-diagrams/activities-aktion}{fig:activities-aktion}{Aktion mit Vor- und Nachbedingungen}{Aktion mit Vor- und Nachbedingungen}
+
+Wie auch für Aktivitäten können für Aktionen Vor- und Nachbedingungen definiert werden. Diese werden durch die Schlüsselwörter \emph{localPrecondition} und \emph{localPostcondition} angegeben. Die Definition der Bedingung erfolgt gleich wie bei Aktivitäten (vgl. \citep{PilonePitman2005}, S.105-107). Abbildung \ref{fig:activities-aktion} zeigt eine solche Aktion mit definierten Vor- und Nachbedingungen.
+
+Aktionen können durch den lesenden oder schreibenden Zugriff auf Objekte bzw. durch den Aufruf anderen Verhaltens den Zustand des Systems verändern. Die Aktion steht immer im Kontext einer Verhaltensbeschreibung in Form einer Aktivität oder einer Transition in einem Zustandsdiagramm und ist nur durch diese verfügbar. Die Verhaltensbeschreibung legt fest, wann eine Aktion mit welchen Parametern ausgeführt wird.
+
+Aktionen sind atomar, können aber unterbrochen werden wobei der Ursprungszustand des Systems wie vor Beginn der Aktion wieder hergestellt wird.
+
+Aktionen können sowohl Eingabewerte entgegennehmen und verarbeiten wie auch Ausgabewerte zur Verfügung stellen. Diese Werte werden als Kopien verarbeitet wobei Kopien von Objektreferenzen wiederum auf das Originalobjekt zeigen.
+
+Die Ausgabewerte können entsprechend zweier Strategien zur Verfügung gestellt werden: gleichzeitig oder, gemäß ihrer Verfügbarkeit, einzeln. Welche dieser Strategien gewählt wird ist eine Frage der Implementierung. Zusätzlich wird in jedem Fall nach Beendigung der Aktion an jeder Kontrollflusskante ein Kontrolltoken angeboten.
+
+In UML 2.0 existieren 44 vordefinierte, sprachunabhängige Aktionen. Diese können aufgrund ihrer Granularität auf eine beliebige Zielsprache abgebildet werden. Mithilfe der \emph{OpaqueAction} kann eine Aktion auch direkt in der Implementierungssprache definiert werden.
+
+Für die meisten vordefinierten Aktionen gibt es keine eigenen Notationsregeln. Es können beliebige Namen in die Aktionsrechtecke geschrieben werden. Damit eine Zuordnung vom anwendungsspezifischen Aktionsnamen auf die jeweilige konkrete vordefinierte Aktion erfolgen kann, wird empfohlen, eigene Konventionen zu erstellen und diese konsequent zu befolgen (bsp. \emph{Dokument anlegen} für \emph{CreateObjectAction}).
+
+Die vordefinierten Aktionen werden in folgende Kategorien eingeteilt:
+\begin{description}
+\item[Kommunikationsbezogene Aktionen:] Übermitteln von Objekten und Signalen, Aufrufen von Verhalten und Operationen, Empfang von Ereignissen.
+\item[Objektbezogene Aktionen:] Erzeugen und Löschen von Objekten, Aufruf von Objektverhalten, Reflexionsfunktionen.
+\item[Strukturmerkmals- und variablenbezogene Aktionen:] Setzen und Löschen einzelner oder aller Werte von strukturellen Merkmalen und Variablen.
+\item[Linkbezogene Aktionen:] Erzeugen und Löschen von Links und Navigation auf Basis von Links.
+\end{description}
+
+Für die Beschreibung der einzelnen Aktionen siehe Hitze et al. (vgl. \citep{HitzEtAl2005}, S.222 ff.)
+
+
+\subsection{Object Nodes}
+Ein Objektknoten stellt die Existenz eines Objektes dar, das von einer Aktion produziert wird und von einer anderen konsumiert wird (vgl. \citep{RumbaughJacobsonBooch2005}, S.487). Sie können auch Signale repräsentieren (vgl. \citep{PilonePitman2005}, S.113).
+
+Für Objektknoten kann angegeben werden, in welchem Status sich das Objekt im Objektknoten befinden muss, von welchem Typ die Objekte sein müssen sowie die maximale Anzahl an Tokens, die in einem Objektknoten erlaubt sind (vgl. \citep{OMG2009}, S.393).
+
+Objektknoten sind abstrakte Klassen (vgl. \citep{OMG2009}, S.393), die sich letztendlich in folgenden Pins spezialisieren:
+\begin{description}
+\item[Input Pin:] Eingabepin für Aktionen.
+\item[Output Pin:] Ausgabepin für Aktionen.
+\item[Value Pin:] Werteingabepin für Aktionen. Für Wert-Pins kann ein Wert definiert werden.
+\end{description}
+
+Die Abbildung \ref{fig:activities-pins} zeigt verschiedene Arten von Pins. "Aktion B" hat auf der linken Seite zwei Eingabepins, wobei der obere Pin ein "Value Pin" mit dem Wert "8" ist. Auf der linken Seite werden zwei Ausgabepins gezeigt, wobei bei dem unteren Pin eine alternative Darstellung gewählt ist. Er ist mit dem Pin der nachfolgenden Aktion zusammengefasst und wird als Objektknoten dargestellt.
+
+\img{modeling-diagrams/activities-pins}{fig:activities-pins}{Aktionen mit verschiedenen Arten von Pins}{Aktion mit verschiedenen Arten von Pins}
+
+
+\subsection{Control Nodes}
+Kontrollknoten koordinieren den Kontrolltoken- und Objekttokenfluss zwischen anderen Knoten. Es können folgende Arten von Kontrollknoten unterschieden werden (vgl. \citep{RumbaughJacobsonBooch2005}, S.292-296):
+
+\begin{description}
+\item[Decision:] Ein Entscheidungsknoten hat eine eingehende und mehrere ausgehende Kanten und steuert den Fluss aufgrund von Kantenbedingungen, die auf den ausgehenden Kanten notiert werden. Eintreffende Tokens werden auf maximal eine ausgehende Kante weitergeleitet, auch wenn die Kantenbedingungen für mehrere ausgehende Kanten zutreffen. Auf einer Kante kann die spezielle Kantenbedingung "else" notiert werden, deren Pfad traversiert wird, wenn keine der anderen Bedingungen erfüllt werden konnte (siehe Abbildung \ref{fig:activities-decision}).
+% grapnic
+\imgH{modeling-diagrams/activities-decision}{fig:activities-decision}{Decision Node mit Bedingungen}{Decision Node mit Bedingungen}
+
+\item[Merge:] Ein Zusammenführungsknoten führt ein oder mehrere alternative Pfade zusammen. Wenn auf einer der eingehenden Kanten Tokens bereitstellt sind, werden diese auf die ausgehende Kante weitergeleitet. Es findet also keine Synchronisation statt. Die Tokens werden aber auch nicht vereinigt, sondern einzeln weitergeleitet, wodurch sich die Anzahl nebenläufiger Tokens nicht reduziert (siehe Abbildung \ref{fig:activities-merge}).
+\imgH{modeling-diagrams/activities-merge}{fig:activities-merge}{Merge Node}{Merge Node}
+
+\item[Fork Node:] Dieser Knoten hat eine eingehende Kante und mehrere ausgehende Kanten. Wenn ein Token auf der eingehenden Kante bereitgestellt wird, wird dieser auf alle ausgehenden Kanten kopiert. Ein \emph{fork node} erhöht somit die Anzahl der nebenläufigen Tokens (siehe Abbildung \ref{fig:activities-fork}).
+\imgH{modeling-diagrams/activities-fork}{fig:activities-fork}{Fork Node}{Fork Node}
+
+\item[Join Node:] Ein Synchronisationsknoten hat mehrere eingehenden Kanten und eine ausgehende Kante. Stehen an allen eingehenden Kanten Tokens zur Verfügung, werden diese zusammengeführt und ein Token für die ausgehende Kante produziert. Somit reduziert dieser Knotentyp die Anzahl nebenläufiger Tokens (siehe Abbildung \ref{fig:activities-join}).
+\imgH{modeling-diagrams/activities-join}{fig:activities-join}{Join Node}{Join Node}
+
+\item[Initial Node:] Ein Startknoten hat keine eingehenden Kanten und mindestens eine ausgehende Kante. Ein Startknoten ist der standardmäßige Startpunkt für eine Aktivität. Wenn eine Aktivität gestartet wird, werden die \emph{initial nodes} aktiviert und produzieren für jede ausgehende Kante ein Token. Aktivitäten können aber auch anders gestartet werden, beispielsweise durch Bereitstellung von Tokens an Aktivitätseingangsparameter (vgl. \citep{WeilkiensOestereich2004}, S.93). Siehe Abbildung \ref{fig:activities-initial}.
+\imgH{modeling-diagrams/activities-initial}{fig:activities-initial}{Initial Node}{Initial Node}
+
+\item[Activity Final Node:] Ein Aktivitätsendknoten hat eine oder mehrere eingehende Kanten aber keine ausgehende Kante. Der Knoten wird aktiviert, sobald ein Token auf einer der eingehenden Kanten eintrifft (Oder-Semantik) und die gesamte Aktivität wird terminiert, unabhängig davon, wieviele aktive Tokens sich noch in der Aktivität befinden (vgl. \citep{WeilkiensOestereich2004}, S.93-94). Alle Rückgabewerte, die die Aktivität definiert hat, werden in einem Paket zusammengefasst und zurückgegeben (siehe Abbildung \ref{fig:activities-final}).
+\imgH{modeling-diagrams/activities-final}{fig:activities-final}{Final Node}{Final Node}
+
+\item[Flow Final Node:] Ein Ablaufendknoten hat eine oder mehrere eingehende aber keine ausgehenden Kanten. Alle Tokens, die diesen Knoten erreichen, werden konsumiert und zerstört. Die Aktivität wird dadurch nicht beendet (siehe Abbildung \ref{fig:activities-flowfinal}).
+\imgH{modeling-diagrams/activities-flowfinal}{fig:activities-flowfinal}{Flow Final Node}{Flow Final Node}
+
+\item[Conditional Node:] Ein \emph{conditional node} besitzt eine oder mehrere eingehende Kanten, eine oder mehrere ausgehende Kanten und zwei oder mehrere \emph{clauses} (Bedingungen). Für diesen Knoten gibt es keine graphische Notation. Die Bedingungen bestehen aus einem Test, der evaluiert wird, und einem Codeteil, der ausgeführt wird. Wird der Knoten aktiviert, indem alle eingehenden Kanten Tokens zur Verfügung stellen, und werden die Tests von einem oder mehreren \emph{clauses} erfüllt, wird eine dieser \emph{clauses} ausgeführt. Die Wahl ist nicht deterministisch. Der Rückgabewert wird für die Produktion eines Tokens verwendet (vgl. \citep{RumbaughJacobsonBooch2005}, S.275-276).
+
+\item[Loop Node:] Ein Schleifenknoten wird solange eine Bedingung erfüllt wird ausgeführt. Für diesen Knoten gibt es keine graphische Notation.
+\end{description}
+
+
+\subsection{Activity Edges}
+Kanten stellen Sequenz-Beziehungen zwischen zwei Knoten dar, die auch Daten beinhalten können. Eine Kante hat immer eine Quelle \emph{source} und ein Ziel \emph{target}. Der Zielknoten kann solange nicht ausgeführt werden, bis der Quellknoten die Ausführung beendet hat, ein Token bereitgestellt hat, dieses die Kante traversieren kann und alle anderen Bedingungen des Quellknotens ebenfalls erfüllt werden.
+Kanten können boolesche Bedingungen (\emph{guards}) zugewiesen werden, die erfüllt werden müssen, damit die Kante traversiert werden kann. Weiters kann ein Gewicht definiert werden, welches die minimale Anzahl an Tokens angibt, die über die Kante zum selben Zeitpunkt fließen müssen.
+
+Das abstrakte Konstrukt Aktivitätskante wird in zwei Ableitungen spezialisiert:
+\begin{description}
+\item[Control Flow:] Über eine Kontrollflusskante können Kontrolltokens fließen. Sie können nicht mit \emph{object nodes} verbunden werden.
+\item[Object Flow:] Über eine Objektflusskante können Objekttokens fließen. Sie müssen mit \emph{object nodes} verbunden werden.
+\end{description}
+
+
+%WeilkiensOestereich2004
+%RumbaughJacobsonBooch2005
+%PilonePitman2005
+%HitzEtAl2005
+
+
+\subsection{Tokens}
+Tokens sind Steuerungsmarker, die von Aktivitätsknoten erzeugt und verbraucht werden können. \citep{WeilkiensOestereich2004} unterscheiden zwischen Objekt- und Kontrolltokens, wobei Objekttokens zusätzlich zur Steuerungsmarkierung weitere Informationen in Form von \emph{classifiers} oder beliebigen anderen Daten beinhalten können. Das Vorhandensein von zusätzlichen Informationen wird durch Objektknoten dargestellt, also Ein- und Ausgangs-Pins an Aktionen bzw. Objektknoten zwischen Aktionen und Ein- und Ausgabeparametern an Aktivitäten (vgl. \citep{WeilkiensOestereich2004}, S.90).
+
+Tokens definieren den Zustand der Aktivität. Das Konzept der Tokens ist der Petri-Netz-Theorie entlehnt. In einem Aktivitätsdiagramm mit Nebenläufigkeit können mehrere Tokens gleichzeitig vorhanden sein (vgl. \citep{RumbaughJacobsonBooch2005}, S.654).
+
+Tokens werden von Objektknoten aufgenommen bzw. an Eingabeparameter-Pins der Aktionen bereitgestellt. Aktionen werden erst dann ausgeführt, wenn genügend Tokens an allen Eingabe-Pins zur Verfügung stehen. Für Pins kann hierbei eine Zustandsbedingung (\emph{guard condition}) definiert werden, die erfüllt sein muss damit das Token aufgenommen wird, andernfalls wird es zerstört. Die Zustandsbedingung wird als als boolescher Ausdruck in eckigen Klammern unter dem Namen des Parameter-Pins angegeben (vgl. \citep{HitzEtAl2005}, S.190 und \citep{PilonePitman2005}, S.111).
+
+% TODO: graphik
+
+Tokens werden über Aktivitätskanten zwischen Aktivitätsknoten weitergegeben. An diesen Kanten kann ein Gewicht definiert werden, dass die minimale Anzahl der vorhandenen Tokens definiert. Das Gewicht kann den speziellen Wert \emph{all} haben, durch den alle verfügbaren Tokens ohne minimale Einschränkung vom Aktivitätsknoten konsumiert werden (vgl. \citep{RumbaughJacobsonBooch2005}, S.680-681 und \citep{PilonePitman2005}, S.111).
+
+% TODO: graphik
+
+Tokens werden von Aktivitätsknoten vor deren Ausführung verbraucht. Nach Beendigung der Ausführung werden neue Tokens erzeugt und an den Ausgangspins bereitgestellt (vgl. \citep{RumbaughJacobsonBooch2005}, S.655).
+
+Für Tokens gelten zusammengefasst folgende Regeln:
+\begin{itemize}
+\item Eine Aktion startet erst, wenn an allen eingehenden Kanten genügend Tokens zur Verfügung stehen. Das bewirkt eine implizite Synchronisation und entspricht einer Und-Logik.
+\item Ist eine Aktion beendet, werden an allen ausgehenden Kanten Tokens bereitgestellt. Das bewirkt eine implizite Aufspaltung und entspricht einer Und-Logik.
+\item Ein Token kann von einer Aktion zur nächsten fließen, wenn an der vorherigen Aktion ein Token zur Verfügung steht, die folgende Aktion bereit ist das Token aufzunehmen und die Anzahl der Tokens mindestens dem Kantengewicht entspricht.
+\end{itemize}
+
+
+\subsection{Anwendung von Aktivitätsdiagrammen}
+Mit der UML Version 2 wurden Aktivitätsdiagramme stark überarbeitet, was vor allem ihren Einsatz zum Modellieren von Geschäftsprozessen erleichtert hat. Mit Aktivitätsdiagrammen kann beliebiges Ablaufverhalten modelliert werden. Die Einbettung in den UML Standard und Interoperabilität mit anderen Diagrammarten aus der UML machen Aktivitätsdiagramme zu einen mächtigen und flexiblen Werkzeug.
+
+Durch die Flexibilität und Vielseitigkeit von Aktivitätsdiagrammen ergeben sich auch deren Schwächen. Der Modellierungsvorgang kann relativ aufwändig sein, da oft eine Vielzahl an Elementen verwendet und konfiguriert werden muss, um bestimmte, vergleichsweise einfache Ziele zu erreichen. Die Ausdrucksstärke der visuellen Darstellung ist gegenüber spezialisierten Diagrammarten, wie beispielsweise die Business Process Modeling Notation, die im nächsten Kapitel vorgestellt wird, vergleichsweise geringer.
+
+
+\subsection{Beispiel für die Aktivität \emph{PatientInnenversorgung in einem Krankenhaus}}
+
+Abbildung \ref{fig:activities-usecase} zeigt den im Kapitel Kapitel \rref{intro-usecase} vorgestellten Usecase für eine PatientInnenversorgung in einem Krankenhaus. Es wurden keine Pins oder Eingabeparameter notiert, obwohl dies für eine solche Aktivität für den Zugriff auf den/die PatientIn oder die Krankenakte sinnvoll sein kann. Die Aktivität und alle in ihr enthaltenen Elemente haben Zugriff auf den/die PatientIn, wenn die Aktivität im Kontext einer Klasse mit entsprechenden Attributen für eine/n Patient/In aufgerufen wird. Wenn der/die PatientIn die Krankenakte besitzt, kann über den/die PatientIn auf diese zugegriffen werden. In dem Fall müssen keine Pins zwischen Datenaufnahme und Datenüberprüfung notiert werden. Bei der Verwendung von Pins müsste entweder die Aktion "Diagnose" ebenfalls einen eingehenden Objektfluss enthalten oder auf den Fork Knoten verzichtet werden, da alle ein- und ausgehenden Kanten eines Fork Knoten vom selben Typ sein müssen. Weitere Bedingungskriterien können in der \emph{UML Superstructure Specification} nachgelesen werden (vgl. \citep{OMG2009}, S.295ff.)
+
+
+\img{modeling-diagrams/activities-usecase}{fig:activities-usecase}{Beispielsaktivität \emph{PatientInnenversorgung in einem Krankenhaus}}{Beispielsaktivität \emph{PatientInnenversorgung in einem Krankenhaus}}
+
+% Weiters können Aktivitätsdiagramme aufgrund ihrer komplexen Tokenflusssemantik weit weniger mathematisch analysiert und berechnet werden als Petrinetze.
+
+
+
+%Zeitsignal
+%Signalempfänger
+%Signalsender
+%Bedingungen
+%    Vorbedingung
+%    Nachbedingung
+%Teilaktivität/  Gruppierung
+%Partitionen
+%Multiple Tokens
+%Ausnahmen
+%Datenspeicher
+
+
+% END OF DOCUMENT

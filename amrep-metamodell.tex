@@ -1,0 +1,140 @@
+\chapter{Metamodell der Activity Model Runtime Engine für Python}\label{amrep-metamodel}
+
+\section{Einführung}\label{amrep-metamodel-intro}
+%XXXXXXXXXXXXXXXXXXXXX
+Dieses Kapitel stellt die Python Implementierung des UML Metamodells für die \emph{Activity Model Runtime Engine für Python} (AMREP) vor und beschreibt die Unterschiede und Vereinfachungen, die getroffen wurden. Diese Python Implementierung des Metamodells ist der Kern der AMREP und ermöglicht die Definition von Python-Modellen, die alle die selben Eigenschaften teilen und so für die Software interpretierbar sind.
+
+Die Entstehungsgeschichte der AMREP basiert auf der Arbeit mit UML Modellierungswerkzeugen im Allgemeinen und Überlegungen zu UML Aktivitäts\-di\-a\-grammen im Besonderen, die vor allem seit der UML Version 2 das dynamische Verhalten von Systemen in vielfältigen Einsatzszenarien modellieren lässt. Das Python Metamodell der AMREP basiert somit auf dem aktuellen UML Standard für Aktivitätsdiagramme, der Version 2.2.
+
+Das Python Metamodell der AMREP ist aber keine direkte Implementierung des UML Metamodells in Python, sondern orientiert sich daran und verwendet ein Subset der im UML Standard definierten Elemente, Attribute und Assoziationen sowie eine angepasste Semantik. Ziel war es, ein einfaches, aber dennoch flexibles Metamodell zur Verfügung zu stellen, ohne die Gesamtheit und Tiefe der Vererbungshierarchie des UML Metamodells umzusetzen. Es basiert nicht auf einem Meta-Metamodell der Ebene \emph{M3} (siehe Kapitel \ref{mod-meta}), da es zum Zweck der Erstellung einer Activity Runtime genügt, das Metamodell direkt in der Implementierungssprache Python umzusetzen, ohne Elemente einer höheren Abstraktionsebene zu instantiieren.
+
+Die Begriffe AMREP Metamodell und \texttt{activites.metamodel} werden synonym verwendet. \texttt{activites.metamodel} ist der Name des Python-Paketes, in dem die Python Implementierung des Metamodells umgesetzt ist.
+
+
+\section{Das AMREP Metamodell im Überblick}
+In diesem Kapitel wird das Metamodell anhand dessen Darstellung als UML Klassendiagrammen erläutert.
+
+Die Attribute werden unter den Klassennamen angegeben. Es existieren konkrete und abstrakte Klassen. Jede dieser Klassen besitzt das Attribut \emph{abstract}, wobei in den konkreten Klassen \texttt{abstract = False} zugewiesen wurde und das Attribut in der UML Darstellung nicht angeführt wurde.
+
+Die Assoziationen werden durch benannte Beziehungslinien dargestellt, wie in der UML gebräuchlich. Das Attribut, durch das die Assoziation einer Klasse abgefragt werden kann, wird jeweils am anderen Ende der Beziehungslinie angegeben.
+
+Die Methoden der Metamodelle sind wie üblich unter den Attributen durch einen horizontalen Strich getrennt dargestellt.
+
+
+\subsection{Allgemeine Metamodell Elemente}
+
+In der Abbildung \ref{fig:amrep-elements} werden die Modellelemente im Überblick dargestellt, wobei Subklassen dieser Elemente in den Folgenden Abschnitten behandelt werden.
+
+\emme{Element} ist die Superklasse aller Modellelemente und definiert deren grundlegenden Eigenschaften. Es ist von \emme{Node} abgeleitet und erbt von dieser die Möglichkeit, hierarchische Datenstrukturen aufzubauen und auf enthaltene Elemente auf verschiedene Weise zuzugreifen. Eine oft verwendete Methode ist ein Filter, der alle Elemente, die ein bestimmtes Interface implementieren, zurück liefert. Node Elemente besitzen eine eindeutige ID, die ebenfalls für den Zugriff verwendet werden kann und einen Namen.
+
+\emme{Element} definiert die Methode \emme{check\_model\_constraints()}, die von abstrakten wie konkreten Metamodellelementen verwendet wird, um Bedingungen für valide Modelle zu implementieren, wie sie von der UML Spezifikation vorgegeben werden. Es ist eine Konvention, dass in allen Modellelementen in der Methode \emme{check\_model\_constraints()} die selbe Methode der Superklasse aufgerufen wird, so dass alle Modellbedingungen, die in der Vererbungshierarchie definiert sind, überprüft werden. Diese Methode wird nicht in alle Subklassen des Metamodells überschrieben.
+
+% graphic
+\imgS{metamodel-activities/amrep-elements}{fig:amrep-elements}{Allgemeine Metamodell Elemente}{Allgemeine Metamodell Elemente in AMREP}{0.5}
+
+Das Modellelement \emme{Constraints} erlaubt über dessen konkrete Subklassen die Definition von Vor- und Nachbedingungen für die Modellelemente \emme{Activity} und \emme{Action} (siehe Kapitel \rref{amrep-meta-constraint}). Die Spezifikation der Bedingung wird als Python-Ausdruck im Attibut \emme{specification} angegeben und zur Laufzeit ausgewertet. Hierbei stehen die Daten aus dem gerade aktiven Tokens zur Verfügung (siehe Kapitel \rref{amrep-token}). Kann die Bedingung zur Laufzeit nicht erfüllt werden, so wird das Modell als nicht valide beziehungsweise \emph{ill formed} angesehen und ein Laufzeitfehler ausgelöst (vgl. \citep{RumbaughJacobsonBooch2005}, S. 285).
+
+Die Implementierung des UML Erweiterungsmechanismus über Profile unterscheidet sich stark vom Standard. Profile werden nicht als eigenes Metamodell zur Erweiterung von Modellen definiert, sondern direkt im Modell integriert. Diese Einschränkung macht Profile inkompatibel zum Standard. Dieses Problem wurde aber in Kauf genommen und kann in einer zukünftigen Weiterentwicklung von AMREP gelöst werden. Profile werden in AMREP dafür verwendet, um Python-Module in denen \emme{Executions}\footnote
+{Executions sind in AMREP Klassen, die die Aktionsimplementierungen bereitstellen. Executions werden hierbei über ein Command Pattern von der Runtime geladen und sind dadurch von den modellierten Aktionen getrennt.}
+definiert sind zu laden. Zum Laden des Moduls wird hierbei der Name des Profils benutzt, der somit ein vom Python Interpreter erreichbares Modul benennen muss (siehe Kapitel \rref{amrep-executions}). Profile sind in \emme{Package} Elementen enthalten.
+
+Stereotypen benennen den Namen der zu ladenden Execution und können \emme{TaggedValues} über die Kompositionsbeziehung \emme{taggedvalues} beinhalten. Stereotypen können für beliebige Modellelemente aufgrund der Kompositionsbeziehung \emme{stereotypes} der Klasse \emme{Element} definiert werden Die Runtime Engine verwendet allerdings nur Stereotypen, die für Elemente des Typs \emme{Action} definiert wurden. Mit Hilfe von \emph{TaggedValues} können zusätzliche statische Informationen modelliert werden, die den \emph{Executions} zur Laufzeit übergeben werden und von diesen verwendet werden können.
+
+
+\subsection{Aktivität}
+
+Mit der Metamodellklasse \emme{Activity} können UML Aktivitäten modelliert werden (siehe Abbildung \ref{fig:amrep-activity}). Sie wird über die abstrakte Klasse \emme{Behavior} von \emme{Element} abgeleitet und erbt über Behavior die Möglichkeit Vor- und Nachbedingungen mithilfe der Kompositionsbeziehungen\footnote{
+Kompositionen stellen in UML Klassendiagrammen starke Beziehungen zwischen Klassen dar. Sie sind die stärkste Art von Assoziationen und erlauben das Modellieren von Teil-Ganzes Beziehungen (vgl. \citep{PilonePitman2005}, S.27). Im UML Standard werden die Beziehungen als Assoziationen angeführt. Hier werden Sie aber entsprechend der Implementierung genauer benannt.}
+\emme{preconditions} und \emme{postconditions} zu definieren. Die Kompositionsbeziehung \emme{preconditions} referenziert Klassen des Typs \emme{PreConstraint}, \emme{postconditions} hingegen \emme{PostConstraints}.
+
+% graphic
+\imgS{metamodel-activities/amrep-activity}{fig:amrep-activity}{Aktivität, Behavior und Package}{Aktivität, Behavior und Package in AMREP}{0.5}
+
+Eine Aktivität besitzt eine Menge von Knoten und Kanten, die über die Kompositionsbeziehungen \emme{nodes}, \emme{edges} und \emme{actions} referenziert werden. Die Kompositionsbeziehung \emme{actions} ist hierbei nicht im UML Standard definiert sondern wurde zum Zweck eines schnellen Zugriffs in die Python Implementierung des Metamodells für AMREP aufgenommen.
+
+Eine Aktivität muss immer in einem \emme{Package} definiert sein, welches zur Gruppierung von Modellelementen dient. Ein Package kann Profile über die Kompositionsbeziehung \emme{profiles} besitzen, die in der AMREP Implementierung zum Laden von \emme{Executions} dienen.
+
+
+\subsection{Kanten}
+Da in der AMREP Implementierung keine Objektknoten existieren (siehe \rref{amrep-metamodel-diff}), gibt es auch keine Unterscheidung zwischen Kontroll- und Objektkanten. Das Element \emme{ActivityEdge} ist somit konkret und direkt instantiierbar. Kanten verbinden Konten über eine Quelle (Assoziation \emme{source}) und ein Ziel (Assoziation \emme{target}). Die Assoziation ist beidseitig navigierbar, wodurch für Knoten die eingehenden (Assoziation \emme{incoming\_edges}) und ausgehenden (Assoziation \emme{outgoing\_edges}) Kanten abfragbar sind. Über die Kompositionsbeziehung \emme{edges} von Aktivitäten können alle in ihr definierten Kanten abgefragt werden. Umgekehrt ist für eine Kante die zugehörige Aktivität über das Attribut \emme{activity} bekannt (siehe Abbildung \ref{fig:amrep-flows}).
+
+Das Attribut \emme{guard} erlaubt die Definition einer Kantenbedingung, die zur Laufzeit erfüllt werden muss, damit Tokens über diese Kanten traversieren können. Die Bedingung wird als Python Ausdruck angegeben, der auf die Daten Zugriff hat, die im Token gespeichert werden, falls die Kantenbedingung zutrifft und der Token produziert werden kann.
+
+% graphic
+\imgS{metamodel-activities/amrep-flows}{fig:amrep-flows}{Kante}{Kante in AMREP}{0.5}
+
+
+\subsection{Knoten}
+In Abbildung \ref{fig:amrep-nodes} wird ein Überblick über die verschiedenen Knotentypen in AMREP geboten. Abbildung \ref{fig:amrep-controlnodes} zeigt die unterschiedlichen Kontrollknoten.
+
+Der größte Unterschied der UML Metamodellimplementierung in AMREP zum Standard ist das Fehlen von Objektknoten und damit einhergehend die fehlende Unterscheidung zwischen Objekt- und Kontrollkanten. Diese Entscheidung ermöglichte wesentliche Vereinfachungen in der Implementierung der Runtime Engine rief aber auch eine Inkompatibilität mit dem Standard hervor. Dies ist in \rref{amrep-metamodel-diff} näher erläutert.
+
+Über die Kompositionsbeziehung \emme{nodes} von Activity können alle Knoten beziehungsweise \emme{ActivityNodes} einer Aktivität abgefragt werden.
+
+Für die Subklasse \emme{Action} können Vor- und Nachbedingungen über die Kompositionsbeziehungen \emme{postconditions} und \emme{preconditions} definiert werden. Diese Klasse ist in der Subklasse \emme{OpaqueAction} spezialisiert, die zur Modellierung von Aktionen in AMREP verwendet werden muss. OpaqueAction besitzt anders als im UML Standard die Attribute \emph{body} und \emph{language} nicht, da das Verhalten nicht direkt in der Aktion, sondern in Executions definiert ist.
+
+% graphic
+\imgS{metamodel-activities/amrep-nodes}{fig:amrep-nodes}{Knoten}{Knoten in AMREP}{0.5}
+
+Kontrollknoten steuern den Prozessablauf und sind in Abbildung \ref{fig:amrep-controlnodes} dargestellt.
+
+InitialNodes sind die Startpunkte von Aktivitäten. Es können mehrere InitialNode Elemente definiert werden, die jeweils einen Token für jede ausgehende Kante bei Start der Aktivität erzeugen. Diese Knoten können keine eingehenden Kanten besitzen.
+
+FinalNode ist in ActivityFinalNode und FlowFinalNode spezialisiert. Beide können mehrere eingehende aber keine ausgehende Kanten besitzen. Während ActivityFinalNode die Aktivität als ganzes beendet, konsumiert FlowFinalNode nur den jeweiligen Token und beendet somit den entsprechenden Ablauf, wobei andere Tokens auf dem jeweiligen Zweig nicht gelöscht werden.
+
+DecisionNode ist ein Kontrollknoten, der aufgrund von Kanten-Bedingungen Tokens für eine von mehreren ausgehenden Kanten produziert. Dies entspricht einem Exklusiv-Oder Verhalten.
+
+Elemente vom Typ ForkNode erzeugen Nebenläufigkeit indem sie für jede ausgehende Kante einen Token mit dem selben Daten produzieren.
+
+Ein JoinNode synchronisiert eingehende Kanten, indem ein Token für die ausgehende Kante produziert wird, wenn an allen eingehenden Kanten ein Token konsumiert werden kann. Es wird somit die Anzahl nebenläufiger Tokens reduziert.
+
+MergeNodes bringen mehrere eingehende Flüsse zusammen, synchronisieren aber nicht. Entgegen der UML Spezifikation wird bei einem MergeNode nur ein Token für die ausgehende Kante produziert, auch wenn mehrere Tokens an den eingehenden Kanten konsumiert worden sind. Dieses Verhalten entspricht einer Und Semantik.
+
+% graphic
+\imgS{metamodel-activities/amrep-controlnodes}{fig:amrep-controlnodes}{Kontrollknoten}{Kontrollknoten in AMREP}{0.5}
+
+
+\section{Modellvalidierung}
+Die Funktion zur Validierung des Modells \emme{validate(node)} ist im selben Modul definiert, in dem die Python Implementierung des Metamodells definiert ist (\empy{activities.metamodel}). Diese Funktion erwartet als Parameter ein Modellelement und ruft dann die Methode \emme{check\_model\_contraints()} des Modellelements sowie rekursiv jedes darin enthaltene Modellelement auf. Wird der Funktion eine Activity oder ein Package übergeben, wird somit das gesamte Modell validiert. Ist das Modell nicht valide, beispielsweise da eingehende Kanten in einer InitialNode modelliert worden sind, wird ein Fehler erzeugt.
+
+
+\section{Unterschiede zum UML2 Metamodell für Aktivitäten}\label{amrep-metamodel-diff}
+
+Aufgrund der Komplexität der UML Spezifikation konnte im Rahmen dieser Diplomarbeit nur ein Subset der Metamodellelemente von Aktivitätsdiagrammen umgesetzt werden. Dieses Subset und weitere Vereinfachungen orientieren sich an den Anforderungen, die sich aus dem im Kapitel \rref{intro-usecase} skizzierten Usecase und den Zielen und Abgrenzungen aus dem Kapitel \rref{intro-ziele} ergeben.
+
+Als Aktion steht nur OpaqueAction zur Verfügung, da die Implementierung von Aktionen zur Gänze durch Executions erfolgt (siehe Kapitel \rref{amrep-executions}). Executions können hierbei kleine Bausteine sein, die elementare Tätigkeiten verrichten oder komplexe Programme mit Userinteraktion und Ausführung weiterer Aktivitätsmodelle.
+
+Executions werden über Profile geladen und über Stereotypen den Aktionen zugewiesen. Die Implementierung von Stereotypen und Profilen ist hierbei nur lose am UML Standard angelehnt, da die Implementierung als Erweiterungsmechanismus von Metamodellen den Rahmen der Diplomarbeit gesprengt hätte, die erforderte Funktionalität aber auch in dieser vereinfachten Form zur Verfügung gestellt werden kann.
+
+Objektknoten wurden nicht implementiert, wodurch die Datensicht auf Modelle nicht modelliert werden kann. Modellrelevante Daten werden über die Startmethode der Runtime Engine in den Prozessablauf eingebracht und von Executions gegebenenfalls manipuliert oder es werden von ihnen neue Daten erzeugt. Das Anbieten aller notwendigen Daten liegt hierbei in der Verantwortung des Prozesses, der die Ausführung des Modells startet. Im Modell kann aber durch Angabe von Vorbedingungen für Aktivitäten das Vorhandensein notwendiger Daten überprüft werden und ein Fehler somit vorzeitig ausgelöst werden, wenn die Bedingungen nicht zutreffen. Die Personen, die Modelle erstellen, müssen somit Kenntnis über von Executions erforderte Daten besitzen. Dies wäre aber auch im Falle einer Umsetzung laut Standard der Fall gewesen, da bestimmte Aktionen bestimmte Daten benötigen und diese durch Objektkanten und Objektknoten modelliert werden müssen. Durch den Verzicht auf Objektknoten konnte das Token Competition Problem, wie im Kapitel \rref{amrep-token-ttc} beschrieben, umgangen werden. Das im selben Kapitel beschriebene Traverse-to-Completion Problem tritt durch diese Entscheidung und eine geänderte Tokenflusssemantik nicht auf. Die Implementierung der Runtime konnte dadurch wesentlich vereinfacht werden, wobei die Eingangs definierten Ziele weiterhin erreicht werden können. Die direkte Kompatibilität mit UML Aktivitätsdiagrammen anderer Werkzeuge wurde somit aber aufgegeben. Modelle für AMREP müssen nach bestimmten Konventionen erstellt werden, die im Kapitel \rref{amrep-metamodel-konv} beschrieben werden.
+
+Durch die fehlende Implementierung von Objektknoten gibt es auch keine Unterscheidung zwischen Objektkanten und Kontrollkanten. Kanten nehmen beide Funktionen wahr und besitzen einen Daten-Payload, der auch leer sein kann.
+
+Namen von Attributen und Assoziationen wurden teilweise geändert und in den in Python gebräuchlichen Standards notiert (vgl. \citep{PEP8}).
+
+Erweiterte Konzepte von UML Aktivitätsdiagrammen wie Partitionen, Gruppen, Ausnahmebehandlung, Datenspeicher, Erweiterungsknoten und Erweiterungsregionen, Unterbrechungsregionen, Schleifenknoten, Signale und andere wurden nicht umgesetzt, da sie nicht Teil der Anforderungen waren.
+
+Die Python Implementierung des Metamodells für AMREP ist eine prototypische Implementierung, die in verschiedenen Einsatzszenarien erprobt werden und gegebenenfalls erweitert werden kann. Eine weitere Angleichung an den UML Standard wäre von Vorteil, da eine bessere Interoperabilität mit anderen UML Werkzeugen und Frameworks hergestellt werden könnte.
+
+
+\section{Konventionen für die Erstellung von Metamodellen für AMREP}\label{amrep-metamodel-konv}
+
+Bei der Modellerstellung für AMREP müssen folgende Konventionen eingehalten werden:
+\begin{itemize}
+\item Es können nur die Modellelemente Profile, Stereotype, TaggedValue, PreConstraint, PostConstraint, Package, Activity, ActivityEdge, OpaqueAction, InitialNode, ActivityFinalNode, FlowFinalNode, DecisionNode, ForkNode, JoinNode und MergeNode verwendet werden.
+\item Aktionen müssen mit dem Modellelement OpaqueAction  modelliert werden.
+\item Damit Aktionen ausgeführt werden können, müssen sie mit einem Stereotyp versehen werden, der genau dem Namen einer Execution entspricht.
+\item Die benötigten Executions müssen durch die Angabe von Profilen geladen werden. Profile müssen in Packages definiert werden. Der Name eines Profils muss dem Namen eines Moduls entsprechen, das durch den Python Interpreter importiert werden kann. Weitere Informationen über die Erstellung von Executions sind im Kapitel \ref{amrep-executions} angegeben.
+\item Es können keine Objektknoten verwendet werden und keine Pins für Aktionen definiert werden.
+\item Zur Modellierung von Kanten muss das Modellelement ActivityEdge verwendet werden. In UML Editoren müssen Kontrollkanten verwendet werden, die durch den XMI Importer in ActivityEdge Elemente übersetzt werden.
+\item Guard Bedingungen sowie Pre- und Postconstraints müssen als Python Ausdrücke notiert werden. Der Zugriff auf Variablen aus dem Daten-Payload der Tokens erfolgt durch direkte Angabe des Variablennamens.
+\item Wird ein durch den Daten-Payload eines Tokens referenziertes Objekt durch eine Execution geändert, ist dieses Objekt auch für andere Tokens geändert deren Daten-Payload das selbe Objekt referenzieren (siehe Kapitel \rref{token-data}).
+\item Die Prinzipien "Token Competition" und "Traverse to Completion" sind nicht umgesetzt. Es wird für jede ausgehende Kante, deren Kantenbedingungen zutreffen, ein Token produziert, unabhängig davon, ob der Zielknoten den Token konsumieren kann oder nicht (siehe Kapitel \rref{amrep-token-ttc}).
+\item Wenn Tokens von einer Kante konsumiert werden, wird deren Daten-Payload zusammengeführt. Sind hierbei zwei gleiche Schlüssel definiert, die unterschiedliche Objekte referenzieren, wird ein Fehler ausgelöst und die Aktivität abgebrochen.
+\item Für FinalNodes gilt die Und-Semantik. Es müssen daher an allen eingehenden Kanten Token zur Verfügung stehen, damit der Knoten aktiv wird und die Aktivität beziehungsweise den Tokenfluss abbricht. Dieses Verhalten ist in der UML Spezifikation nicht explizit definiert. Das Problem kann umgangen werden, indem Für FinalNodes nur eine eingehende Kante modelliert wird.
+\end{itemize}
+
+
+
+
+% END OF DOCUMENT

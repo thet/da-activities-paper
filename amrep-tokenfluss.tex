@@ -1,0 +1,42 @@
+\section{Token-Fluss in der AMREP}\label{amrep-token}
+
+\subsection{Allgemeines}\label{token-allgemeines}
+Das Konzept der Tokens basiert auf dem Konzept der \emph{Marken} aus den Petri-Netzen (vgl. \citep{RumbaughJacobsonBooch2005}, S.654). Tokens sind Runtime-Markierungen, die den Zustand der Aktivität beschreiben.
+
+Knoten werden ausgeführt wenn genügend Tokens an den eingehenden Kanten zur Verfügung stehen. Bei allen Knoten außer \emme{MergeNode} müssen an allen eingehenden Kanten Tokens vorhanden sein damit diese konsumiert werden können und der Knoten ausgeführt werden kann. Dies entspricht einer impliziten Und-Semantik. Im Falle von Knoten des Typs \emme{MergeNode} muss nur ein Token an einer der eingehenden Kanten zur Verfügung stehen. Dies entspricht einer impliziten Oder-Semantik. Nach der Ausführung des Knotens werden Tokens für alle ausgehenden Kanten erzeugt (implizite Und-Semantik). Hiervon ausgenommen sind Knoten vom Typ \emph{DecisionNode}, die nur für die erste mögliche ausgehende Kante ein Token produzieren, wo die Kantenbedingung es zulässt. Welche Kante dies ist, kann nicht vorhergesagt werden. Das Verhalten ist in diesem Fall nicht deterministisch. Da die Implementierung auf einem \emph{ordered dictionary} basiert, ist die gewählte Kante von der Reihenfolge der Definitionen im Modell abhängig. Das Verhalten von Knoten vom Typ \emph{DecisionNode} entspricht einer impliziten Exklusiv-Oder-Semantik (XOR).
+
+Tokens aus eingehenden Kanten werden von der Runtime Engine für Knoten, die ausgeführt werden, gelöscht. Zuvor wird der Daten-Payload vom Token kopiert und mit dem Daten-Payload anderer Tokens vermengt (\emph{merge}). Nach der Ausführung des Knotens werden Tokens mit dem Daten-Payload erneut produziert. Tokens existieren also immer nur solange, bis ein nächster Knoten ausgeführt wird.
+
+Es ist hierbei erwähnenswert, dass Tokens nicht Teil des Metamodells sind. Weiters referenzieren nicht direkt auf Modellelemente vom Typ \emme{ActivityEdge}, sondern speichern die \emph{uuid} der Kante. Somit können Modell und TokenPool getrennt voneinander gespeichert werden.
+
+\subsection{Daten-Payload}\label{token-data}
+In der AMREP-Implementierung gibt es keine Unterscheidung zwischen Objekt- und Kontrolltoken. Tokens besitzen immer ein Attribut (\emph{data}), welches bei Initialisierung auf ein leeres Python-Dictionary gesetzt wird. Demzufolge besitzt ein Token in der AMREP-Implementierung immer einen Daten-Payload, der entweder leer ist oder mit Schlüsselwort-/Elementpaaren befüllt. Das Schlüsselwort entspricht dem Namen der Variablen, die bei der Auswertung von Kantenbedingungen und Vor- und Nachbedingungen für Aktionen und Aktivitäten zur Verfügung stehen. Als Elemente können beliebige Python Objekte verwendet werden. Dieser Daten-Payload entspricht den Werten bzw. Objekten, die mit Objekttokens über Objektkanten fließen.
+
+Im Falle von Kontrollknoten werden die eventuell zusammengeführten Daten weitergereicht, also nicht verändert in den Tokens der ausgehenden Kanten gespeichert. Im Falle von Aktionen wird der Daten-Payload den \emme{Executions} übergeben, die diesen gegebenenfalls verändern und zurückgeben. Dieser Rückgabewert  wird als neuer Daten-Payload für Tokens auf den ausgehenden Kanten verwendet. Es hängt also von der Implementierung der \emme{Executions}) ab, ob Werte im Daten-Payload aus vorhergehenden Aktionen in nachfolgenden Aktionen noch zur Verfügung stehen (siehe Kapitel \rref{amrep-executions}).
+
+Bei Variablenzuweisungen werden in Python Referenzen auf Objekte der Variable zugewiesen. Python unterscheidet zwischen veränderbaren (engl. \emph{mutable}) und unveränderbaren (engl. \emph{immutable}) Objekten. Zahlen, Zeichen und Strings sind Beispiele für unveränderbare Objekte. Operationen auf diesen Objekten erzeugen neue Objekte. Veränderbare Objekte sind zum Beispiel Instanzen selbst definierter Klassen. Wird ein veränderbares Objekt eines Daten-Payloads manipuliert, so ist dieses Objekt für jeden Daten-Payload der Tokens, die dieses Objekt referenzieren, geändert. Wird einem Schlüssel aber ein neues Objekt zugewiesen, wird nur die Referenz des auf dieses Objekt für den Daten-Payload des entsprechenden Tokens geändert. Die Daten-Payloads anderer Tokens mit dem selben Schlüssel-Bezeichner werden dadurch nicht geändert.
+
+Wenn in einem Knoten, der ausgeführt wird, die Token konsumiert werden, wird versucht, die Daten der Tokens zusammenzuführen. Es wird hierfür ein neues Dictionary erzeugt, in das alle Schlüssel-/Elementpaare kopiert werden. Haben zwei Schlüssel den selben Bezeichner, wird geprüft, ob die referenzierten Objekte die selbe Identität haben. Ist das der Fall wird ein entsprechender Schlüssel im Dictionary angelegt. Wenn die referenzierten Objekte unterschiedlich sind, wird ein Fehler erzeugt und die Ausführung der Aktivität abgebrochen. Dieser Umstand muss bei der Modellierung und Implementierung von \emme{Executions} berücksichtigt werden. Es wird in vielen Einsatzszenarien nicht wünschenswert sein, dass die Aktivität in einem solchen Fall abgebrochen wird. Ein solcher Fehler kann abgefangen werden und zum Beispiel durch Benutzerinteraktion gelöst werden.
+
+\subsection{Tokens referenzieren Kanten}\label{token-kanten}
+In der AMREP Implementierung werden Token auf Kanten referenziert. Ist ein Token bekannt, kann somit die zugehörige Kante abgefragt werden und über die Kante der Quell- und Zielknoten ermittelt werden. Die \emph{uuid} der Kante ist ein obligatorischer Parameter beim Instantiieren des Tokens. Tokens werden nach Ausführung eines Knoten von der Runtime Engine für jede ausgehende Kante produziert, bei der die Kantenbedingungen zutreffen.
+
+Tokens werden in einer Liste gespeichert\footnote
+{Eine Instanz der Klasse \emph{TokenPool}, die vom Python-Builtin \empy{list} erbt.}
+wodurch das First-In First-Out (FIFO) Prinzip umgesetzt ist. Werden die Tokens einer Kante abgefragt, werden die ältesten für diese Kante produzierten Tokens zuerst zurückgeliefert.
+
+\subsection{Traverse-To-Completion Problem}\label{amrep-token-ttc}
+Nach der UML2-Spezifikation kann ein Token erst dann eine Kante traversieren, wenn eine nachfolgende Aktion den Token aufnehmen kann und die Kantenbedingungen, Ziel- und Quellknotenbedingungen zutreffen. Dabei muss der Zielknoten eine Aktion oder ein Objektknoten sein, da Kontrollknoten keine Tokens halten können (vgl. \citep{OMG2009}, S.319). Dieses Token-Fluss Prinzip wird nach Conrad Bock \emph{Traverse-To-Completion} genannt (vgl. \citep{Bock2004}, S.35).
+
+Eine weitere Regel des Tokenfluss nach der UML2-Spezifikation ist, dass Tokens nur über eine Kante traversieren können, auch wenn ein Objektknoten mehrere ausgehende Kanten besitzt. Dieses Prinzip wird nach Conrad Bock \emph{Token Competition} genannt (vgl. \citep{Bock2004}, S.35 und \citep{OMG2009}, S.312). % TODO: graphik?
+Dies entspricht einer \emph{XOR} Semantik. Die Entscheidung, über welche der ausgehenden Objektkanten der Token traversiert kann nicht vorausgesagt werden (vgl. \citep{CraneDingel2008}).
+
+Die Prinzipien \emph{Traverse-To-Completion} und \emph{Token Competition} sollen sicherstellen dass keine Deadlock-Situation bzw. Verklemmung entsteht. Sie verhindern, dass Knoten angebotene Tokens akzeptieren, obwohl sie nicht ausgeführt werden können, da die notwendigen Bedingungen nicht zutreffen und somit anderen Knoten den Konsum des Tokens entziehen (vgl. \citep{OMG2009}, S.312).
+
+Das Prinzip \emph{Traverse-To-Completion} erschwert die Implementierung einer Runtime, da bei jedem Durchlauf getestet werden muss, ob ein traversieren des Tokens möglich ist bevor das Token weitergereicht wird. Dabei müssen alle anderen Abhängigkeiten wie nebenläufige Token-Flüsse mit berücksichtigt werden. Mit zunehmender Komplexität müssten immer mehr Testfälle durchgespielt werden, was zu einer negativen Beeinflussung der Performance des Systems führen würde.
+
+In der AMREP Implementierung der Runtime Engine werden diese Prinzipien nicht berücksichtigt. Es wird für jede ausgehende Kante Tokens produziert, unabhängig davon, ob ein nachfolgender Knoten diesen Token unmittelbar konsumieren kann oder nicht. Dieses Verhalten ist beabsichtigt, da in der AMREP Implementierung davon ausgegangen wird, dass jeder Zielknoten einer Kante, deren Kantenbedingungen zutreffen, auch ausgeführt werden soll. Dieses geänderte Verhalten ist bei der Modellierung ebenfalls zu berücksichtigen.
+
+
+
+% END OF DOCUMENT

@@ -1,0 +1,24 @@
+\chapter{Zusammenfassung, Ergebnisse und Ausblick}\label{amrep-future}
+
+In dieser Diplomarbeit auf Grundlage der Erkenntnisse aus den vorgestellten Prozessmodellierungssprachen und den Grundlagen zur Modellierung ein Interpreter für Aktivitätsmodelle präsentiert und eine zugehörige vereinfachte und geänderte Python Implementierung des UML Metamodells für Aktivitätsdiagramme vorgestellt.
+
+Es konnte gezeigt werden, dass der Eingangs skizzierte Usecase mit der Activity Model Runtime Engine für Python umsetzbar ist, die wesentlichsten Sprachkonstrukte zur Prozessmodellierung unterstützt und eine Änderung des Modells zur Laufzeit möglich ist.
+
+Der vorgestellte Aktivitätsinterpreter hat Potential zur Weiterentwicklung und Integration in andere Frameworks und Projekte. Er ist auch mit diesem Ziel vor Augen entwickelt worden.
+
+Speziell können folgende Bereiche als mögliche Erweiterungen genannt werden:
+
+\begin{itemize}
+\item Angleichung der Python Implementierung des Metamodells an die aktuelle UML Spezifikation.
+\item Erweiterung der Python Implementierung des Metamodells um nicht implementierte Elemente von UML, insbesondere Ausnahmebehandlung mit \emph{ExceptionHandler}, Unterbrechung von Teilen der Aktivität durch \emph{InterruptibleActivityRegion}, Senden und Empfangen von Signalen mit \emph{SendSignalAction} und \emph{AcceptEventAction} sowie die Unterstützung der Modellierung von Zuständigkeiten und Verantwortungsbereiche mithilfe von \emph{ActivityPartition}.
+\item Verbesserung des XMI Import Mechanismus.
+\item Unterstützung asynchroner Executions und Zugriff auf gemeinsame Ressourcen.
+\item Visualisierung des Tokenstatus zur Laufzeit.
+\end{itemize}
+
+Für den produktiven Einsatz von AMREP ist es notwendig, Tests mit den speziellen Anforderungen in diesen Einsatzszenarien zu entwickeln. Beispielsweise ist noch kein Test entwickelt worden, der das Verhalten von parallelen Ausführungen von Aktivitäten überprüft.
+
+Die AMREP wurde im Hinblick auf mögliche zukünftige Erweiterungen entwickelt. Es ist zu Erwarten, dass für einen produktiven Einsatz im Rahmen einer größeren Plattform bestimmte Anpassungen zu treffen sind. Die AMREP wurde aber als Referenzimplementierung und Studienobjekt entwickelt. Ein produktiver Einsatz wird den wahren Nutzen der \emph{Activity Model Runtime Engine für Python} zeigen.
+
+
+% END OF DOCUMENT

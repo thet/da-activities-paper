@@ -1,0 +1,67 @@
+\chapter{Verwendung der Activity Model Runtime Engine für Python}\label{amrep-use}
+
+\section{Modellerstellung mit Python}
+Das Metamodell der AMREP-Implementierung ist im Paket \texttt{activities.metamodel} implementiert. Das Listing \ref{amrep-modell-python} zeigt, wie ein Modell in der Programmiersprache Python erstellt werden kann. Aus das Listing folgt eine Erklärung der wichtigsten Programmabschnitte.
+
+\pyinc{Erstellen eines Modells in Python}{amrep-modell-python}{resources/amrep-verwendung-modellierung.py}
+
+\begin{description}
+\item[1] Import des Package \texttt{activites.metamodel} und Zuweisung des Alias \texttt{mm} für einen schnellen Zugriff. Das \texttt{\_\_init\_\_.py}-Modul des Packages importiert alle konkreten Metaklassen und alle notwendigen Methoden, weshalb dieser Import den Zugriff darauf erlaubt.
+\item[3] Instantiierung der Metaklasse \emph{Package} und Übergabe des Namen "testmodell" an den Konstruktor.
+\item[4] Dem Modellelement \emph{Package} wird ein Profil zugewiesen. Da alle Metamodellelemente von \emph{Node} erben und die \emph{Dictionary}-API unterstützen, muss dem Modellelement ein Schlüssel zugewiesen werden. In diesem Fall muss dem Konstruktor von \emph{Profil} aber kein Name übergeben werden, da der Schlüssel als Name für das Node-Element \emph{Profil} verwendet wird. Der Schlüssel bzw. Name des Profils muss einem Package entsprechen, das geladen werden kann, und das Executions registriert (siehe auch \rref{amrep-executions}).
+\item[5] Die Aktivität mit dem Namen "main" wird dem Package zugewiesen.
+\item[6] Es wird eine Variable definiert, die in weiterer Folge einen komfortablen Zugriff auf die Aktivität erlaubt.
+\item[8] Eine Vorbedingung für die Aktivität wird definiert. Der Übergabeparameter \texttt{specification} definiert hier eine Prüfung, ob die Variable \texttt{test} bei Start der Aktivität vorhanden ist und einen Wert anders als das Null-Objekt \texttt{None} hat. Andernfalls wird beim Start der Aktivität ein Fehler produziert.
+\item[13-16] Hinzufügen einer Aktion, eines Stereotypen für diese Aktion und eines TaggedValue für den Stereotypen. Der Name des Stereotyps muss dem Namen einer Execution entsprechen, die die Ausführungslogik der Aktion beinhaltet und geladen werden kann  (siehe auch Kapitel \rref{amrep-executions}).
+\item[23-32] Die einzelnen Modellelemente werden mit Kanten verbunden und für die Kanten mit dem Namen "3" und "4" werden \emph{guard}-Bedingungen definiert. Die \emph{guard}-Bedingungen testen die Variablen, die im Daten-Payload der Tokens definiert sind. Die spezielle \emph{guard}-Bedingung \texttt{else} wird angewandt, wenn keine andere Bedingung erfüllt werden konnte.
+\item[34] Das Modell wird schlussendlich mit der Funktion \texttt{validate} auf Korrektheit überprüft.
+\end{description}
+
+
+\section{Modellerstellung mit einem UML-Editor}\label{amrep-use-umleditor}
+Da sich das Metamodell der AMREP an der UML2-Spezifikation orientiert, ist es prinzipiell möglich Modelle mit einem UML2-Editor zu erstellen und anschließend mit dem Package \texttt{activities.transform.xmi} zu importieren. Dabei muss folgendes beachtet werden:
+\begin{itemize}
+\item Aktivitäten werden immer mit der Metaklasse \emph{OpaqueAction} definiert.
+\item Kanten werden als \emph{ControlFlows} modelliert. \emph{ControlFlows} können nach der UML2-Spezifikation nicht an \emph{Pins} angeschlossen werden. Auf die Implementierung von \emph{Pins} wurde verzichtet. Die Transformationsregeln von \texttt{activities.transform.xmi} übersetzen aber auch ein Element vom Typ \emph{ObjectFlow} in ein Element vom Typ \emph{ActivityEdge}.
+\end{itemize}
+
+Die Tests im Package \texttt{activities.transform.xmi} zeigen, dass ein in XMI definieres Modell zu einem AMREP-Modell transformiert werden kann. Allerdings gibt es hierbei folgende Einschränkungen:
+\begin{itemize}
+\item Als UML-Editor wurde der Eclipse UML2-Editor des \emph{Model Development Tools}-Projekt verwendet (vgl. \citep{EclipseMDT}). Es wurde das aktuelle Modeling Package der Eclipse-Galileo-Distribution (3.5) verwendet\footnote
+{Url: http://www.eclipse.org/downloads/packages/eclipse-modeling-tools-includes-incubating-components/galileor}.
+\item Die mit dem Eclipse UML2-Editor erstellte XMI Datei unterscheidet sich in der Art der Definition von Modellelementen anderer UML2-Editoren. Das XMI Format ist somit nicht vollständig einheitlich. Diese Unterschiede wurden von den Transformationsregeln nicht berücksichtigt und daher werden keine anderen UML2-Editoren als die verwendete unterstützt.
+\item Der Eclipse UML2-Editor erlaubt keine Definition von \emph{guard}-Bedingungen auf Kanten und keine \emph{preconditions} und \emph{postconditions} für Aktivitäten und Aktionen. % TODO bugreport
+\item Die Definition von Profilen erfolgt in einer seperaten XMI Datei. Das verwendete Transformations Framework \emph{AGX} (siehe \citep{AGX}) unterstützt keine XMI-Referenzen über verschiedene Dateien hinweg. Es können somit keine Profile importiert werden und keine Stereotypen auf Modellelementen angewandt werden.
+\end{itemize}
+
+Es wurde auf die Implementierung eines vollständigen XMI Import Frameworks verzichtet, da dies nicht im Fokus der Diplomarbeit lag. Es konnte aber das Ziel, einen XML Dialekt zur Modellierung von Aktivitäten, zumindest teilweise erreicht werden.
+
+
+\section{Verwendung der Runtime}\label{amrep-use-runtime}
+Die Runtime ist im Package \texttt{activities.runtime} implementiert. Das Listing \ref{amrep-runtime} zeigt die grundlegende Verwendung zeigt .
+
+\pyinc{Verwendung der Runtime}{amrep-runtime}{resources/amrep-verwendung-runtime.py}
+
+Im folgenden wird das Listing erläutert.
+
+\begin{description}
+\item[2] Instantiierung der zuvor importierten Runtime-Klasse \texttt{ActivityRuntime}. Ihr wird als Konstruktor die Aktivität, die ausgeführt werden soll, übergeben. Es wird hier vorausgesetzt, dass das in Kapitel \rref{amrep-modell-python} erläuterte Modell \texttt{model} zur Verfügung steht.
+\item[4] Starten der Runtime. Da die der Runtime übergebene Aktivität eine \emph{precondition} besitzt, die überprüft, ob ein Parameter mit dem Namen "test" existiert und nicht auf das Null-Objekt \texttt{None} gesetzt ist, muss dieser Parameter der \texttt{start}-Methode in einem \emph{Dictionary} übergeben werden. Die \texttt{start}-Methode iteriert über alle Knoten des Typs \emph{InitialNode} und produziert für jede der ausgehenden Kanten ein Token.
+\item[8] Ausgabe des Token-Status der Runtime. Die Methode \texttt{ts} - eine Kurzform der Methode \texttt{print\_token\_state} - liefert einen \emph{String} zurück, der pro Zeile ein Token anzeigt, dem der Name der zugehörigen Kante vorangestellt ist.
+\item[10] Iteration durch die Aktivität mit der \texttt{next}-Methode der Runtime. Es wird über alle Knoten iteriert und gegebenenfalls werden die Tokens der eingehenden Kanten konsumiert und bei Beendigung Tokens für die ausgehenden Kanten produziert. Die Tokens werden pro Aufruf der \texttt{next}-Methode nur um maximal eine Stelle weiterbewegt.
+\item[12-21] Unterbrechen der Runtime und Neustart zu einem späteren Zeitpunkt. Zuerst müssen die Aktivität und der Token-Pool, der alle aktiven Tokens hält, gesichert und gegebenenfalls persistiert werden. Danach wird die Runtime zur besseren Demonstration des Verhaltens gelöscht. Es gibt nun keine Referenzen mehr auf die Runtime, weshalb sie auch vom Python \emph{garbage collector} aus dem Speicher entfernt werden kann. Danach wird eine neue Runtime \texttt{new\_ar} mit der zuvor gesicherten Aktivität instantiiert. Darauf folgend wird der zuvor gesicherte Token-Pool in die Runtime geladen. Mit dem Aufruf der \texttt{next}-Methode wird die Aktivität schließlich weiter abgearbeitet.
+\item[23-28] Änderung einer Aktivität zur Laufzeit: Mithilfe des Runtime-Attribut \texttt{activity} kann auf die Aktivität zugegriffen werden und diese manipuliert werden. Es empfiehlt sich die Aktivität danach neu zu validieren. \item[30] Stoppen der Aktivität.
+\end{description}
+
+
+
+
+
+
+
+
+
+
+
+
+% END OF DOCUMENT

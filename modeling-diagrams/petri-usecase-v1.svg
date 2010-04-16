@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="356.04004"
+   height="681.37067"
+   id="svg3347"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="petri-usecase-v1.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   version="1.0">
+  <defs
+     id="defs3349">
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend"
+       style="overflow:visible">
+      <path
+         id="path3277"
+         style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.97309,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective3355" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="88.701172"
+     inkscape:cy="333.63028"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="640"
+     inkscape:window-height="718"
+     inkscape:window-x="396"
+     inkscape:window-y="951" />
+  <metadata
+     id="metadata3352">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-3896.7515,3641.7845)">
+    <g
+       id="g17553"
+       transform="translate(3351.121,-3681.3522)">
+      <text
+         id="text4233"
+         y="46.989594"
+         x="729.44366"
+         style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           style="font-size:10px"
+           y="46.989594"
+           x="729.44366"
+           id="tspan4235"
+           sodipodi:role="line">Start</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4237"
+         y="122.29289"
+         x="712.01904"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="122.29289"
+           x="712.01904"
+           id="tspan4241"
+           sodipodi:role="line">Erstdiagnose</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4253"
+         y="194.26346"
+         x="780.40558"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           id="tspan17179"
+           sodipodi:role="line"
+           x="780.40558"
+           y="194.26346">Akuttherapie</tspan><tspan
+           id="tspan17181"
+           sodipodi:role="line"
+           x="780.40558"
+           y="206.76346">notwendig</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4259"
+         y="222.617"
+         x="561.35791"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="222.617"
+           x="561.35791"
+           id="tspan17183"
+           sodipodi:role="line">Akuttherapie</tspan><tspan
+           y="235.117"
+           x="561.35791"
+           id="tspan17185"
+           sodipodi:role="line">nicht notwendig</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text7239"
+         y="266.03122"
+         x="761.31372"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="266.03122"
+           x="761.31372"
+           id="tspan17175"
+           sodipodi:role="line">Akuttherapie</tspan><tspan
+           y="278.53122"
+           x="761.31372"
+           id="tspan17177"
+           sodipodi:role="line">durchführen</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text7249"
+         y="335.75"
+         x="779.25"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           id="tspan17171"
+           sodipodi:role="line"
+           x="779.25"
+           y="335.75">Akuttherapie</tspan><tspan
+           id="tspan17173"
+           sodipodi:role="line"
+           x="779.25"
+           y="348.25">beendet</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text7257"
+         y="418"
+         x="712.5"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="418"
+           x="712.5"
+           id="tspan7261"
+           sodipodi:role="line">Datenaufnahme</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text7267"
+         y="483.55518"
+         x="728.67358"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           id="tspan17167"
+           sodipodi:role="line"
+           x="728.67358"
+           y="483.55518">Datenaufnahme</tspan><tspan
+           id="tspan17169"
+           sodipodi:role="line"
+           x="728.67358"
+           y="496.05518">beendet</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text7277"
+         y="559.25"
+         x="712.2218"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="559.25"
+           x="712.2218"
+           id="tspan7281"
+           sodipodi:role="line">Normale Therapie</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text7291"
+         y="631.23401"
+         x="784.84924"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="631.23401"
+           x="784.84924"
+           id="tspan17163"
+           sodipodi:role="line">Gesundheitszustand</tspan><tspan
+           y="643.73401"
+           x="784.84924"
+           id="tspan17165"
+           sodipodi:role="line">größer oder gleich 90%</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text7295"
+         y="686.17151"
+         x="545.21057"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="686.17151"
+           x="545.21057"
+           id="tspan17159"
+           sodipodi:role="line">Gesundheitszustand</tspan><tspan
+           y="698.67151"
+           x="545.21057"
+           id="tspan17161"
+           sodipodi:role="line">weniger als 90%</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text7311"
+         y="708.0694"
+         x="764.71405"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="708.0694"
+           x="764.71405"
+           id="tspan7315"
+           sodipodi:role="line">Ende</tspan></text>
+      <path
+         inkscape:export-filename="/home/thet/dev-da/WORK-paper/modeling-diagrams/petri-stelle.pdf.png"
+         inkscape:export-ydpi="96"
+         inkscape:export-xdpi="96"
+         transform="translate(547.88419,303.29027)"
+         d="M 161.42857,113.71429 A 14.285714,14.285714 0 1 1 132.85714,113.71429 A 14.285714,14.285714 0 1 1 161.42857,113.71429 z"
+         sodipodi:ry="14.285714"
+         sodipodi:rx="14.285714"
+         sodipodi:cy="113.71429"
+         sodipodi:cx="147.14285"
+         id="path7255"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <g
+         transform="translate(3.8018478,0.5892557)"
+         id="g7317">
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1"
+           d="M 691.49278,63 L 691.23166,105.64977"
+           id="path4178"
+           inkscape:connector-type="polyline" />
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4180"
+           width="62.629459"
+           height="23.486046"
+           x="660"
+           y="39.513954"
+           inkscape:transform-center-x="22.142857"
+           inkscape:transform-center-y="-35" />
+      </g>
+      <rect
+         inkscape:transform-center-y="-35"
+         inkscape:transform-center-x="22.142857"
+         y="187.02831"
+         x="713.23041"
+         height="23.486046"
+         width="62.629459"
+         id="rect4245"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         inkscape:transform-center-y="-35"
+         inkscape:transform-center-x="22.142857"
+         y="187.02831"
+         x="614.11456"
+         height="23.486046"
+         width="62.629459"
+         id="rect4247"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         inkscape:connector-type="polyline"
+         id="path4271"
+         d="M 695.02704,136.67417 L 743.63276,185.54375"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.07455409px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+      <path
+         inkscape:connector-type="polyline"
+         id="path7229"
+         d="M 695.02704,136.67417 L 646.42132,185.54375"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.07455409px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+      <path
+         inkscape:export-filename="/home/thet/dev-da/WORK-paper/modeling-diagrams/petri-stelle.pdf.png"
+         inkscape:export-ydpi="96"
+         inkscape:export-xdpi="96"
+         transform="translate(597.08704,155.95495)"
+         d="M 161.42857,113.71429 A 14.285714,14.285714 0 1 1 132.85714,113.71429 A 14.285714,14.285714 0 1 1 161.42857,113.71429 z"
+         sodipodi:ry="14.285714"
+         sodipodi:rx="14.285714"
+         sodipodi:cy="113.71429"
+         sodipodi:cx="147.14285"
+         id="path7231"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <path
+         inkscape:connector-type="polyline"
+         id="path7233"
+         d="M 744.22989,211.01994 L 743.96877,253.66971"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+      <rect
+         inkscape:transform-center-y="-35"
+         inkscape:transform-center-x="22.142857"
+         y="328.7417"
+         x="712.8949"
+         height="23.486046"
+         width="62.629459"
+         id="rect7245"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         inkscape:connector-type="polyline"
+         id="path7247"
+         d="M 744.22989,284.26084 L 743.96877,326.91061"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+      <path
+         inkscape:connector-type="polyline"
+         id="path7263"
+         d="M 744.62052,352.34895 L 696.0148,401.21853"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.07455409px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+      <rect
+         inkscape:transform-center-y="-35"
+         inkscape:transform-center-x="22.142857"
+         y="476.00549"
+         x="663.71246"
+         height="23.486046"
+         width="62.629459"
+         id="rect7265"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         inkscape:connector-type="polyline"
+         id="path7273"
+         d="M 695.02704,431.53741 L 694.76592,474.18718"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+      <path
+         inkscape:export-filename="/home/thet/dev-da/WORK-paper/modeling-diagrams/petri-stelle.pdf.png"
+         inkscape:export-ydpi="96"
+         inkscape:export-xdpi="96"
+         transform="translate(547.81053,444.97817)"
+         d="M 161.42857,113.71429 A 14.285714,14.285714 0 1 1 132.85714,113.71429 A 14.285714,14.285714 0 1 1 161.42857,113.71429 z"
+         sodipodi:ry="14.285714"
+         sodipodi:rx="14.285714"
+         sodipodi:cy="113.71429"
+         sodipodi:cx="147.14285"
+         id="path7275"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <path
+         inkscape:connector-type="polyline"
+         id="path7283"
+         d="M 694.95338,499.93243 L 694.69226,542.5822"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+      <rect
+         inkscape:transform-center-y="-35"
+         inkscape:transform-center-x="22.142857"
+         y="623.45508"
+         x="712.9184"
+         height="23.486046"
+         width="62.629459"
+         id="rect7285"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         inkscape:transform-center-y="-35"
+         inkscape:transform-center-x="22.142857"
+         y="623.45508"
+         x="614.15948"
+         height="23.486046"
+         width="62.629459"
+         id="rect7289"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         inkscape:connector-type="polyline"
+         id="path7303"
+         d="M 694.95338,573.08722 L 743.5591,621.9568"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.07455409px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+      <path
+         inkscape:connector-type="polyline"
+         id="path7305"
+         d="M 694.95338,573.08722 L 646.34766,621.9568"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.07455409px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+      <path
+         inkscape:export-filename="/home/thet/dev-da/WORK-paper/modeling-diagrams/petri-stelle.pdf.png"
+         inkscape:export-ydpi="96"
+         inkscape:export-xdpi="96"
+         transform="translate(597.08704,592.43839)"
+         d="M 161.42857,113.71429 A 14.285714,14.285714 0 1 1 132.85714,113.71429 A 14.285714,14.285714 0 1 1 161.42857,113.71429 z"
+         sodipodi:ry="14.285714"
+         sodipodi:rx="14.285714"
+         sodipodi:cy="113.71429"
+         sodipodi:cx="147.14285"
+         id="path7307"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <path
+         inkscape:connector-type="polyline"
+         id="path7309"
+         d="M 744.22989,647.41281 L 743.96877,690.06258"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+      <path
+         inkscape:connector-type="polyline"
+         id="path7408"
+         d="M 592.5,669.66667 L 645.73701,669.65529"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.03641438px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:none;stroke-opacity:1" />
+      <path
+         inkscape:connector-type="polyline"
+         id="path7949"
+         d="M 592.49941,670.17714 L 592.49978,559.2602"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.03682888px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:none;stroke-opacity:1" />
+      <path
+         inkscape:connector-type="polyline"
+         id="path7951"
+         d="M 645.52641,670.18174 L 645.5296,647.39776"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.88649172px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:none;stroke-opacity:1" />
+      <path
+         inkscape:connector-type="polyline"
+         id="path7953"
+         d="M 591.9847,559.24995 L 678.84366,559.25042"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.03672671px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:none;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+      <path
+         inkscape:connector-type="polyline"
+         id="path17294"
+         d="M 645.52924,352.45039 L 645.52953,210.8935"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.03690886px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:none;stroke-opacity:1" />
+      <path
+         inkscape:connector-type="polyline"
+         id="path17340"
+         d="M 645.39676,352.07292 L 694.00248,400.9425"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.07455409px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+      <g
+         transform="translate(610.3531,33.066129)"
+         id="g17471">
+        <path
+           sodipodi:type="arc"
+           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="path17473"
+           sodipodi:cx="147.14285"
+           sodipodi:cy="113.71429"
+           sodipodi:rx="14.285714"
+           sodipodi:ry="14.285714"
+           d="M 161.42857,113.71429 A 14.285714,14.285714 0 1 1 132.85714,113.71429 A 14.285714,14.285714 0 1 1 161.42857,113.71429 z"
+           transform="translate(-62.542577,-24.536798)" />
+        <path
+           transform="matrix(0.3680447,0,0,0.3680447,30.445135,47.325553)"
+           d="M 161.42857,113.71429 A 14.285714,14.285714 0 1 1 132.85714,113.71429 A 14.285714,14.285714 0 1 1 161.42857,113.71429 z"
+           sodipodi:ry="14.285714"
+           sodipodi:rx="14.285714"
+           sodipodi:cy="113.71429"
+           sodipodi:cx="147.14285"
+           id="path17475"
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           sodipodi:type="arc" />
+      </g>
+    </g>
+  </g>
+</svg>

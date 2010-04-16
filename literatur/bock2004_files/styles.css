@@ -1,0 +1,78 @@
+.papertitle      { color: #0000cd; font-size: x-large; font-family: Verdana }
+.toptitle    { font-weight: bold; font-size: 12px; font-family: Verdana }
+.sectiontitle { color: #008000; font-size: medium; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+.subtitle { color: #0000cd; font-size: small; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+.programtext   { color: #00f; font-family: "Courier New", Courier, Monaco }
+.programtext2  { color: black; font-style: italic; font-weight: bold; font-size: small; font-family: "Times New Roman", Georgia, Times }
+.programtext3    { color: black; font-style: italic; font-weight: normal; font-size: small; font-family: "Times New Roman", Georgia, Times; text-indent: 20px; margin-left: 20px }
+.text { font-size: smaller; font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+.text_small   { font-size: 9px; font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+.authors       { font-weight: bold; font-size: smaller; font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+.affiliation { font-size: smaller; font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+.footnote { font-size: x-small; font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+.italictext { font-style: italic; font-size: small; font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+.programtext3 { color: #00f; font-size: small; font-family: "Courier New", Courier, Monaco; text-indent: 50px }
+.code { color: blue; font-family: "Courier New", Courier, Monaco }
+h1  {
+	color: #0000cd;
+	font-weight: lighter;
+	font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
+}
+indextitle { font-weight: bold; font-size: large; font-family: Verdana }
+h2  {
+	color: #0000cd;
+	font-family: Verdana;
+	font-weight: lighter;
+}
+.indextitle { font-weight: bold; font-size: larger; font-family: Verdana }
+h3 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: medium;
+	color: #008000;
+	font-weight: lighter;
+}
+h4 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: small;
+	color: #0000cd;
+}
+.outlook {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #0000cd;
+	font-size: smaller;
+}
+.indexh1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #008000;
+	font-size: smaller;
+}
+.smallCaps {
+	font-family: Verdana, Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
+	font-variant: small-caps;
+
+}
+.editor {
+	margin-bottom: 20px;
+	margin-left: 20px;
+	width: 100px;
+	text-align: right;
+}
+h5 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #0000cd;
+	font-style: italic;
+}
+li {
+font-family: Verdana, Arial, Helvetica, sans-serif
+}
+.sf {
+	font-family: "Times New Roman", Times, serif;
+	font-size: larger;
+
+}
+td {
+	vertical-align: top;
+}

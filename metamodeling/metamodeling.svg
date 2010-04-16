@@ -1,0 +1,963 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1024"
+   height="768"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   version="1.0"
+   sodipodi:docname="da-se3-diagrams.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow2Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow2Lstart"
+       style="overflow:visible">
+      <path
+         id="path3274"
+         style="font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         transform="scale(1.1) translate(1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lstart"
+       style="overflow:visible">
+      <path
+         id="path3256"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none"
+         transform="scale(0.8) translate(12.5,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow2Lend"
+       style="overflow:visible;">
+      <path
+         id="path3277"
+         style="font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round;"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         transform="scale(1.1) rotate(180) translate(1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="TriangleOutL"
+       style="overflow:visible">
+      <path
+         id="path3399"
+         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none"
+         transform="scale(0.8)" />
+    </marker>
+    <marker
+       inkscape:stockid="EmptyTriangleOutL"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="EmptyTriangleOutL"
+       style="overflow:visible">
+      <path
+         id="path3417"
+         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
+         style="fill-rule:evenodd;fill:#FFFFFF;stroke:#000000;stroke-width:1.0pt;marker-start:none"
+         transform="scale(0.8) translate(-6,0)" />
+    </marker>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="617.2002"
+     inkscape:cy="599.9492"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1002"
+     inkscape:window-height="711"
+     inkscape:window-x="268"
+     inkscape:window-y="19" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g18006"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       transform="translate(-408.10163,-45.96194)"
+       inkscape:export-filename="/home/thet/dev-da/da-seminar/da-se3/resources/da-se3-diagramsxx.pdf.png">
+      <g
+         id="g14630">
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect11354"
+           width="140.41121"
+           height="33.335033"
+           x="456.58893"
+           y="103.82472"
+           inkscape:transform-center-x="-19.192898"
+           inkscape:transform-center-y="-8.5862966" />
+        <text
+           xml:space="preserve"
+           style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+           x="463.97714"
+           y="124.22027"
+           id="text11358"><tspan
+             style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold"
+             sodipodi:role="line"
+             id="tspan11360"
+             x="463.97714"
+             y="124.22027">M3: Meta Meta Modell</tspan></text>
+      </g>
+      <g
+         id="g14635">
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect11378"
+           width="140.41121"
+           height="33.335033"
+           x="456.58893"
+           y="176.55571"
+           inkscape:transform-center-x="-19.192898"
+           inkscape:transform-center-y="-8.5862966" />
+        <text
+           xml:space="preserve"
+           style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+           x="479.85605"
+           y="196.95125"
+           id="text11362"><tspan
+             style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold"
+             sodipodi:role="line"
+             x="479.85605"
+             y="196.95125"
+             id="tspan11366">M2: Meta Modell</tspan></text>
+      </g>
+      <g
+         id="g14640">
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect11380"
+           width="140.41121"
+           height="33.335033"
+           x="456.58893"
+           y="249.28667"
+           inkscape:transform-center-x="-19.192898"
+           inkscape:transform-center-y="-8.5862966" />
+        <text
+           xml:space="preserve"
+           style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+           x="465.25644"
+           y="269.68222"
+           id="text11370"><tspan
+             style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold"
+             sodipodi:role="line"
+             id="tspan11372"
+             x="465.25644"
+             y="269.68222">M1: Konkretes Modell</tspan></text>
+      </g>
+      <g
+         id="g14645">
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect11382"
+           width="140.41121"
+           height="33.335033"
+           x="456.58893"
+           y="322.01764"
+           inkscape:transform-center-x="-19.192898"
+           inkscape:transform-center-y="-8.5862966" />
+        <text
+           xml:space="preserve"
+           style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+           x="486.92636"
+           y="342.32529"
+           id="text11374"><tspan
+             style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold"
+             sodipodi:role="line"
+             id="tspan11376"
+             x="486.92636"
+             y="342.32529">M0: Instanzen</tspan></text>
+      </g>
+      <g
+         id="g14660">
+        <g
+           id="g14650">
+          <path
+             inkscape:connector-type="polyline"
+             id="path11404"
+             d="M 511.05151,137.2841 L 511.05151,175.09578"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.97392905px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+          <text
+             id="text11937"
+             y="159.36278"
+             x="455.7254"
+             style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               y="159.36278"
+               x="455.7254"
+               id="tspan11939"
+               sodipodi:role="line">beschreibt</tspan></text>
+        </g>
+        <g
+           id="g14655">
+          <text
+             id="text11941"
+             y="159.44844"
+             x="540.61438"
+             style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               y="159.44844"
+               x="540.61438"
+               id="tspan11943"
+               sodipodi:role="line">Instanz</tspan></text>
+          <path
+             inkscape:connector-type="polyline"
+             id="path11945"
+             d="M 537.6726,138.61238 L 537.6726,176.42415"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.97393388px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2Lstart);marker-end:none;stroke-opacity:1" />
+        </g>
+      </g>
+      <g
+         transform="translate(0.6502129,72.574445)"
+         id="g14670">
+        <g
+           id="g14672">
+          <path
+             inkscape:connector-type="polyline"
+             id="path14674"
+             d="M 511.05151,137.2841 L 511.05151,175.09578"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.97392905px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+          <text
+             id="text14676"
+             y="159.36278"
+             x="455.7254"
+             style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               y="159.36278"
+               x="455.7254"
+               id="tspan14678"
+               sodipodi:role="line">beschreibt</tspan></text>
+        </g>
+        <g
+           id="g14680">
+          <text
+             id="text14682"
+             y="159.44844"
+             x="540.61438"
+             style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               y="159.44844"
+               x="540.61438"
+               id="tspan14684"
+               sodipodi:role="line">Instanz</tspan></text>
+          <path
+             inkscape:connector-type="polyline"
+             id="path14686"
+             d="M 537.6726,138.61238 L 537.6726,176.42415"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.97393388px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2Lstart);marker-end:none;stroke-opacity:1" />
+        </g>
+      </g>
+      <g
+         transform="translate(0.6502125,144.7173)"
+         id="g14688">
+        <g
+           id="g14690">
+          <path
+             inkscape:connector-type="polyline"
+             id="path14692"
+             d="M 511.05151,137.2841 L 511.05151,175.09578"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.97392905px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+          <text
+             id="text14694"
+             y="159.36278"
+             x="455.7254"
+             style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               y="159.36278"
+               x="455.7254"
+               id="tspan14696"
+               sodipodi:role="line">beschreibt</tspan></text>
+        </g>
+        <g
+           id="g14698">
+          <text
+             id="text14700"
+             y="159.44844"
+             x="540.61438"
+             style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               y="159.44844"
+               x="540.61438"
+               id="tspan14702"
+               sodipodi:role="line">Instanz</tspan></text>
+          <path
+             inkscape:connector-type="polyline"
+             id="path14704"
+             d="M 537.6726,138.61238 L 537.6726,176.42415"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.97393388px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2Lstart);marker-end:none;stroke-opacity:1" />
+        </g>
+      </g>
+      <g
+         id="g15816">
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+           d="M 456.06092,113.60225 L 428.08036,113.6808"
+           id="path14720"
+           inkscape:connector-type="polyline" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+           d="M 428.55722,113.16861 L 428.43232,73.387142"
+           id="path14722"
+           inkscape:connector-type="polyline" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+           d="M 427.93527,73.558033 L 479.68528,73.524242"
+           id="path14724"
+           inkscape:connector-type="polyline" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1;display:inline"
+           d="M 480.075,73.015048 L 479.82143,103.17857"
+           id="path15267"
+           inkscape:connector-type="polyline" />
+      </g>
+      <g
+         transform="translate(0,2)"
+         id="g17992">
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2Lstart);marker-end:none;stroke-opacity:1;display:inline"
+           d="M 597.42008,112.71861 L 625.40064,112.79716"
+           id="path15824"
+           inkscape:connector-type="polyline" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+           d="M 624.92378,112.28497 L 625.04868,72.503503"
+           id="path15826"
+           inkscape:connector-type="polyline" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+           d="M 625.54573,72.674394 L 573.79572,72.640603"
+           id="path15828"
+           inkscape:connector-type="polyline" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:none;stroke-opacity:1;display:inline"
+           d="M 573.406,72.131409 L 573.65957,102.29493"
+           id="path15830"
+           inkscape:connector-type="polyline" />
+      </g>
+      <text
+         id="text17998"
+         y="68.785713"
+         x="428.85715"
+         style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="68.785713"
+           x="428.85715"
+           id="tspan18000"
+           sodipodi:role="line">beschreibt</tspan></text>
+      <text
+         id="text18002"
+         y="71"
+         x="588.07141"
+         style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="71"
+           x="588.07141"
+           id="tspan18004"
+           sodipodi:role="line">Instanz</tspan></text>
+    </g>
+    <g
+       id="g18067"
+       transform="translate(273.30032,0.8652735)" />
+    <g
+       id="g18520"
+       transform="translate(-41.416254,-461.13463)"
+       inkscape:export-filename="/home/thet/dev-da/da-seminar/da-se3/metamodeling-uml.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.58147091;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect18392"
+         width="46.885551"
+         height="33.753563"
+         x="326.07001"
+         y="501.61554"
+         inkscape:transform-center-x="-6.4088215"
+         inkscape:transform-center-y="-8.6940938" />
+      <text
+         xml:space="preserve"
+         style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         x="336.82968"
+         y="522.13245"
+         id="text18394"><tspan
+           style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold"
+           sodipodi:role="line"
+           id="tspan18396"
+           x="336.82968"
+           y="522.13245">MOF</tspan></text>
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.93038124;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect18401"
+         width="121.28793"
+         height="33.404652"
+         x="407.56177"
+         y="503.30518"
+         inkscape:transform-center-x="-16.578951"
+         inkscape:transform-center-y="-8.6042097" />
+      <text
+         xml:space="preserve"
+         style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         x="414.37274"
+         y="523.73553"
+         id="text18403"><tspan
+           style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold"
+           sodipodi:role="line"
+           id="tspan18405"
+           x="414.37274"
+           y="523.73553">UML Infrastructure</tspan></text>
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.14140081;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect18411"
+         width="183.70638"
+         height="33.19363"
+         x="382.91849"
+         y="575.63666"
+         inkscape:transform-center-x="-25.110974"
+         inkscape:transform-center-y="-8.5498372" />
+      <text
+         xml:space="preserve"
+         style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         x="391.42984"
+         y="594.90436"
+         id="text18407"><tspan
+           style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold"
+           sodipodi:role="line"
+           id="tspan18409"
+           x="391.42984"
+           y="594.90436">UML Superstructure</tspan></text>
+      <rect
+         y="583.14209"
+         x="516.18793"
+         height="19.192898"
+         width="39.39595"
+         id="rect18419"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         inkscape:connection-start="#rect18392"
+         inkscape:connection-end="#rect18401"
+         inkscape:connector-type="polyline"
+         id="path18421"
+         d="M 373.24629,518.79529 L 407.09658,519.22741"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1, 3;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         inkscape:connection-end="#rect18419"
+         inkscape:connection-start="#rect18401"
+         inkscape:connector-type="polyline"
+         id="path18425"
+         d="M 484.18104,537.17502 L 526.49061,582.64209"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1, 3;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text18415"
+         y="594.78601"
+         x="518.95221"
+         style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="594.78601"
+           x="518.95221"
+           id="tspan18417"
+           sodipodi:role="line">merge</tspan></text>
+      <g
+         transform="translate(-30.254906,473.4912)"
+         id="g18454">
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2Lstart);marker-end:none;stroke-opacity:1;display:inline"
+           d="M 597.42008,112.71861 L 625.40064,112.79716"
+           id="path18456"
+           inkscape:connector-type="polyline" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+           d="M 624.92378,112.28497 L 625.04868,72.503503"
+           id="path18458"
+           inkscape:connector-type="polyline" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+           d="M 625.54573,72.674394 L 573.79572,72.640603"
+           id="path18460"
+           inkscape:connector-type="polyline" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:none;stroke-opacity:1;display:inline"
+           d="M 573.406,72.131409 L 573.65957,102.29493"
+           id="path18462"
+           inkscape:connector-type="polyline" />
+      </g>
+      <text
+         id="text18464"
+         y="542.49121"
+         x="557.81647"
+         style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="542.49121"
+           x="557.81647"
+           id="tspan18466"
+           sodipodi:role="line">Instanz</tspan></text>
+      <g
+         transform="translate(-328.57694,397.64949)"
+         id="g18468">
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect18470"
+           width="140.41121"
+           height="33.335033"
+           x="729.88922"
+           y="250.15195"
+           inkscape:transform-center-x="-19.192898"
+           inkscape:transform-center-y="-8.5862966" />
+        <text
+           xml:space="preserve"
+           style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+           x="767.2677"
+           y="270.54749"
+           id="text18472"><tspan
+             style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold"
+             sodipodi:role="line"
+             id="tspan18474"
+             x="767.2677"
+             y="270.54749">UML Modell</tspan></text>
+      </g>
+      <g
+         transform="translate(-328.57694,397.64949)"
+         id="g18476">
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect18478"
+           width="140.41121"
+           height="33.335033"
+           x="729.88922"
+           y="322.8829"
+           inkscape:transform-center-x="-19.192898"
+           inkscape:transform-center-y="-8.5862966" />
+        <text
+           xml:space="preserve"
+           style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+           x="772.42395"
+           y="343.12463"
+           id="text18480"><tspan
+             style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold"
+             sodipodi:role="line"
+             id="tspan18482"
+             x="772.42395"
+             y="343.12463">Instanzen</tspan></text>
+      </g>
+      <g
+         transform="translate(-54.626413,471.0892)"
+         id="g18484">
+        <g
+           id="g18486">
+          <path
+             inkscape:connector-type="polyline"
+             id="path18488"
+             d="M 511.05151,137.2841 L 511.05151,175.09578"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.97392905px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+          <text
+             id="text18490"
+             y="159.36278"
+             x="455.7254"
+             style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               y="159.36278"
+               x="455.7254"
+               id="tspan18492"
+               sodipodi:role="line">beschreibt</tspan></text>
+        </g>
+        <g
+           id="g18494">
+          <text
+             id="text18496"
+             y="159.44844"
+             x="540.61438"
+             style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               y="159.44844"
+               x="540.61438"
+               id="tspan18498"
+               sodipodi:role="line">Instanz</tspan></text>
+          <path
+             inkscape:connector-type="polyline"
+             id="path18500"
+             d="M 537.6726,138.61238 L 537.6726,176.42415"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.97393388px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2Lstart);marker-end:none;stroke-opacity:1" />
+        </g>
+      </g>
+      <g
+         transform="translate(-54.626413,543.23206)"
+         id="g18502">
+        <g
+           id="g18504">
+          <path
+             inkscape:connector-type="polyline"
+             id="path18506"
+             d="M 511.05151,137.2841 L 511.05151,175.09578"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.97392905px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+          <text
+             id="text18508"
+             y="159.36278"
+             x="455.7254"
+             style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               y="159.36278"
+               x="455.7254"
+               id="tspan18510"
+               sodipodi:role="line">beschreibt</tspan></text>
+        </g>
+        <g
+           id="g18512">
+          <text
+             id="text18514"
+             y="159.44844"
+             x="540.61438"
+             style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               y="159.44844"
+               x="540.61438"
+               id="tspan18516"
+               sodipodi:role="line">Instanz</tspan></text>
+          <path
+             inkscape:connector-type="polyline"
+             id="path18518"
+             d="M 537.6726,138.61238 L 537.6726,176.42415"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.97393388px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2Lstart);marker-end:none;stroke-opacity:1" />
+        </g>
+      </g>
+    </g>
+    <g
+       id="g2898"
+       transform="translate(12.857143,-5.7142857)">
+      <rect
+         inkscape:transform-center-y="-8.5862966"
+         inkscape:transform-center-x="-19.192898"
+         y="66.161507"
+         x="665.56268"
+         height="33.335033"
+         width="140.41121"
+         id="rect2720"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text2722"
+         y="86.557053"
+         x="686.27124"
+         style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="86.557053"
+           x="686.27124"
+           id="tspan2724"
+           sodipodi:role="line"
+           style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold">M3: ~zodict.node</tspan></text>
+      <rect
+         inkscape:transform-center-y="-8.5862966"
+         inkscape:transform-center-x="-19.192898"
+         y="139.50185"
+         x="665.56268"
+         height="33.335033"
+         width="140.41121"
+         id="rect2728"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text2730"
+         y="152.63908"
+         x="680.99292"
+         style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           id="tspan2732"
+           y="152.63908"
+           x="680.99292"
+           sodipodi:role="line"
+           style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold">M2: Simplified UML</tspan><tspan
+           y="165.13908"
+           x="680.99292"
+           sodipodi:role="line"
+           style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold"
+           id="tspan2892">Activities in Python</tspan></text>
+      <g
+         transform="translate(208.97378,-37.663218)"
+         id="g2734">
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect2736"
+           width="140.41121"
+           height="33.335033"
+           x="456.58893"
+           y="249.28667"
+           inkscape:transform-center-x="-19.192898"
+           inkscape:transform-center-y="-8.5862966" />
+        <text
+           xml:space="preserve"
+           style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+           x="465.25644"
+           y="269.68222"
+           id="text2738"><tspan
+             style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold"
+             sodipodi:role="line"
+             id="tspan2740"
+             x="465.25644"
+             y="269.68222">M1: Konkretes Modell</tspan></text>
+      </g>
+      <g
+         transform="translate(208.97378,-37.663218)"
+         id="g2742">
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect2744"
+           width="140.41121"
+           height="33.335033"
+           x="456.58893"
+           y="322.01764"
+           inkscape:transform-center-x="-19.192898"
+           inkscape:transform-center-y="-8.5862966" />
+        <text
+           xml:space="preserve"
+           style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+           x="486.92636"
+           y="342.32529"
+           id="text2746"><tspan
+             style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold"
+             sodipodi:role="line"
+             id="tspan2748"
+             x="486.92636"
+             y="342.32529">M0: Instanzen</tspan></text>
+      </g>
+      <g
+         transform="translate(208.97378,-37.663218)"
+         id="g2750">
+        <g
+           id="g2752">
+          <path
+             inkscape:connector-type="polyline"
+             id="path2754"
+             d="M 511.05151,137.2841 L 511.05151,175.09578"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.97392905px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+          <text
+             id="text2756"
+             y="159.36278"
+             x="455.7254"
+             style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               y="159.36278"
+               x="455.7254"
+               id="tspan2758"
+               sodipodi:role="line">beschreibt</tspan></text>
+        </g>
+        <g
+           id="g2760">
+          <text
+             id="text2762"
+             y="159.44844"
+             x="540.61438"
+             style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               y="159.44844"
+               x="540.61438"
+               id="tspan2764"
+               sodipodi:role="line">Instanz</tspan></text>
+          <path
+             inkscape:connector-type="polyline"
+             id="path2766"
+             d="M 537.6726,138.61238 L 537.6726,176.42415"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.97393388px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2Lstart);marker-end:none;stroke-opacity:1" />
+        </g>
+      </g>
+      <g
+         transform="translate(209.62399,34.911227)"
+         id="g2768">
+        <g
+           id="g2770">
+          <path
+             inkscape:connector-type="polyline"
+             id="path2772"
+             d="M 511.05151,137.2841 L 511.05151,175.09578"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.97392905px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+          <text
+             id="text2774"
+             y="159.36278"
+             x="455.7254"
+             style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               y="159.36278"
+               x="455.7254"
+               id="tspan2776"
+               sodipodi:role="line">beschreibt</tspan></text>
+        </g>
+        <g
+           id="g2778">
+          <text
+             id="text2780"
+             y="159.44844"
+             x="540.61438"
+             style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               y="159.44844"
+               x="540.61438"
+               id="tspan2782"
+               sodipodi:role="line">Instanz</tspan></text>
+          <path
+             inkscape:connector-type="polyline"
+             id="path2784"
+             d="M 537.6726,138.61238 L 537.6726,176.42415"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.97393388px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2Lstart);marker-end:none;stroke-opacity:1" />
+        </g>
+      </g>
+      <g
+         transform="translate(209.62399,107.05408)"
+         id="g2786">
+        <g
+           id="g2788">
+          <path
+             inkscape:connector-type="polyline"
+             id="path2790"
+             d="M 511.05151,137.2841 L 511.05151,175.09578"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.97392905px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+          <text
+             id="text2792"
+             y="159.36278"
+             x="455.7254"
+             style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               y="159.36278"
+               x="455.7254"
+               id="tspan2794"
+               sodipodi:role="line">beschreibt</tspan></text>
+        </g>
+        <g
+           id="g2796">
+          <text
+             id="text2798"
+             y="159.44844"
+             x="540.61438"
+             style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               y="159.44844"
+               x="540.61438"
+               id="tspan2800"
+               sodipodi:role="line">Instanz</tspan></text>
+          <path
+             inkscape:connector-type="polyline"
+             id="path2802"
+             d="M 537.6726,138.61238 L 537.6726,176.42415"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.97393388px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2Lstart);marker-end:none;stroke-opacity:1" />
+        </g>
+      </g>
+      <g
+         transform="translate(208.97378,-37.663218)"
+         id="g2804">
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+           d="M 456.06092,113.60225 L 428.08036,113.6808"
+           id="path2806"
+           inkscape:connector-type="polyline" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+           d="M 428.55722,113.16861 L 428.43232,73.387142"
+           id="path2808"
+           inkscape:connector-type="polyline" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+           d="M 427.93527,73.558033 L 479.68528,73.524242"
+           id="path2810"
+           inkscape:connector-type="polyline" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1;display:inline"
+           d="M 480.075,73.015048 L 479.82143,103.17857"
+           id="path2812"
+           inkscape:connector-type="polyline" />
+      </g>
+      <g
+         transform="translate(208.97378,-35.663218)"
+         id="g2814">
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2Lstart);marker-end:none;stroke-opacity:1;display:inline"
+           d="M 597.42008,112.71861 L 625.40064,112.79716"
+           id="path2816"
+           inkscape:connector-type="polyline" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+           d="M 624.92378,112.28497 L 625.04868,72.503503"
+           id="path2818"
+           inkscape:connector-type="polyline" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+           d="M 625.54573,72.674394 L 573.79572,72.640603"
+           id="path2820"
+           inkscape:connector-type="polyline" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:none;stroke-opacity:1;display:inline"
+           d="M 573.406,72.131409 L 573.65957,102.29493"
+           id="path2822"
+           inkscape:connector-type="polyline" />
+      </g>
+      <text
+         id="text2824"
+         y="31.122496"
+         x="637.83093"
+         style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="31.122496"
+           x="637.83093"
+           id="tspan2826"
+           sodipodi:role="line">beschreibt</tspan></text>
+      <text
+         id="text2828"
+         y="33.336781"
+         x="797.04517"
+         style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="33.336781"
+           x="797.04517"
+           id="tspan2830"
+           sodipodi:role="line">Instanz</tspan></text>
+    </g>
+  </g>
+</svg>

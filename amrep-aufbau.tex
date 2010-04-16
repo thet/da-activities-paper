@@ -1,0 +1,22 @@
+\chapter{Aufbau der Activity Model Runtime Engine für Python}
+Im folgenden werden die involvierten Pakete der AMREP-Implementierung, des umgesetzten Prototyps, kurz umrissen.
+
+\begin{description}
+
+\item[Metamodell:] Die Python Implementierung des Metamodell für AMREP ist im Paket \texttt{activities.metamodel} definiert. Es beinhaltet alle Metamodellelemente wie in Kapitel \rref{amrep-metamodel-elemente} beschrieben.
+
+\item[Runtime Engine:] Die Runtime Engine ist im Paket \texttt{activities.runtime} definiert. Sie ist der Modellinterpreter der Python-Modelle auf Basis von \texttt{activities.metamodel}. Das Paket beinhaltet weiters die Implementierung der Tokens und die Interfaces für \emph{Executions} (siehe auch: \ref{amrep-executions}).
+
+\item[XMI Importer:] Ein Modellimporter für UML Aktivitätsdiagramme im XMI Datenaustauschformat ist im Paket \texttt{activities.transform.xmi} implementiert. Der Import Mechanismus hat eine Reihe von Einschränkungen, die im Kapitel \rref{amrep-use-umleditor} beschrieben sind.
+
+\item[Use Case Article:] Ein Usecase für kollaborative  Dokumentenerstellung ist im Paket \texttt{activities.test.article} implementiert und zeigt, wie Python-Modelle und die Aktionsimplementierung \emme{Executions} definiert werden und wie der Daten-Payload der Token durch \emme{Executions} manipuliert werden kann.
+
+\item[Use Case Hospital:] Der Usecase "Patientenversorgung in einem Krankenhaus", wie in \ref{intro-usecase} beschrieben, ist im Paket \texttt{activities.test.hospital} implementiert. Die Besonderheit an diesem Test Case ist der komplexere Ablauf, das Testen von Pre- und Postconditions der Aktivität, Entscheidungen aufgrund der Werte der Daten-Payloads von Tokens und das Verändern des Modells zur Laufzeit.
+
+\item[Buildout:] Das Python \texttt{zc.buildout}\footnote{Mehr Informationen über zc.buildout, das Python Deployment System, sind hier zu finden: \url{http://pypi.python.org/pypi/zc.buildout}}
+basierte Deployment Modul ist im Paket \texttt{activities.buildout} definiert. Mit ihm werden alle relevanten Module der AMREP Implementierung sowie alle Abhängigkeiten automatisch installiert und die Pfade für den Python Interpreter gesetzt. Weitere Informationen zur Installation der AMREP Implementierung sind im Anhang unter Kapitel \rref{amrep-installation} beschrieben.
+
+\end{description}
+
+
+% END OF DOCUMENT

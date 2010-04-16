@@ -1,0 +1,58 @@
+\chapter{Interpreter der Activity Model Runtime Engine für Python}\label{amrep-runtime}
+
+\section{Einführung}
+
+Der Modellinterpreter\footnote
+{Zur Definition eines Interpreters siehe Kapitel \rref{def-interpreter}.}
+beziehungsweise die Runtime Engine, wie diese in AMREP genannt wird, ist für die Ausführung von Aktivitäten zuständig. Aktivitäten werden als Python Modelle geladen und Schritt für Schritt abgearbeitet. Der Interpreter erlaubt die Unterbrechung der Aktivität sowie die Änderung der Python Modelle zur Laufzeit.
+
+Dieses Kapitel erläutert die Funktionsweise und Implementierung der Runtime Engine.
+
+
+\section{Implementierung der Runtime Engine}
+
+Die Runtime Engine ist im Packet \empy{activities.runtime} implementiert. Die involvierten Klassen werden in der Abbildung \ref{fig:activities-runtime} dargestellt.
+
+Im Klassendiagramm ist ersichtlich, dass das Adapter Pattern in drei Fällen zum Einsatz kommt. Der für das Interface IActionInfo registrierte Adapter adaptiert Knoten vom Typ Action und liefert ein ActionInfo Objekt mit Informationen aus der adaptierten Aktion zurück. Der Adapter ITaggedValueDict zur Adaption von Stereotypen wird verwendet, um ein Dictionary mit TaggedValues des adaptierten Stereotyps zu erzeugen. ITokenFilter ist ein sogenannter Multiadapter\footnote
+{Multiadapter werden in der Zope Component Architecture verwendet, um zwei Objekte zu adaptieren und unterschiedliches Verhalten, abhängig von beiden Objekten, zur Verfügung zu stellen. Multiadapter werden in ZCA basierten Web Frameworks häufig verwendet, um unterschiedliche Ansichten (engl. \emph{Views}) für ein Objekt, abhängig vom \emph{Request} bereit zu stellen.}, der zwei Objekte vom Typ TokenPool und ActivityEdge adaptiert und wird verwendet, um alle Tokens zu einer bestimmten Kante auszulesen\footnote
+{Dieser Adapter trägt den Namen \emme{tokenfilter} und ist deshalb in Kleinbuchstaben notiert, da er als Funktion und nicht als Klasse implementiert ist.}.
+
+% graphic
+\imgS{activities-runtime/activities-runtime}{fig:activities-runtime}{Klassen der Runtime Engine}{Klassen der Runtime Engine}{0.5}
+
+Der Kern der Runtime Engine ist die Klasse \emme{ActivityRuntime}. Bei der Instantiierung wird der \empy{\_\_init\_\_} Methode die auszuführende Aktivität als Parameter übergeben und die Klasse \emme{TokenPool} instantiiert, die alle aktiven Tokens während der Laufzeit verwaltet.
+
+Die Runtime Engine wird mit der Methode \empy{start} gestartet. Als optionaler Parameter kann ein Daten Dictionary\footnote
+{In Python ist ein \emph{dictionary} ein Hashtable, dessen Elemente Objektreferenzen und in Konsequenz beliebige Datentypen beinhalten können (vgl. \citep{Martelli2006}, S.44). Ein Dictionary ist einem Array anderer Programmiersprachen sehr ähnlich.}
+übergeben werden, dessen Schlüssel (engl. \emph{Keys}) den im Modell verfügbaren Variablennamen entsprechen sollen und dessen Werte beliebige Python Objekte\footnote{In Python wird jeder Wert inklusive Zahlen, Zeichen und Funktionen als Objekt repräsentiert.}
+sein können.
+
+\imgS{activities-runtime/runtime-start}{fig:runtime-start}{Aktivitätsmodell der Start-Methode}{Aktivitätsmodell der Start-Methode}{0.6}
+
+Bei Aufruf der Start-Methode werden folgende Schritte ausgeführt (siehe Abbildung \ref{fig:runtime-start} als Darstellung als Aktivitätsmodell):
+\begin{enumerate}
+\item Es wird überprüft, ob \emme{TokenPool} aktive Tokens enthält und ein Fehler ausgelöst und der Vorgang abgebrochen falls dies der Fall ist, da die Aktivität bereits ausgeführt wird.
+\item Es werden die Vorbedingungen der Aktivität überprüft und ein Fehler ausgelöst, wenn diese nicht erfüllt werden können.
+\item Es wird über alle Profile des Package iteriert, in der die Aktivität definiert ist. Der Name jedes Profils wird verwendet, um ein gleichnamiges Python Modul zu importieren.
+\item Für jede ausgehende Kante jeder InitialNode wird ein Token mit den übergebenen Daten produziert.
+\item Es werden alle Tokens entsperrt, damit diese im nächsten Schritt von Knoten konsumiert werden können
+\end{enumerate}
+
+Neu erzeugte Tokens werden deshalb gesperrt, damit diese im aktuellen Schritt keine Kanten traversieren können. Andernfalls wäre es möglich, dass neu produzierte Tokens die gesamte Aktivität in einem Iterationsschritt durchlaufen können. Dieses Verhalten ist auch für nebenläufige Aktivitäten von Bedeutung, da andernfalls ein Zweig bis zum Ende durchlaufen werden könnte, ohne dass sich Tokens in einem anderen Zweig aufgrund von Knotenbedingungen bewegen würden.
+
+Nachdem die Aktivität gestartet wurde kann mit der \empy{next} Methode die Aktivität weiter abgearbeitet werden. Es werden die Schritte wie in Abbildung \ref{fig:runtime-next} dargestellt ausgeführt.
+
+\imgS{activities-runtime/runtime-next}{fig:runtime-next}{Aktivitätsmodell der Next-Methode}{Aktivitätsmodell der Next-Methode}{0.6}
+
+Die Next-Methode iteriert über alle in der Aktivität definierten Knoten. Falls der Knoten der aktuellen Iteration ein InitialNode ist, oder dieser aufgrund fehlender Tokens nicht ausgeführt werden kann, wird zur nächsten Iteration gesprungen. Für jeden Knoten werden alle Tokens aus den eingehenden Kanten gelöscht und der Daten-Payload zusammengeführt. Wenn der Knoten eine Aktion ist, wird diese ausgeführt (siehe auch \rref{amrep-executions}). Anschließend werden für alle ausgehenden Kanten Tokens produziert, wenn die Kantenbedingungen dies zulassen. Konnten keine Tokens produziert werden und ist eine Kante mit der speziellen Kantenbedingung "else" vorhanden, wird für diese Kante ein Token produziert. Wenn der aktuelle Knoten vom Typ "FinalNode" ist, werden Rückgabedaten aus dem Daten-Payload erzeugt. Nachdem über alle Knoten iteriert worden ist, werden die Tokens im TokenPool entsperrt. Falls ein Token zuvor einen Knoten vom Typ ActivityFinalNode erreicht hat, werden alle Tokens aus dem TokenPool gelöscht. Ist der TokenPool leer, so ist die Aktivität beendet und die Nachbedingungen können überprüft werden. Ist ein Rückgabewert vorhanden, wird dieser nun zurück gegeben.
+
+
+
+
+
+
+
+
+
+
+% END OF DOCUMENT

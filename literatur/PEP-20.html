@@ -1,0 +1,255 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+
+
+
+
+
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>PEP 20 -- The Zen of Python</title>
+  <meta name="keywords" content="None">
+  <meta name="description" content="None">
+  <link rel="alternate" type="application/rss+xml" title="Community Events" href="http://www.python.org/channews.rdf">
+  <link rel="alternate" type="application/rss+xml" title="Python Recipes" href="http://aspn.activestate.com/ASPN/Cookbook/Python/index_rss">
+  <link rel="alternate" type="application/rss+xml" title="Usergroup News" href="http://python-groups.blogspot.com/feeds/posts/default">
+  <link rel="alternate" type="application/rss+xml" title="Python Screencasts" href="http://www.showmedo.com/latestVideoFeed/rss2.0?tag=python">
+  <link rel="alternate" type="application/rss+xml" title="Python Podcasts" href="http://www.awaretek.com/python/index.xml">
+  <link rel="alternate" type="application/rss+xml" title="Foundation News" href="http://pyfound.blogspot.com/feeds/posts/default">
+  <link rel="alternate" type="application/rss+xml" title="Python Enhancement Proposals" href="http://www.python.org/dev/peps/peps.rss">
+  <link rel="alternate" type="application/rss+xml" title="Python Job Opportunities" href="http://www.python.org/community/jobs/jobs.rss">
+  <link rel="alternate" type="application/rss+xml" title="Reddit Feed of Python What's New Online" href="http://www.reddit.com/r/Python/.rss">
+
+  <link rel="stylesheet" type="text/css" media="screen" id="screen-switcher-stylesheet" href="PEP-20_files/screen-switcher-default.css">
+  <link rel="stylesheet" type="text/css" media="scReen" href="PEP-20_files/netscape4.css">
+  <link rel="stylesheet" type="text/css" media="print" href="PEP-20_files/print.css">
+  <link rel="alternate stylesheet" type="text/css" media="screen" href="PEP-20_files/largestyles.css" title="large text">
+  <link rel="alternate stylesheet" type="text/css" media="screen" href="PEP-20_files/defaultfonts.css" title="default fonts">
+
+  <link rel="search" type="application/opensearchdescription+xml" title="Search under the www.python.org Domain" href="http://www.python.org/search-pysite.xml">
+
+  <link rel="search" type="application/opensearchdescription+xml" title="Search within the Python Wiki" href="http://www.python.org/search-pywiki.xml">
+
+  <link rel="search" type="application/opensearchdescription+xml" title="Search within Python Books at Google Book Search" href="http://www.python.org/search-pybooks.xml">
+
+  <link rel="search" type="application/opensearchdescription+xml" title="Search within the Python Documentation" href="http://www.python.org/search-pydocs.xml">
+
+  <link rel="search" type="application/opensearchdescription+xml" title="Search for a Module in the Standard Library" href="http://www.python.org/search-pymodules.xml">
+
+  <link rel="search" type="application/opensearchdescription+xml" title="Search for Packages inside the Cheeseshop (PyPI)" href="http://www.python.org/search-pycheese.xml">
+
+  <link rel="search" type="application/opensearchdescription+xml" title="Search Archives of the Main Python Mailing List" href="http://www.python.org/search-pythonlist.xml">
+
+  <script type="text/javascript" src="PEP-20_files/iotbs2-key-directors-load.js"></script>
+  <script type="text/javascript" src="PEP-20_files/iotbs2-directors.js"></script>
+  <script type="text/javascript" src="PEP-20_files/iotbs2-core.js"></script>
+
+</head><body>
+  <!-- Logo -->
+  <h1 id="logoheader">
+    <a href="http://www.python.org/" id="logolink" accesskey="1"><img id="logo" src="PEP-20_files/python-logo.gif" alt="homepage" border="0"></a>
+  </h1>
+  <!-- Skip to Navigation -->
+  <div class="skiptonav"><a href="#left-hand-navigation" accesskey="2"><img src="PEP-20_files/trans.gif" id="skiptonav" alt="skip to navigation" border="0"></a></div>
+  <div class="skiptonav"><a href="#content-body" accesskey="3"><img src="PEP-20_files/trans.gif" id="skiptocontent" alt="skip to content" border="0"></a></div>
+  <!-- Utility Menu -->
+  <div id="utility-menu">
+    <!-- Search Box -->
+    <div id="searchbox">
+      <form method="get" action="http://google.com/search" id="searchform" name="searchform">
+        <div id="search">
+          <input id="domains" name="domains" value="www.python.org" type="hidden">
+          <input id="sitesearch" name="sitesearch" value="www.python.org" type="hidden">
+          <input id="sourceid" name="sourceid" value="google-search" type="hidden">
+          <input class="input-text" name="q" id="q" type="text">
+          <input value="search" class="input-button" name="submit" id="submit" type="submit">
+          <a href="http://www.python.org/search" class="reference">Advanced Search</a>
+        </div>
+      </form>
+    </div>
+    <div id="screen-switcher"><dl id="select-screen-switcher"><dt>Screen styles</dt><dd class="selected">normal*</dd><dd class=""><a href='javascript:void("largefonts",%20"large")'>large</a></dd><dd class=""><a href='javascript:void("defaultfonts",%20"userpref")'>userpref</a></dd></dl></div>
+  </div>
+
+  <div id="left-hand-navigation">
+    <!-- Main Menu -->
+    <div id="menu">
+      <ul class="level-one">
+            <li>
+          <a href="http://www.python.org/about/" title="About The Python Language">About</a>
+        </li>
+            <li>
+          <a href="http://www.python.org/news/" title="Major Happenings Within the Python Community">News</a>
+        </li>
+            <li>
+          <a href="http://www.python.org/doc/" title="Tutorials, Library Reference, C API">Documentation</a>
+        </li>
+            <li>
+          <a href="http://www.python.org/download/" title="Start Running Python Under Windows, Mac, Linux and Others">Download</a>
+        </li>
+            <li>
+          <a href="http://www.python.org/community/" title="Mailing Lists, Jobs, Conferences, SIGs, Online Chats">Community</a>
+        </li>
+            <li>
+          <a href="http://www.python.org/psf/" title="Python Software Foundation">Foundation</a>
+        </li>
+            <li class="selected">
+          <a href="http://www.python.org/dev/" title="Development of the Python language and website" class="selected">Core Development</a>
+	    <ul class="level-two">
+		<li>
+	      <a href="http://www.python.org/dev/why/">Why Develop Python?</a>
+              </li>
+		<li>
+	      <a href="http://www.python.org/dev/setup/">Getting Set Up</a>
+              </li>
+		<li>
+	      <a href="http://www.python.org/dev/workflow/">Issue Workflow</a>
+              </li>
+		<li>
+	      <a href="http://www.python.org/dev/contributing/">How to Contribute to Python</a>
+              </li>
+		<li>
+	      <a href="http://www.python.org/dev/intro/">Intro to Development</a>
+              </li>
+		<li>
+	      <a href="http://www.python.org/dev/process/">Development Process</a>
+              </li>
+		<li>
+	      <a href="http://www.python.org/dev/culture/">Culture</a>
+              </li>
+		<li>
+	      <a href="http://www.python.org/dev/tools/">Tools</a>
+              </li>
+		<li>
+	      <a href="http://www.python.org/dev/patches/">Patch Submission</a>
+              </li>
+		<li>
+	      <a href="http://www.python.org/dev/buildbot/">Buildbot</a>
+              </li>
+		<li>
+	      <a href="http://www.python.org/dev/doc/">Documenting Python</a>
+              </li>
+		<li>
+	      <a href="http://www.python.org/dev/faq/">FAQ</a>
+              </li>
+		<li class="selected">
+	      <a href="http://www.python.org/dev/peps/" class="selected">PEP Index</a>
+              </li>
+		<li>
+	      <a href="http://www.python.org/dev/summary/">python-dev Summaries</a>
+              </li>
+		<li>
+	      <a href="http://www.python.org/dev/pydotorg/">Python.org</a>
+              </li>
+		<li>
+	      <a href="http://svn.python.org/view/">Browse Subversion</a>
+              </li>
+		<li>
+	      <a href="http://svn.python.org/snapshots/">Daily Snapshots</a>
+              </li>
+	    </ul>
+        </li>
+            <li>
+          <a href="http://www.python.org/links/" title="Pointers to Useful Information">Links</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Quick Links -->
+    <h4><a style="color: rgb(213, 130, 40); padding-top: 1.5em;" href="http://www.python.org/psf/donations/">Help Fund Python</a></h4>
+    <div style="padding-top: 0.5em; padding-left: 1em;">
+      <a href="http://www.python.org/psf/donations/"><img src="PEP-20_files/donate.png" alt="" title="" width="116" height="42"></a>
+    </div>
+  </div>
+
+  <div id="content-body">
+    <div id="body-main">
+      <div id="content">
+        
+          <div id="breadcrumb">
+               <a href="http://www.python.org/dev/">Core Development</a>
+               <span class="breadcrumb-separator">&gt;</span>
+               <a href="http://www.python.org/dev/peps/">PEP Index</a>
+               <span class="breadcrumb-separator">&gt;</span>
+            
+            PEP 20 -- The Zen of Python
+          </div>
+
+
+
+        <!--
+This HTML is auto-generated.  DO NOT EDIT THIS FILE!  If you are writing a new
+PEP, see http://www.python.org/dev/peps/pep-0001 for instructions and links
+to templates.  DO NOT USE THIS HTML FILE AS YOUR TEMPLATE!
+-->
+<div class="header">
+<table class="rfc2822" border="0">
+  <tbody><tr><th class="field-name">PEP:&nbsp;</th><td>20</td></tr>
+  <tr><th class="field-name">Title:&nbsp;</th><td>The Zen of Python</td></tr>
+  <tr><th class="field-name">Version:&nbsp;</th><td>1877</td></tr>
+  <tr><th class="field-name">Last-Modified:&nbsp;</th><td><a href="http://svn.python.org/view/*checkout*/peps/trunk/pep-0020.txt"> 2004-08-23 05:41:21 +0200 (Mon, 23 Aug 2004)</a> </td></tr>
+  <tr><th class="field-name">Author:&nbsp;</th><td>Tim Peters &lt;tim at zope.com&gt;</td></tr>
+  <tr><th class="field-name">Status:&nbsp;</th><td>Active</td></tr>
+  <tr><th class="field-name">Type:&nbsp;</th><td>Informational</td></tr>
+  <tr><th class="field-name">Content-Type:&nbsp;</th><td><a href="http://www.python.org/dev/peps/pep-0009">text/plain</a> </td></tr>
+  <tr><th class="field-name">Created:&nbsp;</th><td>19-Aug-2004</td></tr>
+  <tr><th class="field-name">Post-History:&nbsp;</th><td>22-Aug-2004</td></tr>
+</tbody></table>
+</div>
+<h3>Abstract</h3>
+<pre>    Long time Pythoneer Tim Peters succinctly channels the BDFL's
+    guiding principles for Python's design into 20 aphorisms, only 19
+    of which have been written down.
+
+
+</pre>
+<h3>The Zen of Python</h3>
+<pre>    Beautiful is better than ugly.
+    Explicit is better than implicit.
+    Simple is better than complex.
+    Complex is better than complicated.
+    Flat is better than nested.
+    Sparse is better than dense.
+    Readability counts.
+    Special cases aren't special enough to break the rules.
+    Although practicality beats purity.
+    Errors should never pass silently.
+    Unless explicitly silenced.
+    In the face of ambiguity, refuse the temptation to guess.
+    There should be one-- and preferably only one --obvious way to do it.
+    Although that way may not be obvious at first unless you're Dutch.
+    Now is better than never.
+    Although never is often better than *right* now.
+    If the implementation is hard to explain, it's a bad idea.
+    If the implementation is easy to explain, it may be a good idea.
+    Namespaces are one honking great idea -- let's do more of those!
+
+
+</pre>
+<h3>Easter Egg</h3>
+<pre>    &gt;&gt;&gt; import this
+
+
+</pre>
+<h3>Copyright</h3>
+<pre>    This document has been placed in the public domain.
+
+
+</pre>
+
+
+      </div>
+
+      
+      <div id="footer">
+	<div id="credits">
+ 	  <a href="http://www.python.org/about/website">Website maintained by the Python community</a><br>
+	  <a href="http://www.xs4all.com/" title="Web and email hosting provided by xs4all, Netherlands">hosting by xs4all</a> /
+	  <a href="http://www.timparkin.co.uk/" title="Design by Tim Parkin, Yorkshire man, photographer and developer">design by Tim Parkin</a>
+	</div>
+	Copyright © 1990-2009, <a href="http://www.python.org/psf/">Python Software Foundation</a><br>
+	<a href="http://www.python.org/about/legal">Legal Statements</a>
+      </div>
+
+
+    </div>
+  </div>
+</body></html>

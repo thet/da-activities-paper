@@ -1,0 +1,125 @@
+\chapter{Modellierungssprachen im Kontext der Prozessmodellierung}\label{mod-petri}
+
+\section{Petri-Netze}
+
+\subsection{Einführung in Petri-Netze}
+Ein Petri-Netz ist ein Modell zur Beschreibung und Analyse von nebenläufigen Prozessen, die in verteilten Systemen mit vielen Komponenten auftauchen (vgl. \citep{PetriReisig2008}). Nebenläufigkeit ist als Begriff allgemeiner gefasst als Parallelität, da nebenläufige Prozesse sequentielle und parallele Ausführung mit einschließen (vgl. \citep{ClausSchwill2006}, S. 444-445). Die theoretische Basis der Petri-Netze wurde 1962 vom Deutschen Mathematiker und Informatiker Carl Adam Petri beschrieben. Petri-Netze bilden die Basis der meisten Prozessmodell-Sprachen (vgl. \citep{BernroiderStix2006}, S. 17).
+
+Ein Petri-Netz ist ein gerichteter Graph aus Knoten, die durch Kanten verbunden sind. Es werden zwei verschiedene Knotentypen unterschieden (vgl. \citep{BernroiderStix2006} S. 17):
+
+\begin{description}
+\item[Stelle:] Engl.: \emph{state}. Alternative Bezeichnung: \emph{Aktion} oder \emph{Bedingung}. Dieser Knotentyp führt bestimmte Aktionen aus oder stellt bestimmte Bedingungen bereit. Stellen, denen Transitionen folgen, heißen \emph{Eingabestellen}. Stellen, die Transitionen nachgelagert sind, heißen \emph{Ausgabestellen}. Sie werden durch einen Kreis dargestellt. Siehe Abbildung \ref{fig:petri-stelle}.
+% graphik
+\img{modeling-diagrams/petri-stelle}{fig:petri-stelle}{Stelle}{Stelle in Petrinetzen}
+
+\item[Transition:] Engl.: \emph{transition}. Alternative Bezeichnung: \emph{Ereignis}. Dieser Knotentyp stellt einen Zeitpunkt dar, an dem ein Ereignis eintritt und nachfolgende Stellen aktiviert werden. Siehe Abbildung \ref{fig:petri-transition}.
+% graphik
+\img{modeling-diagrams/petri-transition}{fig:petri-transition}{Transition}{Transition in Petrinetzen}
+\end{description}
+
+In Petri-Netzen können immer nur zwei unterschiedliche Knotentypen durch Kanten verbunden werden. Das impliziert, dass zwischen Aktionen bzw. Bedingungen immer Ereignisse eintreten müssen, die dann weitere Aktionen bzw. Bedingungen auslösen (vgl. \citep{BernroiderStix2006}, S. 18). Siehe Abbildung \ref{fig:petri-verbindung-knoten}.
+% graphik
+\img{modeling-diagrams/petri-verbindung-knoten}{fig:petri-verbindung-knoten}{Verbindung unterschiedlicher Knotentypen}{Verbindung unterschiedlicher Knotentypen in Petrinetzen}
+
+
+Ein weiteres wichtiges Konzept von Petri-Netzen sind \emph{Marken} (engl.: \emph{tokens}). Diese können sich in Stellen befinden und markieren, dass eine Aktion durchgeführt wird oder eine Bedingung zutrifft. Die Marken werden im Prozessablauf von einer Stelle zur nächsten weitergereicht. Stellen können beliebig viele Marken beinhalten, Kanten jedoch nur jeweils eine Marke zu einem Zeitpunkt weiter transportieren. Marken werden durch einen schwarzen Punkt innerhalb des Stellenkreises dargestellt (vgl. \citep{BernroiderStix2006}, S. 17). Siehe Abbildung \ref{fig:petri-token}.
+% graphik
+\img{modeling-diagrams/petri-token}{fig:petri-token}{Stelle mit einem und drei Token}{Token in Petrinetzen}
+
+Die \emph{Markierung} eines Petri-Netzes ist der Zustand zu einem Zeitpunkt, der durch Anzahl und Positionen der Marken beschrieben wird und durch einen Vektor ausgedrückt werden kann. Die Position $i$ im Vektor entspricht der Position der Stelle im Petri-Netz (vgl. \citep{BernroiderStix2006} S. 17).
+% TODO: graphik, beispiel
+
+Es gelten folgende Regeln für den Prozessablauf in Petri-Netzen (vgl. \citep{ClausSchwill2006}, S. 500):
+\begin{enumerate}
+\item Eine Transition schaltet (bzw. \emph{feuert}) dann, wenn in jeder Eingabestelle mindestens eine Marke vorhanden ist. Die Transition ist somit \emph{aktiv}.
+\item Wenn eine Transition schaltet, wird aus jeder Eingabestelle eine Marke entnommen und für jede Ausgabestelle eine neue Marke produziert. Der Zustand des Netzes ändert sich.
+\end{enumerate}
+% TODO: graphik, beispiel
+
+\subsection{Mögliche Grundstrukturen in Petri-Netzen}
+In Petri-Netzen können folgende Grundstrukturen auftreten (vgl. \citep{ClausSchwill2006}, S. 501 und \citep{BernroiderStix2006}, S. 19-20):
+
+
+\begin{description}
+\item[Erzeugen von Marken:] Ein Ereignis tritt ein und eine Marke wird erzeugt und weitergegeben (siehe Abbildung \ref{fig:petri-pattern-1}).
+\imgH{modeling-diagrams/petri-pattern-1}{fig:petri-pattern-1}{Erzeugen von Marken}{Erzeugen von Marken in Petrinetzen}
+
+\item[Löschen von Marken:] Eine Marke wird einer vorangehenden Stelle entnommen und gelöscht (siehe Abbildung \ref{fig:petri-pattern-2}).
+\imgH{modeling-diagrams/petri-pattern-2}{fig:petri-pattern-2}{Löschen von Marken}{Löschen von Marken in Petrinetzen}
+
+\item[Vervielfachung von Marken und Beginn einer Nebenläufigkeit:] Es werden Marken für alle nachfolgenden Stellen produziert. Eventuell vorhandene Objekte werden vervielfacht (siehe Abbildung \ref{fig:petri-pattern-3}).
+\imgH{modeling-diagrams/petri-pattern-3}{fig:petri-pattern-3}{Vervielfachung von Marken}{Vervielfachung von Marken in Petrinetzen}
+
+\item[Synchronisation, Ende der Nebenläufigkeit und Verschmelzung von Objekten:] Der Knoten wird aktiv, sobald an jeder Kante Marken eintreffen. Eventuell transportierte Objekte werden verschmolzen (siehe Abbildung \ref{fig:petri-pattern-4}).
+\imgH{modeling-diagrams/petri-pattern-4}{fig:petri-pattern-4}{Synchronisation}{Synchronisation in Petrinetzen}
+
+\item[Quelle für Marken:] Die Stelle kann Marken besitzen, die nachgelagerten Transitionen weitergereicht werden können (siehe Abbildung \ref{fig:petri-pattern-5}).
+\imgH{modeling-diagrams/petri-pattern-5}{fig:petri-pattern-5}{Quelle für Marken}{Quelle für Marken in Petrinetzen}
+
+\item[Archiv für Marken:] Die Stelle nimmt Marken von einer vorgelagerten Transition an (siehe Abbildung \ref{fig:petri-pattern-6}).
+\imgH{modeling-diagrams/petri-pattern-6}{fig:petri-pattern-6}{Archiv für Marken}{Archiv für Marken in Petrinetzen}
+
+\item[Ausschließende Fortsetzungsalternativen:] Je nachdem welche nachgelagerte Transition aktiv wird, wird der entsprechende Pfad genommen (siehe Abbildung \ref{fig:petri-pattern-7}).
+\imgH{modeling-diagrams/petri-pattern-7}{fig:petri-pattern-7}{Ausschließende Fortsetzungsalternativen}{Ausschließende Fortsetzungsalternativen in Petrinetzen}
+
+\item[Asynchrones Zusammenführen paralleler Aktionen und Sammelstelle:] Im Gegensatz zur Synchronisation müssen nicht alle Marken gleichzeitig eintreffen (siehe Abbildung \ref{fig:petri-pattern-8}).
+\imgH{modeling-diagrams/petri-pattern-8}{fig:petri-pattern-8}{Asynchrones Zusammenführen}{Asynchrones Zusammenführen in Petrinetzen}
+\end{description}
+
+
+\subsection{Analytische Fragestellungen über den Zustand von Petri-Netzen}
+Petri-Netze können nach folgenden Fragestellungen analysiert und klassifiziert werden (vgl. \citep{ClausSchwill2006}, S. 501):
+% und \citep{PetriReisig2008}
+
+\begin{description}
+\item[Terminierung des Netzes:] Es wird ausgehend von einem bestimmten Ausgangszustand untersucht, ob die Transitionen nur endlich oft schalten können.
+\item[Lebendigkeit des Netzes:] Ausgehend von einem bestimmten Ausgangszustand wird untersucht, ob eine Transition $t$ nach einem Schaltvorgang nochmals schalten kann. Wenn das nicht der Fall ist, nennt man die Transition $t$ \emph{tot}.
+\item[Verklemmung des Netzes:] Engl.: \emph{Deadlock}. Es wird untersucht, ob Situationen auftreten können, in denen keine Transitionen schalten können.
+\item[Erreichbarkeitsproblem:] Ausgehend von zwei Markierungen \emph{M$_{1}$} und \emph{M$_{2}$} wird untersucht, ob eine Schaltfolge existiert, in der das Netz vom Zustand \emph{M$_{1}$} in \emph{M$_{2}$} wechseln kann.
+\item[Beschränkung des Netzes:] Ein Netz heißt beschränkt, wenn bei jeder erreichbaren Markierung höchstens $k$ Marken in jeder Stelle liegen.
+\item[Fairness einer Schaltfolge:] Eine unendliche Schaltfolge ist dann unfair, wenn es Transitionen gibt, die in dieser Schaltfolge nie berücksichtigt werden, aber unendlich oft schalten könnten.
+% \item Markierungsklasse: Menge aller Markierungen, die von einem bestimmten Ausgangszustand erreicht werden können, wenn das Netz vorwärts (in die Zukunft) und rückwärts (in die Vergangenheit) ausgeführt wird.
+\end{description}
+
+
+\subsection{Formale Definition von Petri-Netzen}
+Ein Petri-Netz wird durch ein 5-Tupel $P=(S,T,A,E,M)$ formal definiert \citep{ClausSchwill2006}, S. 502), wobei:
+
+\begin{itemize}
+\item $S$ eine nicht-leere Menge von Stellen ist
+\item $T$ eine nicht-leere Menge von Transitionen ist
+\item $S \cap T = \emptyset$, also Elemente aus S nicht in T enthalten sind
+\item $A \subset S \times T$ ist die Menge der Kanten, die von Stellen zu Transitionen führen
+\item $E \subset T \times S$ ist die Menge der Kanten, die von Transitionen zu Stellen führen
+\item $M : S \rightarrow \mathds{N}_0$ ist eine Markierungsfunktion, die den Ausgangszustand definiert - also die Anzahl der Marken in jeder Stelle
+\end{itemize}
+
+$A$ und $E$ können zur sogenannten Flussrelation $A \cup E = F$ zusammengefasst werden.
+
+% TODO: Beispiel
+
+\subsection{Erweiterungen von Petri-Netzen}
+Petri-Netze können wie folgt erweitert werden (vgl. \citep{BernroiderStix2006}, S. 21):
+
+Stellen in Petri-Netzen können theoretisch unendlich viele Marken besitzen. Kanten können nur jeweils eine Marke transportieren. Durch Gewichtung können Kapazitäten und Durchfluss festgelegt werden. Werden Stellen mit einem Gewicht versehen, wird deren maximale Kapazität festgelegt. Analog dazu wird durch Gewichtung von Kanten die Anzahl der  zu transportierenden Marken festgelegt.
+
+% TODO: graphik
+
+Ein Petri-Netz, in dem alle Stellen und Kanten mit eins gewichtet sind, wird \emph{BE-Netz} (Bedingungs-Ereignis-Netz) genannt. Ein solches Netz eignet sich zur Modellierung logischer Schaltungen.
+
+Eine weitere Variation ergibt sich, wenn die Marken voneinander unterschieden werden (Dokument, Person, usw.) oder ihnen bestimmte Attribute (Gewicht, Preis, Kosten, usw.) zugewiesen werden. Ein solches Netz wird \emph{IM-Netz} (Individuelle-Marken-Netz) genannt.
+
+
+\subsection{Praktische Bedeutung von Petri-Netzen}
+Petri-Netze bauen auf der Graphentheorie auf und bilden die Basis der meisten Prozessmodellierungssprachen. Beispielsweise basiert die Ereignisgesteuerte Prozesskette (EPK) auf Petri-Netzen, allerdings sind Ereignisgesteuerte Prozessketten weit weniger formal definiert und eignen sich nicht für die Beschreibung exakter Prozessabläufe (vgl. \citep{BernroiderStix2006}, S. 26). Auch bei den Aktivitätsdiagrammen von UML2 finden sich Konzepte aus den Petri-Netzen wieder.
+
+Petri-Netze bieten Möglichkeiten, bestimmte Aussagen über das Netz mathematisch zu beweisen. Es kann beispielsweise bewiesen werden, ob ein Netz einen toten Zustand erreichen kann oder nicht. Durch ihre Granularität und die Art der Darstellung werden Petri-Netze allerdings schnell unübersichtlich und sind für Personen, die mit den Konzepten nicht vertraut sind, wenig intuitiv (vgl. \citep{BernroiderStix2006}, S. 22).
+
+
+\subsection{Beispiel für das Petrinetz \emme{PatientInnenversorgung in einem Krankenhaus}}
+Der im Kapitel \rref{intro-usecase} vorgestellte Usecase einer Patientenversorgung in einem Krankenhaus wird in der Abbildung \ref{fig:petri-usecase} als Petrinetz dargestellt. Die Vor- und Nachbedingungen sind nicht modelliert, da es hierfür keine Entsprechung in Petrinetzen gibt. Es ist ein Token in der Stelle "Erstdiagnose" dargestellt, der nach Beendigung von der folgenden Transition konsumiert wird.
+
+\img{modeling-diagrams/petri-usecase}{fig:petri-usecase}{Beispiel für das Petrinetz \emph{PatientInnenversorgung in einem Krankenhaus}}{Beispiel für das Petrinetz \emph{PatientInnenversorgung in einem Krankenhaus}}
+
+
+% END OF DOCUMENT

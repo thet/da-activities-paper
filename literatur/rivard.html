@@ -1,0 +1,1761 @@
+<!DOCTYPE HTML PUBLIC "-//W3O//DTD W3 HTML 2.0//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+<title> Smalltalk: a Reflective Language</title>
+<!-- Rivard Frederic / fred_rivard@oti.com / 20-Jun-1996 -->
+</head><body bgcolor="#ffffff">
+
+<p>
+</p><h1> <center>Smalltalk: a Reflective Language</center></h1>
+
+<p><img src="rivard_files/fredDeFaceIcon.jpg" align="right">
+<strong><b> Fred Rivard</b><br> 
+         Object Technology International Inc.<br> 
+         Ottawa - Ontario<br> 
+        <a href="mailto:fred_rivard@oti.com"><b> fred_rivard@oti.com</b>
+</a></strong>
+</p><p>
+<a href="mailto:fred_rivard@oti.com">Reflection'96 - San Franscico - CA<br>
+Edited by Gregor Kiczales<br>
+</a><a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/reflection96.ps.gz">postcript version (152190 octets) here</a>
+</p><p>
+</p><h3>Abstract:</h3>
+<em>As in the LISP tradition, SMALLTALK
+is almost entirely written in 
+itself. It offers important advantages such as large
+portability, dynamicity, a
+fully unified world, graphical user interface builders, 
+connection to databases, powerful development
+tools, etc. In this paper we discuss the trait that
+underlies all these features: REFLECTION. We quote one of its
+definitions and in the first part of this paper go
+through the different reflective aspects of SMALLTALK. We expand five
+ major aspects in detail: meta-operations, the classes/metaclasses model,
+the reified compiler, message sending 
+and the behavioral representation through the reification of the executive
+stack frame of each process. We illustrate their use with significant
+applications, based both on
+our industrial and research experiences.
+In the second part of the paper, we <a href="ftp://ftp.emn.fr/pub/rivard/Smalltalk/visualworks2.0/prepost.st">introduce and fully develop
+<i> pre/post conditions</i> in SMALLTALK</a>, dealing with extensions of
+the model, the compiler, and the development environment.
+</em>
+
+<p></p><center><p><img src="rivard_files/line.gif"></p></center><p>
+<a href="" http:="" www.emn.fr="" dept_info="" perso="" rivard="" informatique="" neoclassta="" lk="" neoclasstalk.html="">
+<img src="rivard_files/neoClasstalk.gif"></a>
+Most of smalltalk reflective  aspects are used to implement NeoClasstalk
+<a href="http://www.emn.fr/dept_info/perso/rivard/informatique/neoclasstalk/neoclasstalk.html"> (NeoClasstalk web page)</a>.
+</p><p></p><center><p><img src="rivard_files/line.gif"></p></center><p>
+<img src="rivard_files/ball2.gif">
+	1 <a href="#SECTION00010000000000000000"> Introduction</a><br>
+<!--IMG SRC="icons/ball.green.gif">
+	<A HREF="#SECTION00011000000000000000"> 1.1/ Following the LISP tradition</A><BR>
+<IMG SRC="icons/ball.green.gif">
+	<A HREF="#SECTION00012000000000000000"> 1.2/ Meta-Objects</A><BR>
+<IMG SRC="icons/ball.green.gif">
+	<A HREF="#SECTION00013000000000000000"> 1.3/ Paper Organization</A><BR-->
+<img src="rivard_files/ball2.gif">
+	2 <a href="#SECTION00020000000000000000"> Reflective aspects survey</a><br>
+<img src="rivard_files/ball.gif"><img src="rivard_files/ball.gif">
+	2.1 <a href="#SECTION00021000000000000000">  Meta-Operations</a><br>
+<!--IMG SRC="icons/ball.green.gif">
+	<A HREF="#SECTION00021100000000000000"> 2.1.1/ Model</A><BR>
+<IMG SRC="icons/ball.green.gif"><IMG SRC="icons/ball.green.gif">
+	<A HREF="#SECTION00021200000000000000"> 2.1.2/ Usage</A><BR-->
+<img src="rivard_files/ball.gif"><img src="rivard_files/ball.gif">
+	2.2 <a href="#SECTION00022000000000000000">  Structure</a><br>
+<!--IMG SRC="icons/ball.green.gif"><IMG SRC="icons/ball.green.gif">
+	<A HREF="#SECTION00022100000000000000"> 2.2.1/ Model</A><BR>
+<IMG SRC="icons/ball.green.gif"><IMG SRC="icons/ball.green.gif">
+	<A HREF="#SECTION00022200000000000000"> 2.2.2/ Usage</A><BR-->
+<img src="rivard_files/ball.gif"><img src="rivard_files/ball.gif">
+	2.3 <a href="#SECTION00023000000000000000">  Semantics</a><br>
+<!--IMG SRC="icons/ball.green.gif"><IMG SRC="icons/ball.green.gif">
+	<A HREF="#SECTION00023100000000000000"> 2.3.1/ Model</A><BR>
+<IMG SRC="icons/ball.green.gif"><IMG SRC="icons/ball.green.gif">
+	<A HREF="#SECTION00023200000000000000"> 2.3.2/ Usage</A><BR-->
+<img src="rivard_files/ball.gif"><img src="rivard_files/ball.gif">
+	2.4 <a href="#SECTION00024000000000000000">  Message  Sending</a><br>
+<!--IMG SRC="icons/ball.green.gif"><IMG SRC="icons/ball.green.gif">
+	<A HREF="#SECTION00024100000000000000"> 2.4.1/ Model</A><BR>
+<IMG SRC="icons/ball.green.gif"><IMG SRC="icons/ball.green.gif">
+	<A HREF="#SECTION00024200000000000000"> 2.4.2/ Usage</A><BR-->
+<img src="rivard_files/ball.gif"><img src="rivard_files/ball.gif">
+	2.5 <a href="#SECTION00025000000000000000">  Control State</a><br>
+<!--IMG SRC="icons/ball.green.gif"><IMG SRC="icons/ball.green.gif">
+	<A HREF="#SECTION00025100000000000000"> 2.5.1/ Model</A><BR>
+<IMG SRC="icons/ball.green.gif"><IMG SRC="icons/ball.green.gif">
+	<A HREF="#SECTION00025200000000000000"> 2.5.2/ Usage</A><BR-->
+<img src="rivard_files/ball2.gif">
+	3 <a href="#SECTION00030000000000000000">  Reflective Extension: Addition of Pre/Post Conditions</a><br>
+<img src="rivard_files/ball.gif"><img src="rivard_files/ball.gif">
+	3.1 <a href="#SECTION00031000000000000000">  Model Extension</a><br>
+<img src="rivard_files/ball.gif"><img src="rivard_files/ball.gif">
+	3.2 <a href="#SECTION00032000000000000000">  Environment Extension</a><br>
+<img src="rivard_files/ball.gif"><img src="rivard_files/ball.gif">
+	3.3 <a href="#SECTION00033000000000000000">  Compiler Extension</a><br>
+<img src="rivard_files/ball.gif"><img src="rivard_files/ball.gif">
+	3.4 <a href="#SECTION00034000000000000000">  Benchmarks</a><br>
+<img src="rivard_files/ball2.gif">
+	4 <a href="#SECTION00040000000000000000">  Conclusion</a><br>
+<img src="rivard_files/ball2.gif">
+	<a href="#SECTIONREF">References</a><br>
+<img src="rivard_files/ball2.gif">
+	A.1 <a href="#SECTION00060000000000000000">  Code</a>
+</p><p></p><center><p><img src="rivard_files/line.gif"></p></center>
+<h1><a name="SECTION00010000000000000000">1 Introduction</a></h1>
+<p>
+SMALLTALK derives its success largely
+from  being not only a language but also an operating
+system and a development environment as well as producing applications  which
+are extremely portable on multiple
+platforms. 
+The most important
+aspect about the language is that, in the LISP tradition, it
+is almost entirely written in 
+itself. This property makes it an open system that is easily 
+extendable. The implementation of SMALLTALK [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#oe20">Par94b</a>]<a name="tex2html1" href="#1132"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a> itself is structured as
+an object-oriented program,  expressed in
+SMALLTALK and organized around meta-level objects representing the
+classes, methods, lexical closures, processes, compilers, and even the
+stack frames.  
+SMALLTALK belongs to the field
+ of languages that deals with <i> reflection</i>.
+
+</p><p>
+``<i> Reflection is the ability of a program to manipulate as data
+ something representing the state of the program during its own execution.
+ There are two aspects of such manipulation : <b> introspection</b> and <b> 
+ intercession</b>. Introspection is the ability of a program to observe and therefore
+ reason about its own state. Intercession is the ability of a program to
+ modify its own execution state or alter its own interpretation or meaning.
+ Both aspects require a mechanism for encoding execution state as data; providing
+ such an encoding is called <b> reification</b></i>'' [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#reflexionbobrowgabrielwhite">DBW93</a>].
+</p><p>
+Even if the precise point at which a language with
+reflective facilities becomes a reflective language is not well defined
+(and is an interesting issue that merits examination  by the reflective
+community as a whole), SMALLTALK has one of the most complete sets of reflective
+facilities of any language in widespread use. Although SMALLTALK is not fully
+reflective due to the pragmatic reason of 
+<i> efficiency</i> [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#goldbergbluebook">GR83</a>],  its reflective
+facilities can provide much of the power of full
+reflection [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#oopsla89FooteJohnson">FJ89</a>]. 
+This characteristic is
+responsible for most of its advantages over
+other industrial object-oriented languages, such as C++ and ADA95.
+</p><p>
+</p><h2><a name="SECTION00011000000000000000">1.1 Following the LISP tradition</a></h2>
+<p>
+What probably accounts for a large part of the success of the
+early LISP interpreters and their 
+different derived dialects, is the great ease with which  one can describe and build
+programs in terms of simple objects such as lists. Taking the trivial example
+of the addition of two numbers, the program can be described as
+ <tt> (cons '+ '(1 2))</tt>
+Thus, one can consider programs as regular data and may
+use them as such. Futhermore, the program can reason
+about itself. The idea follows that a program could see
+itself as data, and thus modify itself.
+</p><p>
+Although SMALLTALK seems to be a little bit more complicated than LISP at first glance, it has kept LISP's approach 
+towards code, regarding and manipulating it as regular data. Taking the creation of simple
+objects such as points as an illustration, the external representation of a
+point matches
+exactly the program that creates it.
+</p><p>
+<tt> 1@2</tt> 
+represents a point where the <tt> x</tt> value is <tt> 1</tt> and the <tt> y</tt> value is <tt>
+  2</tt>. Moreover, the
+ execution of this representation, viewed as an expression, 
+returns exactly the point object <tt> 1@2</tt>. 
+The internal representation can also be accessed. An object may have a
+textual representation of its internal state using the message <tt>
+  storeString</tt>, which returns
+a sequence of characters that is an expression 
+        whose evaluation creates an object similar to itself.
+Thus <tt> (1@2) storeString</tt> returns the string
+ <tt> 'Point x: 1 y: 2'</tt>. 
+Explicitly calling the regular evaluator using 
+<tt> Compiler evaluate: '...aString...'</tt>, the evaluation of 
+this next string returns <tt> true</tt>:
+</p><pre><tt> 
+ <tt> (1@2)  = (Compiler evaluate: ((1@2) storeString ))</tt> <img src="rivard_files/hand.gif" align="bottom"><tt> true</tt>
+</tt></pre>
+Classes, which are complex objects, also have a textual
+representation.
+ <pre><tt> 
+<tt> ArithmeticValue subclass: #Point</tt>
+	<tt> instanceVariableNames: 'x y '</tt>
+	<tt> classVariableNames: ''</tt>
+	<tt> poolDictionaries: ''</tt>
+	<tt> category: 'Graphics-Geometry'</tt>
+</tt></pre>
+The above text matches the definition of the <tt> Point</tt> class, which
+can be obtained by sending the <tt> definition</tt> method to the reified 
+ object that represents the <tt> Point</tt> class.
+Thus the evaluation of a class definition returns an object (a class) that
+returns exactly the same string when asked for its <tt> definition</tt>.
+<p>
+The SMALLTALK code is stored in what is called a <i> method</i>, which
+corresponds (approximately) to a named LISP lambda-expression.
+As for classes, a textual representation may be obtained just by sending
+introspective messages. 
+<tt> [:x | x+1]</tt> is equivalent to the <tt>
+  (lambda (x) (+ x 1))</tt> LISP expression. It is represented by an object
+from which one can ask for
+its external textual representation. In order to get their
+external textual representation, methods and lexical 
+closures, denoted under the vocable <i> block</i>,  use their internal
+representation, which mainly comprises bytecodes, as well as a
+decompiler (which is reified, too). A special tool (<tt> CompiledCodeInspector</tt>) makes
+the access to this source representation
+very user friendly, using the mouse and a click on a field.
+</p><p>
+Therefore, following the LISP tradition, a SMALLTALK program may
+reason about itself regarding and manipulating the different objects that represent it
+(textually or internally).
+</p><p>
+</p><h2><a name="SECTION00012000000000000000">1.2 Meta-Objects</a></h2>
+<p>
+<a name="metaobjects">&nbsp;</a>
+<i> ``First, the basic elements of the programming language - classes,
+  methods and generic functions - are made accessible as objects. Because
+  these objects represent fragments of a program, they are given the special
+  name of <b> metaobjects</b>. Second, individual decisions about the behavior
+  of the language are encoded in a protocol operating on these metaobjects -
+  <b> a metaobject protocol</b>. Third, for each kind of metaobject, a default
+  class is created, which lays down the behavior of the default language in
+  the form of methods in the protocol.''</i> [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#kiczalesmop">KdRB91</a>]
+</p><p>
+<i> Ordinary</i> objects are
+used to 
+model the real world. <i> Meta-objects</i> describe these ordinary
+objects. As a consequence, meta-objects mostly describe SMALLTALK
+entities. We quote non-exhaustively major meta-object classes (classified by subject):
+</p><p>
+</p><ol>
+<li> <i> <b> Structure</b></i><b></b>:<br> <tt> Behavior,  ClassDescription,  Class,
+      Metaclass, ClassBuilder</tt>
+  </li><li> <i> <b> Semantics</b></i><b></b>:<br> <tt> Parser, Compiler,
+   Decompiler, ProgamNode, ProgramNodeBuilder, CodeStream</tt>
+</li><li> <i> <b> Behavior</b></i><b></b>:<br> <tt> CompiledMethod,  CompiledBlock,  Message, Signal,  Exception</tt>
+</li><li> <i> <b> Control State</b></i><b></b>:<br> <tt> Context, BlockContext, Process, BlockClosure, ProcessorScheduler</tt>
+</li><li> <i> <b> Resources</b></i><b></b>:<br> <tt> ObjectMemory, MemoryPolicy,  WeakArray</tt>
+</li><li> <i> <b> Naming</b></i><b></b>:<br> <tt> SystemDictionary,  NameScope,  PoolDictionary</tt>
+</li><li> <i> <b> Libraries</b></i><b></b>:<br> <tt> MethodDictionary,  ClassOrganizer,  SystemOrganizer</tt>
+</li><li> <i> <b> Environment</b></i><b></b>:<br> <tt> Browser, Inspector, Debugger</tt>
+</li></ol>
+The methods associated with these classes formalize what can be considered as the SMALLTALK MOP.
+<h2><a name="SECTION00013000000000000000"> 1.3 Paper Organization</a></h2>
+<p>
+This paper is divided in two parts: the first
+part is a survey of the reflective capabilities of the language, and the
+ second is
+an illustrative example of those capabilities.
+ After having presented meta-operations and their use,
+ we focus on the most important reflective subjects: <i> structure</i>,
+<i> behavior</i>, <i> semantic</i> and <i> control state</i>. We describe the involved
+meta-objects and their classes. We quote significant
+applications using such objects.
+As an illustration of reflective manipulations, we introduce <i> pre/post
+  conditions</i> in SMALLTALK, dealing with (small) extensions of
+the model, the compiler and the development environment.
+We conclude with the current propensity of SMALLTALK to include more and more
+reflection in recent releases, which we consider as a sign of  adaptability
+to new software engineering challenges.
+</p><p>
+</p><h1><a name="SECTION00020000000000000000">2 Reflective aspects survey</a></h1>
+<p>
+Rather then going through a complete enumeration of all the reflective
+facilities of SMALLTALK, we concentrate on the most important
+ones:
+</p><ol><li> <b> Meta-Operation</b>: regular objects as metaobjects,
+</li><li> <b> Structure</b>: classes as regular objects,
+</li><li> <b> Semantics</b>: compilers as regular objects,
+</li><li> <b> Message Sending</b>: messages as regular objects (when
+errors occur),
+</li><li> <b> Control State</b>: processes as regular objects.
+</li></ol>  
+
+<p>
+</p><h2><a name="SECTION00021000000000000000">2.1 Meta-Operations</a></h2>
+<p>
+ <i> Meta-operations are operations that provide information
+  about an object as opposed to information directly contained by the
+  object. [...] They permit things to be done that are not normally
+  possible</i> (page 195 of [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#lalondepugh">LP90</a>]). 
+</p><h3><a name="SECTION00021100000000000000">2.1.1 Model</a></h3>
+<p>
+Major meta-operations are defined in the root of the inheritance tree, the class
+<tt> Object</tt> as methods for:
+</p><p>
+</p><ul><li> <b> addressing the internal object structure</b>
+<ul><li> <tt> Object<b>&gt;&gt;</b>instVarAt:(put:)</tt><a name="tex2html2" href="#1138"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a><br> 
+reads (writes)
+an instance variable using an  index instead of the name of the instance
+variable,
+</li></ul>
+</li><li> <b> addressing the object meta representation</b>
+<ul><li> <tt> Object<b>&gt;&gt;</b>class</tt> <br> returns the class of the receiver,
+</li><li> <tt> Object<b>&gt;&gt;</b>changeClassToThatOf:</tt> <br> changes the
+class of an object, and thus its behavior. But a heavy restriction of this
+method is
+that both classes must define the same format, i.e., describe the same physical
+structure for their instances,
+</li></ul>
+</li><li> <b> addressing the object identity</b> 
+<ul><li> <tt> Object<b>&gt;&gt;</b>#allOwners </tt><br> returns an array of all objects
+ referencing the receiver,
+</li><li> <tt> Object<b>&gt;&gt;</b>#identityHash</tt><br> returns an integer
+ranged in 0..16383. It is used to implement dictionary classes<a name="tex2html3" href="#1139"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a> which provide efficient access to the 
+objects of a collection using keys,
+<a name="become">&nbsp;</a></li><li> <tt> Object<b>&gt;&gt;</b>#become:</tt> <br> swaps references between two
+objects (the receiver and the argument).
+</li></ul></li></ul>
+ These meta operations consider an object as a
+meta-object, but an object understands ordinary methods too, such as <tt> printString</tt> or
+<tt> inspect</tt>. While some classes define only meta-objects (<tt> Class</tt>,
+<tt> Compiler</tt>, ...), other classes define instances that can be qualified as
+meta-objects depending on the context in which they are used (<tt> Object</tt>, <tt>
+  Array</tt>(cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#semantics">2.3</a>), ... ). Therefore, stamping labels on classes
+based on their
+meta(or not) instances cannot always  be reduced to a dichotomy of
+choices.
+<p>
+</p><h3><a name="SECTION00021200000000000000"> 2.1.2 Usage</a></h3>
+<p>
+<i> Introspection</i> is the essence of <i> reflection</i>, and so the first applications using
+structural reflective facilities are tools used to introspect the SMALLTALK
+system: the <tt> Inspector</tt> class and its subclasses.
+</p><p>
+
+</p><p>
+An inspector enables the user to look at the structure of an object,
+  and to modify its instance variable values, using 
+ <tt> Object<b>&gt;&gt;</b>#instVarAt:</tt>(<tt> put:</tt>) methods.
+ The inspector uses
+  the inspected object class (<tt> Object<b>&gt;&gt;</b>#class</tt>) to get its instance variable names (<tt>
+   Behavior<b>&gt;&gt;</b>#allInstVarNames</tt>) and the index of the instance
+  variables.
+ Notice that these methods allow the programmer to break the encapsulation of
+an object, and this must only be used in pertinent contexts.
+</p><pre><tt> 
+	<tt>  (3@4) x</tt> 			<img src="rivard_files/hand.gif" align="bottom"> <tt> <i> 3</i></tt><i></i>
+	<tt>  (3@4) instVarAt: 1</tt> 		<img src="rivard_files/hand.gif" align="bottom"> <tt> <i> 3</i></tt><i></i>
+	<tt>  (3@4) instVarAt:  1 put: 5</tt> 	<img src="rivard_files/hand.gif" align="bottom"> <tt> <i> 5@4</i></tt><i></i>
+	<tt>  (3@4) class instSize</tt>		<img src="rivard_files/hand.gif" align="bottom"> <tt> <i> 2</i></tt><i></i>
+	<tt>  (3@4) class allInstVarNames</tt> 	<img src="rivard_files/hand.gif" align="bottom"> <tt> <i> ('x'  'y')</i></tt><i></i>
+</tt></pre>
+A hierarchy of inspectors is available, allowing specialized inspection
+ on particular
+objects, such as collections, dictionaries, etc.
+<pre><tt> 
+<tt> Inspector</tt>
+	<tt> ChangeSetInspector</tt>
+	<tt> CompiledCodeInspector</tt>
+	<tt> ContextInspector</tt>
+	<tt> DictionaryInspector</tt>
+	<tt> SequenceableCollectionInspector</tt>
+		<tt> OrderedCollectionInspector</tt>
+</tt></pre>
+<h2><a name="SECTION00022000000000000000">2.2 Structure</a></h2>
+<p>
+Structural reflection implies the ability of the language to provide a
+complete reification both of the program currently being executed as well as 
+of its abstract data type[<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#ijcai95jacques">DM95</a>].
+SMALLTALK as a unified language only manipulates objects. Each object
+is an instance of a class that describes both the behavior and the structure of its
+instances.  A class named <tt> Object</tt> defines the basic
+behavior of every object of the system, such as accessing the class of an
+object.
+</p><h3><a name="SECTION00022100000000000000">2.2.1 Model</a></h3>
+<p>
+
+<a name="model">&nbsp;</a>
+Classes as regular objects are described by other (regular)
+  classes  called metaclasses<a name="tex2html4" href="#224"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a>. A
+ metaclass has a single instance (except
+  metaclasses  involved in the kernel of SMALLTALK). It establishes a couple
+class/metaclass schema. Inheritance on metaclasses follows the one
+at the class level (cf Figure 1), defining the SMALLTALK
+metaclass composition rule.
+This schema is known as the
+SMALLTALK-80 schema, and states how metaclasses are composed. It may
+induce class hierarchy conflicts [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#oopsla89Graube">Gra89</a>], but for everyday
+development,  the pragmatic SMALLTALK  choice suits most needs.
+Metaclass  display  is the concatenation of the global name of its sole instance (a class),
+and the <i> class</i> string. As an example, the metaclass of the class <tt> <i>
+  Object</i></tt><i></i> is the <tt> <i> Object class</i></tt><i></i> metaclass.
+</p><p>
+The behavior of classes and metaclasses are described by two
+(meta)classes respectively named <tt> Class</tt> and <tt> Metaclass</tt>. 
+ In order for classes to behave as classes, <tt> Object class</tt> inherits
+ from <tt> Class</tt>. In particular the <tt> new</tt> method, enabling object
+creation, is accessible. This property is often given as the definition of
+a class. All metaclasses
+are instances of <tt> Metaclass</tt>, and in particular the <tt> Metaclass class</tt> is
+also an instance of <tt> Metaclass</tt>, stopping de facto an
+instantiation of infinite regression. Two abstract classes named <tt> Behavior</tt> and <tt>
+  ClassDescription</tt> regroup the common behavior between metaclasses and
+ classes (for example <tt> new</tt> is defined on <tt> Behavior</tt>).
+</p><p>
+
+</p><p>
+Finally the class/metaclass kernel of SMALLTALK is
+self-described with only five classes:
+</p><ul><li> <tt> Object</tt><br> provides default behavior common to all objects,
+</li><li> <tt> Behavior</tt><br> defines the minimal behavior for classes,
+especially their physical representation, which is known by the SMALLTALK virtual machine,
+</li><li> <tt> ClassDescription</tt><br> implements  common behavior
+for <tt> Class </tt> and <tt> Metaclass</tt> such as category organization for
+methods, named instance variables, and a save (<tt> fileOut</tt>) mechanism,
+</li><li> <tt> Class</tt><br> describes regular class behavior,
+</li><li> <tt> Metaclass</tt><br> describes regular metaclass behavior.
+</li></ul>
+
+<center><img src="rivard_files/smtkmodel.jpg" align="bottom"><p>
+<i>Figure 1: SMALLTALK class/metaclass kernel</i>
+</p></center><p>
+The SMALLTALK-80 kernel has pragmatic origins,
+ resulting from several years of intensive development
+using simpler models that chronologically were SMALLTALK-72 [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#smtk72">KG76</a>] and SMALLTALK-76 [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#smtk76">Ing78</a>]. In order to keep an ``easy to use'' model, 
+a tool named <tt> ClassBuilder</tt> hides the apparent complexity
+of the kernel from the end-user. A class creation 
+(and its associated metaclass creation) is fully managed by
+the tool, which is called by the class creation
+protocol<a name="tex2html5" href="#1142"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a>. 
+It
+also automatically manages class redefinition, guaranteeing system
+consistency in terms of object structures and preventing name
+conflicts, especially instance variable name conflicts.
+When a class
+  definition changes, existing instances must be structurally modified
+  in order to match the  definition of their new class.  Instead of modifying
+  an existing object, the <tt> ClassBuilder</tt> creates a new one with the
+  correct structure (i.e., from the new class that replaces the old one). It then fills this new object
+  with the values of the old one. The <tt>
+    ClassBuilder</tt> uses the <tt> become:</tt> primitive (cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#become">2.1.1</a>) to
+  proceed with the strutural modifications, by replacing<a name="tex2html6" href="#280"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a> the old objects
+  with the new ones throughout the entire system.
+</p><p>
+Methods are held by classes in an instance variable <tt> methodDict</tt>, 
+whose value is an instance of the
+<tt> MethodDictionary</tt> class. It enables access to the SMALLTALK
+code. It also allows methods to be dynamically added at runtime (<tt> ClassDescription<b>&gt;&gt;</b>compile:classified:</tt>).
+The <tt> ClassOrganizer</tt> class provides an organization of methods according
+to their purpose in protocols and every class holds such an organization in
+the instance variable <tt> organization</tt>.  Classes themselves are grouped into categories according
+to their purpose. <tt> Smalltalk organization</tt> represents the 
+organization of classes. It is an instance of the <tt>
+    SystemOrganizer</tt> class which is a subclass of the <tt> ClassOrganizer</tt> class.
+</p><p>
+</p><h3><a name="SECTION00022200000000000000">2.2.2 Usage</a></h3>
+<p>
+<a name="browser">&nbsp;</a>An ordinary use of the self-expressed kernel is to extend it in order to match
+new application domains. Our next pre/post conditions example
+ (cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#prepost">3</a>) is such an extension. As another typical example, 
+CLASSTALK [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#cointeclasstalk">Coi90</a>] proposes an experimental
+platform (an extension of SMALLTALK) to study explicit metaclass
+programming. But even in the language, reification is of great benefit
+allowing  introspection using dedicated tools: <tt> Browser</tt>. It manipulates classes and metaclasses
+ as regular objects. Thus, it can investigate their definitions <tt>
+ ClassDefinition<b>&gt;&gt;</b>#definition</tt> and  their inheritance links, following the
+reified <tt> superclass/subclasses</tt> instance variables.
+
+</p><p>
+The  <tt> Browser</tt> organizes the user external interface according to the
+information held by the different reified organizations <!--(cf Figure 2)-->:
+</p><ul><li> A list pane showing the categories, using <tt> Smalltalk organization</tt>,
+</li><li> A list pane showing class names,
+</li><li> A list pane showing the protocols of a selected class,  
+</li><li> A list pane showing the selectors of a selected protocol,
+</li><li> A text pane for method edition, class definition edition,
+class comment, ....
+</li></ul>
+<!--center><IMG  SRC="browser2.jpg"><P>
+<i>Figure 2: SMALLTALK browser with the different panes (and associted code)</i-->
+<p>
+The reification of classes allows the language to provide essential
+efficient utilities such as <i> implementors</i> (look into all classes for methods matching a given name),
+ <i> senders</i> (look into all methods for the ones performing a given  sending
+ message) and
+ <i> messages</i> (look for implementors of a message present in a given
+ method).
+</p><pre><tt> 
+<tt>  Point selectors</tt>		<tt>  <img src="rivard_files/hand.gif" align="bottom"> <i> IdentitySet( #x  #y #transpose ...)</i></tt><i></i>
+<tt>  Point compiledMethodAt: #+</tt>	<tt>  <img src="rivard_files/hand.gif" align="bottom"> <i> Point<b>&gt;&gt;</b>+</i></tt><i></i>
+<tt>  Point findSelector: #class</tt>	<tt>  <img src="rivard_files/hand.gif" align="bottom"> <i> #( Object Object<b>&gt;&gt;</b>class)</i></tt><i></i>
+<tt>  Point superclass</tt>		<tt>  <img src="rivard_files/hand.gif" align="bottom"> <i> ArithmeticValue</i></tt><i></i>
+<tt>  Point compilerClass</tt>		<tt>  <img src="rivard_files/hand.gif" align="bottom"> <i> Compiler</i></tt><i></i>
+</tt></pre><h2><a name="SECTION00023000000000000000">2.3 Semantics</a></h2>
+<p>
+<a name="semantics">&nbsp;</a>
+One of the salient features of SMALLTALK is the fully reified
+compilation process.
+ Since any compiler implicitly gives the semantics of the language it compiles, and because
+SMALLTALK has in itself, as regular objects, its own compiler, the SMALLTALK
+semantics is  fully controllable.    
+Therefore one may extend the current language semantics providing new
+compile-time features by extending/modifying current compilers.
+</p><p>
+ This approach must be compared to the one of compile-time
+ MOP [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#lampingopencompiler">LKRR92</a>], which breaks
+ the compilation process into small independent fully
+ redesignable pieces. SMALLTALK
+compilation uses the existing SMALLTALK code for its own needs, and is
+designed as a regular OO program which is causally connected to the language.
+Thus, using current OO technology, one can extend the current compilation
+process. Next we describe what can be considered as the first compile-time
+MOP. But the heavy interaction between what is part of the
+compiler and what is not sometimes makes the use of this compile-time MOP
+difficult.  Therefore the authors of 
+[<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#parameterizedCompiler">HJ95</a>] proposes a more parametrized
+compiler. This big interconnection between the
+compilation phase and the SMALLTALK language as a whole is demonstrated 
+by the next small example, which discusses the order of argument evaluation
+of a message send. The compilation process uses
+the regular <tt>
+  do:</tt> method from the <tt> SequenceableCollection</tt> class, allowing the
+treatment of
+each element of a collection in a left to right order. Therefore, it defines a
+left to right semantics for the argument evaluation order. In that, the <tt>
+  SequenceableCollection</tt> class can be seen  as a
+part of the compilation process because it defines the 
+semantics of the argument evaluation order. Notice that 
+ the array that is used to hold the arguments of a
+message at compile time is therefore a meta-object(cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#metaobjects">1.2</a>) but other
+arrays would not necessarily be meta-objects.
+</p><h3><a name="SECTION00023100000000000000">2.3.1 Model</a></h3>
+<a name="compilation">&nbsp;</a>
+The two separated parts of the compilation process, parsing and code
+generation, are  described by class hierarchies. We first describe them, and
+then proceed with their order of execution for compiling method source.
+<ul><li> <tt> Parser</tt>: it produces a
+parse tree whose nodes are <tt> ProgramNode</tt>.
+The SMALLTALK syntax is concise, as it only requires method 
+definition.
+A method is described by a keyword associated with 
+argument names<a name="tex2html7" href="#356"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a> followed
+by an optional temporaries list and an optional
+expressions list. Expressions are assignment, message sending and instance variable
+access. The parser/compiler also defines pseudo-variables (<tt> self, super,
+thisContext</tt>) and syntactical objects (<tt> true</tt>, <tt> false</tt>,
+<tt> nil</tt>, <tt> #( ...anArray...)</tt>,
+<tt> [...a block closure... ]</tt>),
+<p>
+</p></li><li> <tt> ProgramNodeBuilder</tt>:  programNode generators. They are used by
+  parsers to construct the nodes of the syntax tree. Builders allow the complete
+  disconnection of the (recursive descent) parsing mechanism from its result (the nodes),
+</li><li> <tt> ProgramNode</tt>:  syntactic nodes built by <tt>
+  programNodeBuilders</tt>. They hold the code generation methods <tt> emitEffect:
+</tt> and <tt> emitValue</tt>. The next hierarchy presents the classes that
+  formalize the SMALLTALK syntactical rules. 
+ 
+<pre><tt> 
+ProgramNode
+	<b> MethodNode</b>
+	ParameterNode
+	StatementNode
+		ReturnNode
+		ValueNode
+			ArithmeticLoopNode
+			AssignmentNode
+			CascadeNode
+			ConditionalNode
+			LeafNode
+				BlockNode
+				LiteralNode
+				VariableNode
+			LoopNode
+			SequenceNode
+			SimpleMessageNode
+				<b> MessageNode</b>
+</tt></pre>
+The <tt>
+    MessageNode</tt> class represents message sending. It implements a tiny macro
+  expansion mechanism at code generation time. The <tt>
+    MacroSelectors</tt> dictionary holds selectors that need expansion<a name="tex2html8" href="#1146"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a> and their associated
+  transformation symbols. In order to proceed to its code generation, a <tt>
+    messageNode</tt> first tries to expand itself. It then proceeds to the
+  regular code generation of its expansion, or to the generation of itself if no expansion has
+  occurred.  As an example, an <tt> and:</tt> message send is
+  transformed using <tt> transformAnd</tt> into a conditional.
+</li><li> <tt> CodeStream</tt>: byteCode accumulators during code generating. They
+  hold the compilation context in the form of a chain of environments. A <tt> codeStream</tt>
+  is the argument that is passed to both <tt> emitEffect:</tt> and <tt>
+    emitValue:</tt> methods while the (recusive descent) code generation occurs. The result
+  of the code generation is a <tt> CompiledMethod</tt>,
+</li><li> <tt> CompiledMethod</tt>:<a name="cm">&nbsp;</a> it holds (in the instance variable <tt>
+    bytes</tt>) the array that
+represents the byteCodes: opcodes defined by the <tt> DefineOpcodePool</tt> class,
+which defines a set of opcodes of a usual stack-based
+machine, with a special instruction for message sending.
+These opcodes are understood by the Virtual Machine (VM).
+As a matter of fact, when a method is executed for the first time, the VM
+translates the SMALLTALK bytecodes into codes of
+the underlying machine. These new native codes are then executed each time the
+method is used. Changing platforms makes methods return to their initial
+creation state (i.e., native code generation occurs again at first call).
+The <tt>
+    CompiledMethod</tt> class is a variable class<a name="tex2html9" href="#399"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a>, i.e., instances have a part
+  (called the variable part) that
+  behaves as an array. The literals of a method such as literal
+arrays and string, are buffered into this variable part. According to VM code
+limitations, the literal collection size of a method may not be greater than 256 (<tt> ByteCodeStream
+  class<b>&gt;&gt;</b>literalLimitSignal</tt>)<a name="tex2html10" href="#401"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a>.
+ A <tt> CompiledMethod</tt> may return its source, using the <tt>
+  #getSourceForUserIfNone:</tt> method, which asks the <tt> SourceFileManager
+  default</tt> for the corresponding source. If no source is available, a <tt>
+  Decompiler</tt> decompiles the method byteCodes and pretty prints the result,
+</li><li> <tt> NameScope</tt>: they are linked together in
+  order to build the chain representing the compilation context, also
+    called <i> the symbol table</i> in other language compilers.  The code
+  generation occurs  in a compilation context, which
+  is currently associated with a given class, and its superclasses. When
+  <tt> Object</tt> is reached, the dictionary <tt> Smalltalk</tt> is taken as the
+  repository of system globals. Compilation
+  makes the assumption that the receiver is from the class (or subclasses)  to
+  which the method currently being compiled will be added. This is not always
+  true, as when using the <tt> become:</tt> method, for example (cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#become">2.1.1</a>), 
+</li><li> <tt> Compiler</tt>: they are in charge of the
+scheduling of the <i> parsing</i> and <i> code generation</i> phases.
+ Parsers are associated with compilers
+through the <tt> preferredParserClass</tt> method which
+returns the parser class needed to parse the text to be compiled.
+</li><li> <tt> CompilerErrorHandler</tt>: they manage error notifications during code
+  generation. Error management is disconnected from the compilation
+  process, allowing a change of policies. Thus
+  subclasses are provided such as <tt> InteractiveCompilerErrorHandler</tt>, <tt>
+    NonInteractiveCompilerErrorHandler</tt>, <tt> SilentCompilerErrorHandler</tt>. 
+The default behavior is to use an <tt> interactiveCompilerErrorHandler</tt> when
+compiling from a <tt> browser</tt> and a <tt> nonInteractiveCompilerErrorHandler</tt>
+when reading source from an external file (<tt> fileIn</tt> action).
+An <tt> InteractiveCompilerErrorHandler</tt> provides a speller when a new symbol is
+encountered (<tt> newSelector</tt>), warns the user when a temporary is used
+before it is initialized (<tt> readBeforeWritten</tt>), watches out for undeclared
+objects such as temporaries and class variables (<tt> undeclared</tt>), and
+proposes appropriate corrections to the user (<tt> declareGlobal:from:</tt>,
+<tt> declareTemp:from:</tt>, <tt> declareUndeclared:from:</tt>),
+</li><li> <tt> Decompiler</tt>: they are translators of <tt> CompiledMethods</tt>
+ into parse trees (<tt> ProgramNode</tt>). <tt> Decompilers</tt> use a <tt> ProgramNodeBuilder</tt>
+ to produce the parse tree from byteCodes. It allows the complete disconnection of
+ the byteCodes interpretation from the result (usually <tt> ProgramNodes</tt> when
+ using standard <tt> ProgramNodeBuilder</tt>).
+</li></ul>
+<p>
+All of these classes are part of the compilation process. 
+In order to introduce new semantics into SMALLTALK, one can extend these classes and the associated process that
+compiles code.
+We next describe what steps  this compilation process follows:<a name="compilerClass">&nbsp;</a>
+</p><ol><li> While compiling a new method on a class, the class is asked
+  what compiler should be used in order to perform the compilation. This is done through
+  the <tt> Behavior<b>&gt;&gt;</b>compilerClass</tt> method. It returns a compiler class
+  appropriate for the source methods of this class (the default is <tt> Compiler</tt>),
+</li><li> The compiler is then asked for its default parser (<tt> preferedParserClass</tt>) in order to
+  proceed with the source analysis, 
+</li><li> The parser scans the source-stream, picking out SMALLTALK syntactic
+  tokens. According to the token produced by the <tt> scanToken</tt> method, it
+  recursively descends into the 
+  rules of grammar (<tt> constant</tt>, <tt> expression</tt>, <tt>
+    primaryExpression</tt>, <tt> temporaries</tt>, <tt> statementsArgs:temps:</tt>, <tt>
+    argument</tt>, <tt> pattern</tt>, <tt> method:context:</tt>, ... methods). Each time
+  a syntactic element is completely defined, the builder is asked to 
+  create it. In regular SMALLTALK, <tt> ProgramNodeBuilder</tt>
+  returns <tt> ProgramNode</tt>. The result of the parsing is the root node (a <tt>
+    MethodNode</tt>) of the  tree that  expresses all the syntactic entities
+  of the method,
+</li><li> The compiler builds a <tt> codeStream</tt>, which is initialized according to
+  the class of the method that is being currently compiled. It builds the different  <tt>
+    NameScope</tt>s, linking them together,  
+</li><li> The syntactic tree is asked for code generation. The root <tt>
+    methodNode</tt> receives the <tt> emitEffect:</tt> method. It recursively asks each
+  node of the tree to generate its respective byteCodes into the <tt>
+    codeStream</tt>,  
+</li><li> The <tt> codeStream</tt> builds a <tt> CompiledMethod</tt>, according to the
+  bytecodes it has buffered. If there are inner blocks (<tt> BlockClosure</tt>) in the method, which need
+        this method filled in as the outer method, the <tt> codeStream</tt>
+        proceeds to do it.
+</li></ol>
+These steps are  summarized  in  the <tt>
+ translate:noPattern:ifFail:needSourceMap:handler:</tt> method<a name="tex2html11" href="#471"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a>:
+ 
+<pre><tt> 
+<tt> SmalltalkCompiler<b>&gt;&gt;</b>translate:aStream noPattern:...</tt>
+		<b> "<b>&lt;1&gt;</b>... parsing..."</b>
+	<tt> methodNode := class parserClass new</tt>
+				<tt> parse: aStream </tt>
+				<tt> builder:  Prog ramNodeBuilder new ... </tt>
+		<b> "<b>&lt;2&gt;</b>... code generation..."</b>
+	<tt> codeStream := self  newCodeStream.</tt>
+	<tt> methodNode  emitEffect: codeStream.</tt>
+	<tt> method := codeStream  makeMethod: methodNode.</tt>
+	<tt> ^method</tt>
+</tt></pre>
+
+<h3><a name="SECTION00023200000000000000"> 2.3.2 Usage</a></h3>
+<p>
+Extending the proposed semantics by intervening in the two phases of
+compilation allows new semantics to be implemented that suit the domain of the
+application to be modeled as well as possible.
+ The open ended compiler allows
+   modification of itself in order to get improvements needed to face new user requirements,
+  such as a new breakpoint mechanism [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#parameterizedCompiler">HJ95</a>].
+The
+introduction  of new methods into the language
+can be easily performed by subclassing <tt> MessageNode</tt>, in order to
+  propose new message sending semantics. The code generation of this new node will be
+  different, inserting its own semantics. 
+In our experience there are five major methods that are frequently used to
+  add new semantics:
+</p><p>
+(i)		 extension of the parser 
+(ii)		 extension of the node construction
+(iii)		 modification of the obtained parse tree
+(iv)		 extension of the code generation phase
+(v)		 extension of the compilation environment
+</p>
+Our next pre/post conditions introduction (cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#prepost">3</a>) uses a modification of
+the parse tree (iii). As another example, we provide an
+efficient implementation of asynchronous message sending for
+ACTALK [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#briotactalk">Bri89</a>] (cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#actalk">2.4.2</a>), dealing with node construction extension (ii) [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#rivardjfla">Riv95</a>].
+<p>
+Within ACTALK, the user has two message send semantics at his disposal:
+the regular SMALLTALK one, and an asynchronous one. An asynchronous
+message send is syntactically declared
+using the <tt> 'a.'</tt> prefix<a name="tex2html12" href="#1148"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a>.<br> 
+<tt> anActor a.message</tt><br> 
+The distinction between the two semantics can be made by a syntactic analysis. Thus,
+the idea is to intercept the <tt> messageNode</tt> creation made by <tt> aNodeBuilder</tt> 
+(<tt> mewMessageReceiver:selector:arguments:</tt>).<a name="builder">&nbsp;</a>
+ We introduce  a new class, <tt>
+  ActalkProgramNodeBuilder</tt>, subclassing the regular <tt>
+  ProgramNodeBuilder</tt>. When the new nodeBuilder creates a <tt> messageNode</tt>,
+ it analyzes the selector of the message. If it starts with the
+<tt> 'a.'</tt> prefix, then the <tt> ActalkProgramNodeBuilder</tt> returns <tt> aMessageNode</tt> of
+which the selector is the one that queues (at runtime) the asynchronous message
+ into the received messages queue of
+the actor (<tt> addMessage:arguments:</tt>). 
+Thus,  for the '<tt> anActor a.message</tt>' 
+expression, the builder returns the next <tt> messageNode</tt><a name="tex2html13" href="#1150"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a>:
+</p><pre><tt> 
+	<tt> aMessageNode</tt>
+		<tt> selector : #addMessage:arguments:</tt>
+		<tt> receiver : anActor</tt>
+		<tt> arguments: #( message, #() )</tt>
+</tt></pre> 
+Notice that this transformation can be assimilated to a macro-expansion of
+all <tt> 'a.'</tt> prefixed message sends.
+<p>
+More generally,
+ used  in association with the kernel extension, compilation reflection allows
+ one to build new languages [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#otiada9x">RC94</a>]. It allows SMALLTALK
+ to  execute
+  source code whose semantics is different from the default one. A
+  large industrial example is given by OBJECT5 [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#object5">Sie94</a>]
+<a name="tex2html14" href="#530"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a>.
+ It is a strongly typed hybrid language based both on the
+  actor and class paradigms, dedicated to Programmable-Logical-Controllers. 
+Although it has 3
+  different message sending semantics (2 are asynchronous), it is entirely
+  executed in SMALLTALK, without an OBJECT5 interpreter being
+  written. This eliminates an always penalizing software stratum. Types have been
+  introduced extending the class/metaclass kernel (<tt> TypedClass</tt> subclass
+  of <tt> Class</tt>)
+in order to provide typed information (method signature, instance
+variable types, ...). New syntactical nodes have been introduced, and
+new compilers, too. Finally the SMALLTALK VM executes this new language
+as it used to execute regular SMALLTALK. Contrary to the (latent)
+reproach of the lack of efficiency of reflective systems, here
+reflection brought an outstanding gain of efficiency.
+</p><p>
+</p><h2><a name="SECTION00024000000000000000"> 2.4 Message  Sending</a></h2>
+<p>
+</p><h3><a name="SECTION00024100000000000000"> 2.4.1 Model</a></h3>
+<p>
+The unique control structure of SMALLTALK is message sending.
+It is composed of two phases:
+</p><ol><li> <i> lookup</i>: a search for the method to apply according to the receiver
+                of the message sending,
+</li><li> <i> apply</i>: an application of the found method.
+</li></ol>
+The lookup happens at execution time and uses class
+information. Although it is not described in the
+language for reasons of efficiency, the necessary information is accessible and
+modifiable from the language. All the information lies in classes:
+<ul><li> the dictionary of methods (<tt> methodDict</tt> instance variable: pair (<tt> aSymbol</tt>, <tt> aCompiledMethod</tt>))
+</li><li> the inheritance link (<tt> superclass</tt> instance variable),
+</li><li> caches, allowing optimization of the hardwired algorithm. Caches are not
+  reified, but can be reinitialized using primitives (<tt> Behavior<b>&gt;&gt;</b>#flushVMMethod</tt><br> 
+<tt> -Cache</tt>).
+</li></ul>
+Messages are not currently reified using instances of the <tt> Message
+  </tt>class except when the
+lookup fails. In that last particular case, the <tt>
+  #doesNotUnderstand: </tt>method is sent by the VM to the original receiver
+with a reified message given as the argument. 
+<pre><tt> 
+<tt> 2 zork</tt>	<img src="rivard_files/hand.gif" align="bottom">	
+	<tt> 2 doesNotUnderstand: aMessage</tt>	
+		<tt> aMessage selector</tt> 		<img src="rivard_files/hand.gif" align="bottom"> <tt> <i> #zork</i></tt><i></i>
+		<tt> aMessage arguments</tt>		<img src="rivard_files/hand.gif" align="bottom"> <tt> <i> #()</i></tt><i></i>
+</tt></pre>
+An explicit message send may be called using the <tt> perform:</tt>
+primitive<a name="tex2html15" href="#1151"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a>. 
+A lookup result is a <tt> CompiledMethod</tt>(cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#cm">2.3.1</a>), a regular object. The <tt>
+  valueWithReceiver:arguments:</tt>  primitive allows the
+application of <tt> aCompiledMethod</tt> with an array of arguments.
+<pre><tt> 
+-regular message send:
+	 <tt> 5 factorial</tt>				<tt> <img src="rivard_files/hand.gif" align="bottom"> <i> 120</i></tt><i></i>
+-explicit message send using a symbol:
+	<tt> 5 perform: #factorial</tt>			<tt> <img src="rivard_files/hand.gif" align="bottom"> <i> 120</i></tt><i></i>
+-application of a <tt> CompiledMethod</tt>:
+	<tt> (Integer<b>&gt;&gt;</b>#factorial)	valueWithReceiver: 5
+			 arguments: #()		<img src="rivard_files/hand.gif" align="bottom"> <i> 120</i></tt><i></i>
+</tt></pre>
+Accesses to overwritten behavior are qualified by sending a message to
+the pseudo variable <tt> super</tt>. The lookup semantics of such a message is
+slightly different from the default lookup, 
+since it starts from the
+from the superclass of the class which implements the method that executes the
+<tt> super</tt>. As a matter of fact, the class from whose superclass the lookup
+starts is accessible
+within the <tt> compiledMethod</tt> variable part<a name="tex2html16" href="#1152"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a> 
+(cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#compilation">2.3.1</a>). 
+This class is pushed
+into the variable part at compile 
+time (<tt> CodeStream<b>&gt;&gt;</b>sendSuper:numArgs:</tt>).
+<p>
+ To sum up lookup, SMALLTALK provides two different entry points:
+</p><ul><li> one that starts the lookup from the class of the receiver,
+</li><li> one that starts the lookup from the superclass of a class
+stored in the <tt> compiledMethod</tt> variable part.
+</li></ul>
+Notice that as message sending is the only control structure,  an extension of
+  the method semantics provides an extension of the message sending
+  semantics.
+<h3><a name="SECTION00024200000000000000"> 2.4.2 Usage</a></h3>
+<p>
+Everything is expressed in terms of sending messages.
+There is no need for special keywords or special forms, as in
+ BASIC, ADA'95 or C++, etc. 
+As an example, a class declaration is made by sending the
+                  
+<tt>  subclass:instanceVariableNames:classVariableNames:-<br> poolDictionary:category:</tt> 
+message with correct arguments.  <tt> Browsers</tt> use
+this facility (cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#browser">2.2.2</a>).
+</p><p>
+An evaluation is expressed in terms of a default method.
+ Then it is mostly evaluated (using <tt> #valueWithReceiver:arguments:</tt>) 
+with <tt> nil</tt> as the default receiver. The result is either discarded
+(doIt action), inspected through the sending of the <tt> inspect</tt> message
+(inspectIt action), or pretty-printed through the sending of the message
+<tt> printString</tt> (printIt action).
+</p><p>
+The management of the lookup failure allows the building of a catch-up mechanism by
+specialization of the <tt> doesNotUnderstand:</tt>
+method, as  in the encapsulator paradigm [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#oopsla86Pascoe">Pas86</a>], and in
+ the implementation of asynchronous messages for ACTALK [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#briotactalk">Bri89</a>].  <a name="actalk">&nbsp;</a>
+In particular, <tt> #valueWithReceiver:arguments:</tt> and <tt> #perform:</tt>
+  methods can be used. More generally, <tt>
+    #valueWithReceiver:arguments:</tt> enables one to
+dispense with the use of the default lookup and to implement (in cooperation with
+the <tt> Compiler</tt>) new lookup
+algorithms, such as multiple inheritance. This last approach is an efficient
+alternative to
+ the use of the <tt> doesNotUnderstand:</tt>method (cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#builder">2.3.2</a>).
+</p><p>
+As an example of  the  use  of  the <tt> doesNotUnderstand</tt> method, we
+describe the implementation  of lazy evaluation in
+SMALLTALK<a name="tex2html17" href="#623"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a>.<br> 
+<tt> aLazyObject := [ ... aBlock ...] lazyValue.</tt>
+A lazy object represents an execution that may not be required.  It does
+not start execution until at least one message has been
+received. <tt> aLazyObject</tt> is used as the regular object that would have resulted
+from the evaluation of the code inside the block (<tt> [ ... aBlock
+  ...]</tt>).  Thus it receives messages, such as <tt> color</tt> if it represents a
+<tt> Car</tt>. 
+
+</p><pre><tt> 
+<tt>nil	 subclass: #Lazy</tt>
+	<tt> instanceVariableNames: 'result done args '</tt>
+	<tt> classVariableNames: ''</tt>
+	<tt> poolDictionaries: ''</tt>
+	<tt> category: 'Kernel-Processes'</tt>
+</tt></pre>
+As the <tt> Lazy</tt> class is a subclass of <tt> nil</tt>, every message send causes
+the invocation of the <tt> doesNotUnderstand</tt> method.
+
+<pre><tt> 
+<b> Lazy</b>
+<tt>doesNotUnderstand: aMessage</tt>
+	<tt> done</tt>
+	<tt> ifFalse:[	result:= result valueWithArguments: args. </tt>
+			done := true].</tt>
+	^result	perform: aMessage selector
+		withArguments: aMessage arguments
+</pre>
+When it receives its first message, the lazy object 
+forces the evaluation of the
+block. Therefore it computes the real object, which was previously in a lazy
+state (i.e., uncomputed). It is buffered for other message
+sends. An explicit message send, using <tt> perform:withArguments:</tt>, allows 
+the regular execution scheme to continue.
+<p>
+  A classical use of <tt> super</tt> is the
+initialization of newly-created objects. When adding a subclass, both new
+and inherited initializations must be carried out. Thus, the <tt>
+  initialize</tt> method of the subclass usually looks like:
+</p><pre><tt> 
+<b> <tt> Subclass<b>&gt;&gt;</b>initialize</tt></b><tt></tt>
+</tt><p>
+<tt>	<tt> super initialize.</tt>
+	<tt> self localInitialization</tt>
+</tt></p></pre><h2><a name="SECTION00025000000000000000"> 2.5 Control State</a></h2>
+<p>
+ The SMALLTALK system is based on reified processes, and more
+   generally on the objects needed to build a multiprocess
+   system. Processes manage time scheduling (<tt> timingPriority</tt>), event inputs such as
+keyboard/mouse (<tt> lowIOPriority</tt>), and regular user
+evaluations (<tt> userBackgroundPriority</tt>, <tt> userSchedulingPriority</tt>,
+<tt> userInterruptPriority</tt>). 
+</p><h3><a name="SECTION00025100000000000000"> 2.5.1 Model</a></h3>
+<tt> Processor</tt>, the sole instance of the <tt> ProcessorScheduler</tt> class, coordinates the use of
+ the physical  processor by all
+processes requiring service. It defines a preemptive semantics between
+processes having different priorities. <tt>
+  Processor yield</tt> gives processes that have the same priority
+of the one currently running a chance to run. 
+<tt> Semaphore</tt> class  provides synchronized
+communication between processes (using <tt> wait signal</tt> methods). Real
+time scheduling is provided by the <tt> Delay</tt> class. It represents a real-time delay in the
+execution of <tt> aProcess</tt>. The process that executes a delay is
+suspended for an amount of (real) time represented by the resumption time of
+the delay.
+<p>
+The <tt> BlockClosure</tt> class represents lexical closures. It freezes a piece of code
+(along with its environment) so that it may be evaluated later on. 
+Blocks can have temporaries
+    and arguments. The general syntactic form is <tt> [:arg1 ...
+      :argN | | tmp1 ... tmpM | expr1 ...
+      exprP]</tt>. Block evaluation is provided by primitives named <tt> value</tt>,
+    <tt> value:</tt>, <tt> valueWithArguments:</tt> depending of the number of
+    arguments. SMALLTALK uses lots of blocks, as in the <tt>
+      SequenceableCollection<b>&gt;&gt;</b>do:</tt> method for example:
+ </p><pre><tt> 
+<tt> do: aBlock  </tt>
+	<i>"Evaluate aBlock with each of the receiver's</i>
+	<i> elements as the argument."</i>
+		
+	1 to: self size do:[:i | aBlock value: (self at: i)]
+</tt></pre> 
+Process creation is based on blocks; the body of a process is the body of the
+block. The <tt> BlockClosure<b>&gt;&gt;</b>fork</tt> method creates a process. As blocks may
+share an environment, independent processes uses this facility to share common objects.
+A process may be suspended,  resumed or killed (using respectively <tt>
+  suspend</tt>, <tt> resume</tt> or <tt> terminate</tt> methods). The <tt> interruptWith:</tt> method forces the process that
+receives it to interrupt whatever it is doing and to evaluate the received
+block, passed as the argument. 
+The <tt> ProcessorScheduler<b>&gt;&gt;</b>yield</tt> method is a tiny but good illustrative
+example<a name="tex2html18" href="#696"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a>:
+ <pre><tt> 
+<tt> yield</tt>
+	<i> ``Give other Processes at the current priority a chance to run.''</i>
+ 	<tt> | semaphore | </tt>
+ 	<tt> semaphore := Semaphore new.</tt>
+ 	<tt> [semaphore signal] fork.</tt>
+ 	<tt> semaphore wait</tt>
+</tt></pre>
+The currently running process (the one that executes this code) creates a new
+<tt> semaphore</tt>. It proceeds to the creation of a new process (<tt> [...] fork</tt>) that is
+pushed into the list of the processes that may run (at the same priority). 
+The current running process then suspends itself while it executes the <tt>
+  wait</tt> primitive. The VM then takes the next available process and makes it
+run. The small created process, which shares the semaphore with the previously
+running process, will run in its turn. Its only action before
+dying is to unblock the previously running process using the <tt> signal</tt>
+primitive on the common <tt> semaphore</tt>.
+<p>
+The most remarkable reflective facility of SMALLTALK is the reification
+of any process runtime stack, through a chain of linked stack frames, called
+<i> contexts</i> [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#smtk2context">Par94a</a>]. The
+pseudo-variable <tt> thisContext</tt> returns the present  context of the
+currently running process. It is an instance of the <tt> MethodContext</tt> class,
+or the <tt> BlockContext</tt> class. 
+
+</p><p>
+A context mainly knows (Figure 3):
+  </p><ul><li> the context (<tt> sender</tt>) which has
+``created'' it via the application of a method (cf <tt>
+  valueWithReceiver:</tt><br> <tt> arguments:</tt>), or the evaluation of a <tt> BlockClosure</tt>
+using <tt> #valueWithArguments:</tt> (or <tt> #value
+  #value:</tt> ...),
+ </li><li> the method (<tt> aCompiledMethod</tt> held by a class) currently being
+  executed,
+ </li><li> an instruction pointer, remembering
+the operand that is actually being executed in the method,
+</li><li> the receiver of the message, and the arguments. Note
+that the receiver is an instance of the <tt> BlockClosure</tt> class for 
+ <tt> BlockContext</tt>.
+  </li></ul>
+<center><img alt="" src="rivard_files/stack.jpg" align="bottom"><p>
+<i>Figure 3: Two elements of the executive stack. The top-most 
+<tt>MethodContext</tt> represents <tt>thisContext.</tt></i>
+</p></center><p>
+</p><h3><a name="SECTION00025200000000000000"> 2.5.2 Usage</a></h3>
+SMALLTALK's extreme power of expression allows programs to fully control
+its own execution, using regular objects such as <tt> Context</tt>: this is
+ intercession.
+<p>
+ Therefore, a
+first application  of this execution control
+is the implementation of the exception handler
+mechanism into SMALLTALK, which modifies the ``regular'' execution scheme. The <tt>
+  Exception</tt> class reifies objects which manipulate the executive stack in
+order to handle errors (<tt> return</tt>, <tt> reject</tt>, <tt> restart</tt>).
+Exceptions are raised through the stack, and are caught by handlers defined
+by the <tt> handle:do:</tt> message, in order to take appropriate actions
+on errors. This implementation may itself be extended or replaced
+in order to propose an alternative to
+the error handling system of SMALLTALK [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#dony90handler">Don90</a>].
+</p><p>
+A second
+very  important application of the reification of the runtime
+stack is the <tt> Debugger</tt> tool (see Figure 3), which can:
+</p><ul><li> consult any context of the entire executive stack,
+</li><li> look at what part of the selected context is being
+ executed,
+</li><li> inspect the receiver of the message of the selected context,
+</li><li> inspect arguments and temporaries of the selected context,
+</li><li> proceed to a ``step by step'' execution (<tt> send</tt>,
+<tt> step</tt>),
+</li><li> modify any context by recompilation of its method, and
+continue the  execution with this new code.
+  </li></ul><h1><a name="SECTION00030000000000000000"> 3 Reflective Extension: Addition of Pre/Post Conditions</a></h1>
+
+<a name="prepost">&nbsp;</a>
+Having described the most important reflective facilities, we 
+illustrate their use with a small but complete realization. Dealing with extensions of
+the model, the compiler,
+ and the development environment, we introduce pre/post conditions
+on regular SMALLTALK methods.
+ This is a typical way
+of using the general reflection of the language: add new constructions and
+extend current facilities in order to provide a language that suits the actual
+application domain  as
+well as possible. Pre/post conditions fall under the category of
+software engineering tools.
+<p>
+Applications are not stable during both  development and coding phases. Therefore it
+is essential to provide mechanisms in order to check   both the properties of and the
+assumptions made on methods.  Pre/post conditions are devoted to this role. 
+A number of languages, following Flavors [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#flavors86">Moo86</a>], implement
+ <i> before/after methods</i> (SOM [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#sombeforeafter">DFM94</a>], CLOS,... ). 
+One  of their uses can be the implementation of pre/post conditions on methods.
+But because before/after methods rely on a complex composition mechanism 
+and because they are assigned
+to a selector (name of methods) instead of the methods themselves (regular
+objects in SMALLTALK (cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#cm">2.3.1</a>)), we use another
+implementation. It better suits their roles as described by: 
+<i> ``The pre-condition expresses the properties
+that must be checked when the method is called. The post-condition
+certifies those properties that the method guarantees when it returns.''
+ </i> [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#meyercpo">Mey90</a>].  When the development is over and the
+software is about to be released, correct method use makes
+pre/post conditions no longer useful. They should be removed in
+order to provide software clean from any development topics. This is how we
+use pre/post conditions. Our goal is to provide pre/post conditions in SMALLTALK  that respect
+the  dynamic and convivial tradition of the language.
+Specifications are summarized as follows:
+</p><ul><li> <b> dynamic behavior</b> : SMALLTALK users are
+used to dealing with dynamicity, like adding an instance variable anywhere
+in a hierarchy of classes. Dynamicity for pre/post conditions means being
+able to swap from a state
+where they are <i> active</i> to another one where they do not
+interfere at all with the code,
+</li><li> <b> hierarchy independence</b>: the SMALLTALK model deeply connects a class to its
+metaclass (cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#model">2.2.1</a>), of which it is the sole instance. In respect to this model
+we propose the activation (or deactivation) of pre/post conditions on the
+class/metaclass couple, but only locally.
+ The activity of conditions on an <tt> A</tt> class does not propagate
+to <tt> A</tt>'s subclasses,
+</li><li> <b> syntactic convention</b>: instead of extending
+the syntax with a new special character such as the temporaries
+delimiter "|", we use a convention. It is an often-used scheme in
+SMALLTALK, as for example with the <tt> private</tt> protocol, which 
+states that methods from this protocol are supposed to be for 
+private purposes [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#goldbergbluebook">GR83</a>]. Notice that an extension of
+the method semantics (using the reified compiler chain (cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#compilation">2.3.1</a>)) 
+can provide such privacy,
+</li><li> <b> return semantics compatibility</b>: 
+  the return  semantics ( the ^ symbol) may require the popping of many contexts. We assume
+  that an active  post-condition will be evaluated even when returns occur in
+  the body of methods (or in a block evaluation which closes a return),
+</li><li> <b> flexibility</b>: the code of both pre- and post-conditions may access
+  the method context, especially parameters and temporaries,
+
+</li><li> <b> convivial interface</b> (cf Figure 4): 
+The interface modifications must be as small as possible. The user can:
+<ul><li> 
+  look at the source of the pre/post
+conditions associated with a method
+ while browsing the method source (without other manipulations),
+</li><li> 
+  know through his favorite development tool (<tt> browser</tt>), whether or not
+conditions are active  just by looking at the class name display (class
+pane of the browser),
+</li><li>
+  change the activity of the conditions of a class using a popup menu,
+as in SMALLTALK's usage.
+</li></ul></li></ul>
+<p></p><center><img alt="" src="rivard_files/browser1.jpg" align="bottom"><p>
+<i>Figure 4: The currently selected class (NodeItem) has its
+conditions activeness set (cf "(c)"). The associated conditions
+codes is executed at runtime. The figure also shows the menu (conditions)
+that permits the change from active to non-active conditions (and vice versa)
+</i></p></center><p>   
+ Next we present the convention used to write conditions (one or both
+ conditions may be omitted):
+ </p><pre><tt> 
+<tt> <b> selector</b></tt><b></b>
+	<tt> "<i> comment</i>"</tt>
+	<tt> | temporaries | </tt></tt><p>
+<tt>	<tt>[..blockPreCondition..] preCondition.</tt>
+	<tt>[..blockPostCondition..] postCondition.</tt>
+	<tt> expr1 .... exprN</tt>
+</tt></p></pre>This syntactic representation offers several advantages:
+<ul><li>  no ``parasitic'' methods are introduced,
+whose semantics would have been derived from their selectors, such as the creation of
+qualified methods as it is done with method combinations described in
+ [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#cointeclasstalk">Coi90</a>]. As a matter of fact, this last solution suffers
+major drawbacks: these qualified methods pollute the interface of the class,
+and there is no way to prohibit their use as regular methods in another context,
+</li><li> Using a block to represent a condition allows
+full access to the method context. It would have been quite difficult to
+manipulate such a method context with conditions outside the method
+itself (both temporaries and arguments access would  have been
+hard to realize, for example).
+</li></ul>
+<h2><a name="SECTION00031000000000000000"> 3.1 Model Extension</a></h2>
+When not active, pre/post conditions should absolutely not
+interfere at execution time. This is the most important specification of
+our method pre/post conditions. This point is
+crucial. It means that at execution time, we do not allow ourselves to test to see if
+the conditions are active. Therefore, the test must be done
+at compile time: 
+<ul><li> if conditions are active, then the code needed for their
+execution is generated at compile time,
+</li><li> if conditions are not  active, then the conditions are
+ignored and only the regular method body is generated.
+</li></ul>
+Thus, we need two different compilation phases. 
+Changing from active to non-active conditions (and vice versa) is expressed
+in terms of having a quick recompilation of the class interface<a name="tex2html19" href="#843"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a>.
+<p>
+We next describe our solution based on the introduction of a subclass of <tt>
+  Metaclass</tt><a name="tex2html20" href="#1162"><img alt="gif" src="rivard_files/foot_motif.gif" align="bottom"></a>.
+</p><p>
+Considering that the  behavior related to conditions activity is both on the class and its
+metaclass, and that it should not interfere with the inheritance,
+we put the activity notion on <tt> Metaclass</tt>, and on a newly created subclass named
+<tt> MetaclassWithControl</tt>. This new metaclass manages behavior according to
+development topics such as pre/post conditions. The <tt> compilerClass</tt> method (cf
+<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#compilerClass">2.3.1</a>)  returns the
+class whose instances (a compiler) are used to compile the methods of a given
+class. Thus the default  <tt> compilerClass</tt> method is
+conceptually raised  one meta level from that of <tt> Behavior</tt> to that of <tt> Metaclass</tt> and <tt>
+  MetaclassWithControl</tt> (cf SMALLTALK kernel <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#model">2.2.1</a>).
+</p><ul><li> <tt> Behavior<b>&gt;&gt;</b>compilerClass</tt> returns the compilerClass of the
+  metaclass (i.e., calls one of the next two <tt> compilerClass</tt> methods)
+  (cf A.1),
+
+</li><li> <tt> Metaclass<b>&gt;&gt;</b>compilerClass</tt> returns the default
+compiler that does not take conditions into account (and just forgets their
+associated codes),
+</li><li> <tt> MetaclassWithControl<b>&gt;&gt;</b>compilerClass</tt> returns the compiler that
+deals with conditions codes. 
+</li></ul>
+
+Thus (cf Figure 5),
+<p>
+</p><ul><li> the metaclass of a class whose conditions are active
+is an instance of <tt> MetaclassWithControl</tt>,
+</li><li> the metaclass of a class whose conditions are not active
+is an instance of <tt> Metaclass</tt>.
+</li></ul>
+Changing from active conditions to non-active ones is done by dynamically
+changing the class [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#rivardoopsla96">Riv96</a>] of the metaclass from <tt> MetaclassWithControl</tt> to <tt>
+  Metaclass</tt> (and vice versa) using the <tt> changeClassToThatOf:</tt> method (cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#metaobjects">1.2</a>).
+
+<p>
+</p><p></p><center><img alt="" src="rivard_files/metaswap.jpg" align="bottom"><p>
+</p><p><i>Figure 5: The metaclass class changes its class dynamically.</i></p></center><p>
+This solution has many advantages:
+</p><ul><li> as expected, it allows a class to behave in a certain way, without
+  interfering with inheritance. Indeed,  a dynamically added <tt>
+    compilerClass</tt> method (cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#compilerClass">2.3.1</a>) on an <tt> A class</tt> metaclass  would have been
+  inherited by all <tt> A class</tt> subclasses. Thus <tt> A</tt> and all its
+  subclasses would have a connected behavior, which is not within our
+  specification. This is due to the parallel inheritance trees provided
+  by both the class and
+  metaclass levels (cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#model">2.2.1</a>: SMALLTALK model). 
+</li><li> no development topics lie hidden in classes ( 
+neither in their definition nor in their interface).
+ This must be contrasted with a solution that would have added an instance variable
+to the <tt> Class</tt> class definition, in order to remember the
+ activity at runtime. The default <tt> compilerClass</tt> would have to test this instance variable
+ in order to answer the correct compiler. Compared to ours, this last solution
+ is very expensive both
+ in terms of class definition impact and space.
+Moreover it implies another problem: when an application is
+released, all its classes have a ``development'' instance variable always
+positioned to the same boolean value. It is not reasonable to produce such a
+class structure. A recompilation of the <tt> Class</tt> class before release is not
+possible either, because it would no longer be possible to have both released
+applications  and applications in the development stage. In any case, it does not agree with 
+the specification  that when not active, conditions should not
+interfere in any way with regular SMALLTALK.
+</li></ul>
+Finally, notice that this model extension illustrates the great extensiveness
+of the SMALLTALK kernel. Indeed, if active conditions are put on <tt>
+  Metaclass</tt>, its class (<tt> Metaclass class</tt> (cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#model">2.2.1</a>)) is an instance
+of <tt> MetaclassWithControl</tt>, instead of <tt> Metaclass</tt>, which was the kernel
+``trick'' to stop the infinite instantiation regression. Moreover a new loop in
+the instantiation link appears when <tt> MetaclassWithControl</tt>
+ has its conditions activity set to true. This demonstrates that even the very
+ deepest part of the SMALLTALK kernel (cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#model">2.2.1</a>) can easily be extended, without causing the
+ whole system to fail.
+<p>
+</p><h2><a name="SECTION00032000000000000000"> 3.2 Environment Extension</a></h2>
+<p>
+Our choice of syntactic convention allows the method context to be accessible 
+from condition codes. From an interface point of view, the user looks at its
+method and associated condition sources at the same time. Practical
+experience shows the advantage of this convivial representation. It is
+combined with an immediate view of the activity of the class conditions: when
+a class has active conditions, the name of the class is suffixed by the <tt>
+(c)</tt> string (cf Figure 4). 
+
+</p><p>
+As we have extended the model in order to add a new metaclass description to
+deal with development topics, browsers should also take into account
+this new description. Standard SMALLTALK browsers, as global
+introspection class tools, assume that class semantics are fixed. Thus, in
+order to take new class semantics into account, we modifiy the class interface by
+adding a cooperation between classes and browsers [<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#jmRoMa93">RM93</a>]: a browser 
+does not simply
+ask for the name of the class, but for its <tt> browsingName</tt>. With this
+message, a class fully controls what a browser shows. <tt>
+  MetaclassWithControl<b>&gt;&gt;</b>browsingName</tt> adds the '<tt> <b> (c)</b></tt><b></b>' string suffix
+to the name
+(<tt> classOnControlString</tt> method).
+</p><p>
+</p><h2><a name="SECTION00033000000000000000"> 3.3 Compiler Extension</a></h2>
+<p>
+Having designed the structural part of the model and shown its implication in terms of
+interface extension, we now need to extend the compilation in order to manage
+the needed codes for active pre/post conditions.
+</p><p>
+Our solution is based on manipulation of the parse tree, which is generated
+by the SMALLTALK parser. We need:
+</p><ul><li> to position the pre-condition (if one exists) as the first
+statement of the method. We also add the test that raises an exception if
+the pre-condition evaluation does not return <tt> true</tt> at execution time,
+</li><li> to position the post-condition (if one exists) as the last statement of
+  the method. As with the pre-condition, we add the test that raises an
+  exception if the post-condition evaluation does not return <tt>
+    true</tt>. As returns may occur (in the method itself or wrap within a
+  blockClosure received as an argument), it could cause the post-condition to not be
+  evaluated. We wrap the entire method using <tt> valueNowOrOnUnwindDo:</tt> which
+  allows execution of the post-condition regardless of what happens.
+</li></ul>
+Next we give an equivalent syntactic form of what could be the code if we
+were to <i> decompile</i> the parse tree after its reshaping:
+ <tt>
+<pre><tt> 
+selector
+	``<i> comment</i>''
+	| temporaries |  
+	[[..blockPreCondition..] value ifFalse:[ParserWithControl preConditionSignal raiseRequest].
+	expr1 .... exprN ] valueNowOrOnUnwindDo:[
+	[..blockPostCondition..] value ifTrue:[ParserWithControl postConditionSignal raiseRequest]]
+</tt></pre></tt>
+As we need a new compiler when pre/post conditions are active,
+ the <tt> CompilerWithControl</tt> class is introduced
+as a 
+subclass of the standard <tt> Compiler</tt> class. We subclass the <tt> Parser</tt> class with <tt>
+  ParserWithControl</tt> class, which is associated with the new <tt>
+  CompilerWithControl</tt> class through a redefinition of its <tt> preferredParserClass</tt>
+method (cf
+<a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#compilerClass">2.3.1</a>).  We next describe the steps that produce a method and
+its conditions:
+<ol><li> the method is parsed as a regular SMALLTALK method. A parse tree
+  is obtained as a result (cf <a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#compilerClass">2.3.1</a>) of the first step of the compilation process,
+</li><li> the parser, <tt> aParserWithControl</tt>, reshapes the resultant parse tree to get the previously
+  described transformation. During the transformation, new <tt>
+    ProgramNode</tt>s are created, using the parser builder, <tt>
+    aProgramNodeBuilder</tt> (cf code A.1 
+ <tt> ParserWithControl<b>&gt;&gt;</b>compilePreCondition</tt>). 
+</li><li> the parse tree generates regular SMALLTALK code.
+</li></ol>
+The regular parser (an instance of the<tt> Parser</tt> class) removes
+pre/post condition codes, if any. 
+<h2><a name="SECTION00034000000000000000"> 3.4 Benchmarks</a></h2>
+<p>
+The major goal of this extension is to provide code <i> free</i> from any tests when
+pre/post conditions are not active. Thus, if not active, conditions do not
+affect the runtime performance at all. When active their code is executed
+ according to the code wrapped around the conditions, which
+of course takes time.
+</p><p>
+We make two significant benchmarks on the compilation process:
+</p><ol><li> we
+compare the time taken to compile a method which is free from any conditions
+both (i) without our extension, and (ii) using our extension with conditions activity
+set to true. The
+compilation time increases on average by less than 2% from (i) to (ii), which allows a
+comfortable use of the extension,
+<p>
+</p></li><li> we compare  the
+compilation time of (i) a method that has active conditions using our extension and
+(ii) the equivalent code hand written by the user. 
+(i) is on average 9% quicker than (ii). This results mainly from the fact that the
+source to parse is smaller when writing conditions using our
+conditions extension.
+</li></ol><h1><a name="SECTION00040000000000000000"> 4 Conclusion</a></h1>
+<p>
+We have described the current reflective
+facilities of SMALLTALK. We have presented the most important current
+aspects: meta-operations,  the class/metaclass model,
+semantics control through the reified compiler, message sending 
+and behavioral representation through the reification of the runtime stack
+processes. We have fully described an example of reflective use with the
+introduction of pre/post conditions into SMALLTALK.
+</p><p>
+As it evolves, SMALLTALK tends to become more and
+more reflective. In particular we can quote the reification of the dependent
+link (<tt> DependencyTransformer</tt> class), and the definition of a parser
+generator (<tt> ParserCompiler</tt> class),  written in itself. REFLECTION is
+the heart of SMALLTALK.
+It gives the language its
+great expressive power. Because the language
+possesses the ability to naturally adapt itself to new application domains,
+it may be considered as a truly perennial language.
+</p><h2><a name="SECTION00041000000000000000"> Acknowledgments</a></h2>
+<p>
+I wish to thank all the reviewers for their comments. 
+Thanks to Pierre  Cointe who helped me in the organization of the paper.
+Special thanks to Jacques Malenfant who spent time on the elaboration
+of the final version of the paper.   
+
+</p><center>
+<p><img src="rivard_files/line.gif"></p></center>
+<p>
+ </p><p><a name="SECTIONREF"><h2>References</h2></a></p><p>
+</p><dl compact="compact">
+<dt><a name="briotactalk"><strong>Bri89</strong></a></dt><dd>
+Jean Pierre Briot.
+ Actalk : A testbed for Classifying and Designing Actor Languages in
+  Smalltalk-80.
+ In <em> Proceedings of ECOOP'89, Nottingham</em>, July 1989.
+<p>
+</p></dd><dt><a name="cointemetaobjvlisp"><strong>Coi87</strong></a></dt><dd>
+Pierre Cointe.
+ Meta-classes are First Class: the ObjVlisp Model.
+ In <em> Proceedings of OOPSLA'87</em>, pages 156--167, Orlando, Florida,
+  December 1987. ACM Sigplan Notices.
+<p>
+</p></dd><dt><a name="cointeclasstalk"><strong>Coi90</strong></a></dt><dd>
+Pierre Cointe.
+ The ClassTalk System: a Laboratory to Study Reflection in
+  Smalltalk.
+ In <em> Informal Proceedings of the First Workshop on Reflection and
+  Meta-Level Architectures in Object-Oriented Programming, OOPSLA/ECOOP'90</em>,
+  October 1990.
+<p>
+</p></dd><dt><a name="reflexionbobrowgabrielwhite"><strong>DBW93</strong></a></dt><dd>
+R.G. Gabriel and D.G. Bobrow and J.L. White.
+ <em> CLOS in Context - The Shape of the Design Space. In Object
+  Oriented Programming - The CLOS perspective</em>.
+ MIT Press, 1993.
+<p>
+</p></dd><dt><a name="sombeforeafter"><strong>DFM94</strong></a></dt><dd>
+Scott Danforth, Ira R. Forman, and Hari Madduri.
+ Composition of Before/After Metaclasses in SOM.
+ In <em> Proceedings of OOPSLA'94</em>, Portland, Oregon, October 1994.
+<p>
+</p></dd><dt><a name="ijcai95jacques"><strong>DM95</strong></a></dt><dd>
+Francois-Nicola Demers and Jacques Malenfant.
+ Reflection in logic, functional and object-oriented programming : a
+  Short Comparative Study.
+ In <em> Workshop of IJCAI'95 : On Reflection and Meta-Level
+  Architecture and their Application in AI</em>, pages 29--38, August 1995.
+<p>
+</p></dd><dt><a name="dony90handler"><strong>Don90</strong></a></dt><dd>
+Christophe Dony.
+ Exception Handling and Object-Oriented Programming: towards a
+  synthesis.
+ In <em> Proceedings of OOPSLA/ECOOP'90</em>, pages 322--330, 1990.
+<p>
+</p></dd><dt><a name="oopsla89FooteJohnson"><strong>FJ89</strong></a></dt><dd>
+Brian Foote and Ralph E. Johnson.
+ Reflective Facilities in Smalltalk-80.
+ In <em> Proceedings of OOPSLA'89, ACM Sigplan Notices</em>, volume 24,
+  pages 327--335, October 1989.
+<p>
+</p></dd><dt><a name="goldbergbluebook"><strong>GR83</strong></a></dt><dd>
+A. Goldberg and D. Robson.
+ <em> Smalltalk-80, The language and its implementation</em>.
+ Addison Wesley, Readings, Massachusetts, 1983.
+<p>
+</p></dd><dt><a name="oopsla89Graube"><strong>Gra89</strong></a></dt><dd>
+Nicolas Graube.
+ Metaclass Compatibility.
+ In <em> Proceedings of OOPSLA'89, ACM Sigplan Notices</em>, volume 24,
+  pages 305--315, October 1989.
+<p>
+</p></dd><dt><a name="parameterizedCompiler"><strong>HJ95</strong></a></dt><dd>
+Bob Hunkle and Ralph E. Johnson.
+ Deep in the Heart of Smalltalk.
+ In <em> The Smalltalk Report </em>, july 1995.
+<p>
+</p></dd><dt><a name="smtk76"><strong>Ing78</strong></a></dt><dd>
+D.H.H. Ingalls.
+ The Smalltalk-76 Programming System Design and Implementation.
+ In <em> 5th POPL</em>, pages 9--17. Tuscon, Arizona, 1978.
+<p>
+</p></dd><dt><a name="kiczalesmop"><strong>KdRB91</strong></a></dt><dd>
+Gregor Kiczales, Jim des Rivières, and Daniel G. Bobrow.
+ <em> The Art of the Metaobject Protocol</em>.
+ Cambridge, MIT Press, 1991.
+<p>
+</p></dd><dt><a name="smtk72"><strong>KG76</strong></a></dt><dd>
+A. Kay and A. Goldberg.
+ Smalltalk-72 Instruction Manual / SSL-76-6.
+ Technical report, Xerox Parc, Palo Alto, California, 1976.
+<p>
+</p></dd><dt><a name="lampingopencompiler"><strong>LKRR92</strong></a></dt><dd>
+J. Lamping, G. Kiczales, L. Rodriguez, and E. Ruf.
+ An Architecture for an Open Compiler.
+ In A. Yonezawa and B. C. Smith, editors, <em> Proc. of the Int'l
+  Workshop on Reflection and Meta-Level Architecture</em>, pages 95--106, 1992.
+<p>
+</p></dd><dt><a name="lalondepugh"><strong>LP90</strong></a></dt><dd>
+Wilf R. Lalonde and John R Pugh.
+ <em> Inside Smaltalk (volume 1)</em>.
+ Prentice-Hall International Editions, Englewood Cliffs, New Jersey,
+  1990.
+<p>
+</p></dd><dt><a name="meyercpo"><strong>Mey90</strong></a></dt><dd>
+Bertrand Meyer.
+ <em> Conception et Programmation par Objets - 
+version franç aise</em>.
+ iia - InterEditions tirage 1991, France, 1990.
+<p>
+</p></dd><dt><a name="flavors86"><strong>Moo86</strong></a></dt><dd>
+David A. Moon.
+ Object-Oriented Programming with Flavors.
+ In <em> Proceedings of OOPSLA'86</em>, pages 1--8, Portland, Oregon,
+  September 1986. ACM Sigplan Notices.
+<p>
+</p></dd><dt><a name="smtk2context"><strong>Par94a</strong></a></dt><dd>
+ParcPlace.
+ <tt> spaceDescription</tt> method of the <tt> ObjectMemory class</tt>
+  metaclass. Description of the <tt> StackSpace</tt> in VisualWorks2.0.
+ Technical report, ParcPlace System, Inc, August 1994.
+<p>
+</p></dd><dt><a name="oe20"><strong>Par94b</strong></a></dt><dd>
+ParcPlace Systems, Inc, Sunnyvale.
+ <em> VisualWorks Release 2.0 of 4 August 1994</em>, 1994.
+<p>
+</p></dd><dt><a name="oopsla86Pascoe"><strong>Pas86</strong></a></dt><dd>
+G.A. Pascoe.
+ Encapsulators: A New Software Paradigm in Smalltalk-80.
+ In <em> Proceedings of OOPSLA'86, ACM Sigplan Notices</em>, pages
+  341--346, November 1986.
+<p>
+</p></dd><dt><a name="otiada9x"><strong>RC94</strong></a></dt><dd>
+Fred Rivard and Pierre Cointe.
+ From Envy-Classtalk to Ada9x - Final Progress Report.
+ Technical report, OTI-EMN, December 1994.
+<p>
+</p></dd><dt><a name="rivardjfla"><strong>Riv95</strong></a></dt><dd>
+Fred Rivard.
+ Extension du compilateur Smalltalk, Application à la
+  paramétrisation de l'envoi de message.
+ In <em> Actes des Journées Francophones des Langages Applicatifs,
+  JFLA'95</em>. INRIA - collection didactique, January 1995.
+<p>
+</p></dd><dt><a name="rivardoopsla96"><strong>Riv96</strong></a></dt><dd>
+Fred Rivard.
+ Dynamic Instance-Class Link.
+ In <em> Submission to OOPSLA'96</em>, February 1996.
+<p>
+</p></dd><dt><a name="jmRoMa93"><strong>RM93</strong></a></dt><dd>
+F. Rousseau and J. Malenfant.
+ Browsing in Explicit Metaclass Languages : an Essay in Reflective
+  Programming Environments.
+ In <em> Informal Proceedings of the Third Workshop on Reflection and
+  Metalevel Architectures in Object-Oriented Programming, OOPSLA'93</em>, October
+  1993.
+<p>
+</p></dd><dt><a name="object5"><strong>Sie94</strong></a></dt><dd>
+Siemens.
+ Simatic Object 5 Offline.
+ Technical report, Siemens, 1994.
+</dd></dl>
+<p>
+</p><h1><a name="SECTION00060000000000000000"> A.1 Code</a></h1>
+<p>
+<a name="code">&nbsp;</a>
+The full
+development can be loaded using ftp at <a href="ftp://ftp.emn.fr/pub/rivard/Smalltalk/visualworks2.0/prepost.st"><tt> ftp.emn.fr</tt> under <tt> 
+  /pub/rivard/Smalltalk/visualworks2.0/prepost.st</tt></a>.<br>
+ (We provide a version for
+<a href="ftp://ftp.emn.fr/pub/rivard/Smalltalk/visualworks1.0/prepost.st">visualworks1.0 in  <tt> /pub/rivard/Smalltalk/visualworks1.0/prepost.st</tt></a>.)  
+<!--
+COMMENT COMMENT COMMENT COMMENT COMMENT
+<PRE><TT> 
+<b> Browser</b>				<b> Metaclass</b>				<b> MetaclassWithControl</b>
+<P>
+swapControls				swapControls				swapControls
+<P>
+		<i> ``Changing the class of the metaclass to get</i>				<i> ``I get some compilation
+ </i>				<i> ``I don't want compilation and</i>
+<P>
+		<i> some compilation controls or vice versa''</i>				<i> and execution controls
+ ''</i>				<i> execution controls any more''</i>
+  
+<P>
+		<IMG  ALIGN=MIDDLE ALT="" SRC="img43.gif"> metaClass <IMG  ALIGN=MIDDLE ALT="" SRC="img44.gif">				self toMetaclassWithControl				self toMetaclass
+<P>
+		className isNil ifTrue:[<IMG  ALIGN=MIDDLE ALT="" SRC="img45.gif">1234].
+<P>
+		self changeRequest ifFalse:[<IMG  ALIGN=MIDDLE ALT="" SRC="img46.gif">1234].
+<P>
+		metaClass := self nonMetaClass class.
+<P>
+		Cursor wait showWhile:[ 
+metaclass swapControl].
+<P>
+		className := metaClass browsingName.
+<P>
+		self changed: #className
+<P>
+</TT></PRE>
+<PRE><TT> 
+<b> Behavior</b>				<b> Metaclass</b>				<b> MetaclassWithControl</b>
+<P>
+compilerClass				compilerClass				compilerClass
+<P>
+		<i> ``Answer a compiler class to</i>				<i> ``Answer a compiler
+  class to</i>				<i> ``Answer a compiler class to</i>
+<P>
+		<i> source methods of this class''</i>				<i> source methods of this
+  class''</i>				<i> source methods of this class''</i>
+  
+<P>
+		<IMG  ALIGN=MIDDLE ALT="" SRC="img47.gif"> self class compilerClass				<IMG  ALIGN=MIDDLE ALT="" SRC="img48.gif"> Compiler				<IMG  ALIGN=MIDDLE ALT="" SRC="img49.gif">
+CompilerWithControl
+  
+  
+<P>
+<b> ClassDescription</b>				<b> Metaclass</b>				<b> MetaclassWithControl</b>
+<P>
+browsingName				browsingName				browsingName
+<P>
+		<i> ``Answer an appropriate</i>				<i> ``Answer an appropriate</i>				<i>
+  ``Answer an appropriate</i>
+<P>
+		<i> browsing name.''</i>				<i> browsing name.''</i>				<i> browsing name.''</i>
+  
+<P>
+		<IMG  ALIGN=MIDDLE ALT="" SRC="img50.gif"> self class browsingName				<IMG  ALIGN=MIDDLE ALT="" SRC="img51.gif"> self soleInstance name				<IMG  ALIGN=MIDDLE ALT="" SRC="img52.gif">
+(super browsingName ,
+<P>
+										      self class classOnControlString
+<P>
+										                   ) asSymbol
+<P>
+</TT></PRE>
+<PRE><TT> 
+<b> Parser</b>				<b> ParserWithControl</b>
+<P>
+compilePrePostCondition				compilePrePostCondition
+<P>
+		<i> ``Just forget about the pre- and post-conditions''</i>				<i> ``
+  compile the pre and post condition if they are valid''</i> 
+  
+<P>
+						preCondition isNil
+<P>
+						ifFalse:[self compilePreCondition].
+<P>
+						postCondition isNil
+<P>
+						ifFalse:[self compilePostCondition].
+<P>
+</TT></PRE>
+<PRE><TT> 
+<b> ParserWithControl</b>
+<P>
+compilePreCondition
+<P>
+		<i> &quot;Adding the preCondition to the beginning of the current statements.</i>
+<P>
+		<i> The tree to produce is something like</i>
+<P>
+		<i> [...the preCondition...] value </i>
+<P>
+		<i> ifFalse:[ CompilerWithControl preConditionSignal raiseRequest]''</i>
+  
+<P>
+		<IMG  ALIGN=MIDDLE ALT="" SRC="img53.gif"> block statement <IMG  ALIGN=MIDDLE ALT="" SRC="img54.gif">
+<P>
+		preCondition := builder										newMessageReceiver: preCondition receiver
+<P>
+ 												selector: #value
+<P>
+ 												arguments: #() .
+<P>
+		<i> &quot;----------error block construction---------------->
+</p><p>
+		 block := builder				newMessageReceiver:
+</p><p>
+ 										 (builder 								newMessageReceiver: ( builder      newVariableName: 'CompilerWithControl')
+</p><p>
+ 																		selector: #preConditionSignal
+</p><p>
+ 																		arguments: #())
+</p><p>
+ 						selector: #raiseRequest
+</p><p>
+ 						arguments:#().
+</p><p>
+		<i> "----------preConditionBlock construction-----------"</i>
+</p><p>
+		statement := builder 								    newMessageReceiver: preCondition
+</p><p>
+										selector: #ifFalse:
+</p><p>
+										 arguments: (Array with: ( builder										 newBlockArguments: #()
+</p><p>
+  																				body: (builder   newSequenceTemporaries: #()
+</p><p>
+  																				                     statements:  (Array with:
+  block)))).
+</p><p>
+		parseNode body statements addFirst: statement.
+</p><p>
+
+<a name="actalkcode">&nbsp;</a>
+ 
+</p><pre><tt> 
+<b> ActalkProgramNodeBuilder</b>
+</tt><p>
+<tt>newMessageReceiver: rcvr selector: sel arguments: args
+</tt></p><p>
+<tt>		 "a.selector are asynchronous messages"
+</tt></p><p>
+<tt>		<img alt="" src="rivard_files/img55.html" align="middle"> ws <img alt="" src="rivard_files/img56.html" align="middle">
+</tt></p><p>
+<tt>		sel isCompound
+</tt></p><p>
+<tt>		ifFalse: [<img alt="" src="rivard_files/img57.html" align="middle">super newMessageReceiver: rcvr selector: sel arguments: args].
+</tt></p><p>
+<tt>\&gt;"optimizing for less than 5 arguments. 99.1 purcent of the symbols "
+</tt></p><p>
+<tt>		sel numArgs <b>&lt;</b>= 5
+</tt></p><p>
+<tt>		ifTrue:[ <img alt="" src="rivard_files/img58.html" align="middle"> tab <img alt="" src="rivard_files/img59.html" align="middle">
+</tt></p><p>
+<tt>				(tab := OrderedCollection with: (self newLiteralValue: sel selectorPart)) addAll: args.
+</tt></p><p>
+<tt>				ws := (String new: 100) writeStream.
+</tt></p><p>
+<tt>				ws nextPutAll: 'addMessage:'.
+</tt></p><p>
+<tt>				sel numArgs timesRepeat:[ws nextPutAll: 'with:'].
+</tt></p><p>
+<tt>				<img alt="" src="rivard_files/img60.html" align="middle">self						 newMessageReceiver: rcvr
+</tt></p><p>
+<tt>										selector: ws contents asSymbol
+</tt></p><p>
+<tt>										arguments: tab asArray].
+</tt></p><p>
+<tt>		ws := (String new: 100) writeStream.
+</tt></p><p>
+<tt>		args size timesRepeat:[ ws nextPutAll: 'with:'].
+</tt></p><p>
+<tt>		<img alt="" src="rivard_files/img61.html" align="middle">self						newMessageReceiver: rcvr
+</tt></p><p>
+<tt>								selector: #addMessage:arguments:
+</tt></p><p>
+<tt>								arguments: (Array  														with:				 (self newLiteralValue: sel selectorPart)
+</tt></p><p>
+<tt>																						with:				(self  newMessageReceiver: (self
+</tt></p><p>
+<tt>																										          newVariableName:'Array' )
+</tt></p><p>
+<tt>																										          selector: ws contents asSymbol
+</tt></p><p>
+<tt>																										          arguments: args))
+</tt></p><p>
+<tt></tt></p></pre>
+<p>
+
+COMMENT COMMENT COMMENT COMMENT COMMENT
+--&gt;
+
+</p><dl>
+<a name="1132"><dt>...[#oe20##1#] </dt><dd><b> In this paper, SMALLTALK designates the
+  version VISUALWORKS 2.0 of <b> ParcPlace</b>.</b></dd></a>
+<a name="1138"><dt>...Object&gt;&gt;instVarAt:(put:) </dt><dd>
+  <tt> NameOfClass<b>&gt;&gt;</b>selector</tt>: this syntax expresses that 
+  the <tt> #selector</tt> method is implemented by the <tt> NameOfClass</tt> class.</dd></a>
+<a name="1139"><dt>...classes </dt><dd><tt> Dictionary</tt>, 
+<tt> IdentityDictionay</tt> classes.</dd></a>
+<a name="224"><dt>...metaclasses </dt><dd>Metaclass definition: 
+classes whose instances are classes themselves.</dd></a>
+<a name="1142"><dt>...protocol </dt><dd><tt> 
+    subclass:instanceVariableNames:classVariableNames:<br> poolDictionnaries:category:</tt></dd></a>
+<a name="280"><dt>...replacing </dt><dd>These are
+    actually  pointer manipulations</dd></a>
+<a name="356"><dt>...names </dt><dd>The pattern may be omitted for evaluation.</dd></a>
+<a name="1146"><dt>...expansion </dt><dd><tt> timesRepeat:</tt>,
+    <tt> ifTrue:</tt>, <tt> ifFalse:</tt>, <tt> and:</tt>,
+      <tt> or:</tt>, <tt> whileFalse:</tt>, <tt> whileTrue:</tt>, <tt> repeat</tt>, ...</dd></a>
+<a name="399"><dt>...class </dt><dd><tt>
+    variableSubclass:instanceVariableNames:.....</tt></dd></a>
+<a name="401"><dt>...class&gt;&gt;literalLimitSignal) </dt><dd>This limitation must be taken into
+  account while dealing with large automatically generated methods.</dd></a>
+<a name="471"><dt>...method </dt><dd>We
+  simplified the code for clearer understanding</dd></a>
+<a name="1148"><dt>...prefix </dt><dd>The <tt> Actor</tt> class provides the behavior for
+such an actor-object.</dd></a>
+<a name="1150"><dt>...messageNode </dt><dd>See A.1
+<p>
+ for the full source of the <tt> newMessageReceiver:selec</tt><br> <tt> tor:arguments:</tt>
+method of the <tt> ActalkProgramNodeBuilder</tt> class.
+</p></dd></a><a name="530"><dt>...[#object5##1#] </dt><dd>a PLC OO framework for Siemens; 20 year/man; currently used 
+in batch or continuous processes.</dd></a>
+<a name="1151"><dt>...primitive </dt><dd>The general form is <tt> perform:withArguments:</tt>.</dd></a>
+<a name="1152"><dt>...part </dt><dd>using <tt>
+  Object<b>&gt;&gt;</b>at:</tt> and  <tt> Object<b>&gt;&gt;</b>at:put:</tt> methods.</dd></a>
+<a name="623"><dt>...SMALLTALK </dt><dd>Thanks to Mario Wolczko.</dd></a>
+<a name="696"><dt>...example </dt><dd>We have simplified the code for clearer understanding.</dd></a>
+<a name="843"><dt>...interface </dt><dd>This
+  recompilation does not interfere with the source manage-<br> ment.</dd></a>
+<a name="1162"><dt>...Metaclass </dt><dd>Conceptually, our extension can be assimilated to the introduction of a
+new metaclass in a system allowing explicit metaclasses programming, such as OBJVLISP
+ [</dd></a><a href="http://www2.parc.com/csl/groups/sda/projects/reflection96/docs/rivard/fv.html#cointemetaobjvlisp">Coi87</a>].
+</dl>
+<br> <hr>
+<p></p><address>
+<i>Rivard Fred  <br>
+<a href="mailto:fred_rivard@oti.com"><img src="rivard_files/button.gif">    e-mail: fred_rivard@oti.com</a></i>
+</address>
+</body></html>

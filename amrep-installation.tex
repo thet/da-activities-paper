@@ -1,0 +1,31 @@
+\chapter{Installation der Activity Model Runtime Engine für Python}\label{amrep-installation}
+
+
+
+\begin{lstlisting}
+$ cd activities.buildout
+$ py26 bootstrap.py
+$ ./bin/buildout
+\end{lstlisting}
+
+\begin{lstlisting}
+$ ./bin/test -s activities.runtime -t runtime.txt
+$ ./bin/test -s activities.metamodel -t elements.txt
+$ ./bin/test -s activities.transform.xmi -t transform.txt
+$ ./bin/test -s activities.test.hospital -t tests.txt
+$ ./bin/test -s activities.test.article -t tests.txt
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+
+
+
+% END OF DOCUMENT

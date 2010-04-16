@@ -1,0 +1,348 @@
+body {
+    background      : url("http://blog.lombardicto.com/images/background.jpg") 0px 0px repeat-x;
+    margin              : 0px;
+    padding         : 4px 4px 4px 4px;
+    
+    font-family: Verdana;
+    min-width: 900px;
+    font-size: 12px;
+}
+
+/* Global Link Settings */
+
+a:hover {
+	text-decoration: underline;
+	color: #00407A;
+}
+
+a:active {
+	text-decoration: underline;
+	color: #00407A;
+}
+
+a {
+	text-decoration: none;
+	color: #707070;
+}
+
+
+/* Top Section */
+
+#blog_title {
+	width: 100%;	
+	padding: 0px;
+}
+ 
+#blog_title tr th {
+	text-align: left;
+	font-size: 30px;	
+	font-weight: normal;
+       color: #3b3131;
+}
+
+#blog_title tr td {
+	text-align: left;
+	font-size: 12px;	
+	line-height: 20px;
+       color: #382D2C;
+}
+
+#header_image {
+	width: 200px;
+	text-align: center;
+}
+
+#header_image img {
+	padding-left: 13px; /* To center image */
+}
+
+.blog_left_spacer {
+	width: 10px;	
+}
+
+/* Toolbar */
+ 
+#blog_toolbar {
+      width: 100%;
+      /* padding: 0px; */
+      border-color: #8D8D8D;
+      height: 41px;
+}
+ 
+#blog_tb_left {
+      background: url("http://blog.lombardicto.com/images/header-left.gif") 0px 0px no-repeat;     
+      width: 15px;
+      text-align: left;
+}
+
+#blog_tb_left_spacer {
+      background: url("http://blog.lombardicto.com/images/header-slice.gif") 0px 0px repeat-x;
+      width: 182px;
+      text-align: left;
+      border-right: 1px solid #8D8D8D;   
+      border-right-color: #8D8D8D;
+}
+
+.blog_tb_right {
+	background: url("http://blog.lombardicto.com/images/header-right.gif") 0px 0px no-repeat;	
+	height: 41px;
+	width: 15px;
+	text-align: left;
+}
+
+.blog_tb_right_highlight {
+	background: url("http://blog.lombardicto.com/images/header-right-selected.gif") 0px 0px no-repeat;	
+	height: 41px;
+	width: 15px;
+	text-align: left;
+}
+
+
+.blog_button_spacer {
+	width: 1px;
+}
+	
+.blog_tb_button {
+	background: url("http://blog.lombardicto.com/images/header-slice.gif") 0px 0px repeat-x;
+	border-right: 1px solid;	
+	border-left: 1px solid;	
+	border-color: #8D8D8D;	
+	
+	text-align: center;
+	font-weight: bold;
+	font-size: 12px;
+	
+	padding-left: 10px;
+	padding-right: 10px;
+	
+	cursor: pointer;
+}
+
+.blog_tb_button_mouseover {
+	background: url("http://blog.lombardicto.com/images/header-slice-highlight.gif") 0px 0px repeat-x;
+	border-right: 1px solid;	
+	border-left: 1px solid;	
+	border-color: #8D8D8D;	
+	
+	text-align: center;
+	font-weight: bold;
+	font-size: 12px;
+	
+	padding-left: 10px;
+	padding-right: 10px;
+	
+	cursor: pointer;
+}
+
+.blog_tb_button_selected {
+	background: url("http://blog.lombardicto.com/images/header-selected-slice.gif") 0px 0px repeat-x;
+	border-right: 1px solid;	
+	border-left: 1px solid;	
+	border-color: #8D8D8D;	
+	
+	text-align: center;
+	font-weight: bold;
+	color: white;
+	font-size: 12px;
+	
+	padding-left: 10px;
+	padding-right: 10px;
+	
+	cursor: default;
+}
+
+.blog_tb_searches {
+	background: url("http://blog.lombardicto.com/images/header-slice.gif") 0px 0px repeat-x;
+	border-left: 1px solid;	
+	border-color: #8D8D8D;	
+	
+	text-align: right;
+	font-size: 12px;
+	
+	padding-left: 10px;
+	padding-right: 10px;
+	
+	cursor: pointer;
+}
+
+.blog_tb_searches_mouseover {
+	background: url("http://blog.lombardicto.com/images/header-slice-highlight.gif") 0px 0px repeat-x;
+	border-left: 1px solid;	
+	border-color: #8D8D8D;	
+	
+	text-align: right;
+	font-size: 12px;
+	
+	padding-left: 10px;
+	padding-right: 10px;
+	
+	cursor: pointer;
+}
+
+#blog_tb_searchinput {
+	border: 1px solid;
+	border-color: #8D8D8D;	
+	width: 128px;
+}
+
+/* Body */
+#blog_body {
+	
+	width: 100%;	
+	padding: 0px;
+}
+
+#body_left {
+	width: 204px;
+}
+
+#body_main {
+	padding-top: 15px;
+	padding-right: 20px;
+	font-size: 12px;
+	line-height: 20px;
+	color: #000000;
+	vertical-align: top;	
+}
+
+#body_main h3 {
+	font-size: 20px;
+	font-weight: normal;
+	border-bottom: 1px solid;
+	border-bottom-color: #EEEEEE;
+	margin-bottom: 2px;
+	color: #303030;
+       
+}
+
+#body_right {
+	width: 215px;
+	padding-left: 20px;
+	padding-top: 15px;
+	border-left: 1px solid;
+	border-left-color: #EEEEEE;
+	vertical-align: top;
+	font-size: 12px;
+	text-align: right;
+       
+      
+}
+
+/* The following are to support the various random blog tags and styles */
+
+#body_right ul {
+	margin: 0px;
+	padding-top: 4px;
+	padding-right: 20px;
+	
+}
+
+#body_right ul li {
+	list-style-type: none;
+	margin-bottom: 5px;
+}
+
+#body_main p.posted {
+	clear: both;
+	color: #999999;
+	font-size: x-small;
+	border-top: 1px dotted #999999;
+	text-align: left;
+	font-weight: bold;
+		
+	margin-bottom: 20px;
+	line-height: normal;
+	padding: 3px;	
+}
+
+
+.link-note {
+	padding-top: 4px;
+	padding-right: 20px;	
+	margin-bottom: 3px;
+}
+
+/* For the -blogroll-. Damn them for messing up my layout */
+.blogrollmain {
+	margin: 0px;
+	padding: 0px;
+}
+
+.blogrollmain p {
+	margin: 0px;
+	padding: 0px;	
+}
+
+.blogrollmain > a {
+	display: none; /* This hides the "Powered by Bloglines" link, if wanted remove the display: none */
+}
+
+.photo {
+	padding-top: 4px;
+	padding-right: 20px;	
+	margin-bottom: 5px;
+		
+}
+
+.blogrollfolder {
+	padding-top: 4px;
+	padding-right: 20px;	
+	margin-bottom: 2px;
+	font-weight: bold;
+       color: #707070;
+}
+
+.blogrollitem {
+	padding-top: 4px;
+	padding-right: 20px;	
+	margin-bottom: 2px;
+}
+
+.rb_hidden {
+	margin: 0px;
+	padding: 0px;
+	display: none;	
+}
+
+.rb_shown {
+	margin: 0px;
+	padding: 0px;
+}
+
+.rb_table {
+	width: 100%;
+}
+
+.rb_header_left {
+	background: url("http://blog.lombardicto.com/images/rightbar-left.gif") 0px 0px;
+	
+	width: 9px;
+	height: 20px;
+}
+
+.rb_header_toggle {
+	background: url("http://blog.lombardicto.com/images/rightbar-slice.gif") 0px 0px repeat-x;
+	
+	text-align: right;
+	vertical-align: middle;
+	width: 9px;
+	height: 20px;
+}
+
+.rb_header {
+	background: url("http://blog.lombardicto.com/images/rightbar-slice.gif") 0px 0px repeat-x;
+	height: 20px;
+	
+	text-align: right;
+	vertical-align: middle;
+	font-size: 12px;
+}
+
+.rb_header_right {
+	background: url("http://blog.lombardicto.com/images/rightbar-right.gif") 0px 0px no-repeat;
+	
+	width: 21px;
+	height: 20px;
+}
+/* ph=1 */
+/* nhm:from_kauri */

@@ -1,0 +1,362 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="KEYWORDS" content="Petri net">
+<meta name="robots" content="index,follow">
+<link rel="shortcut icon" href="http://www.scholarpedia.org/favicon.ico">
+    <title>Petri net - Scholarpedia</title>
+    <style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "/wiki/skins/monobook/main.css?67"; /*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="petri-reisig-Petri-net_files/commonPrint.css">
+		<link rel="stylesheet" type="text/css" media="handheld" href="petri-reisig-Petri-net_files/handheld.html">
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/wiki/skins/monobook/IE50Fixes.css?67";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/wiki/skins/monobook/IE55Fixes.css?67";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/wiki/skins/monobook/IE60Fixes.css?67";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/wiki/skins/monobook/IE70Fixes.css?67";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/wiki/skins/common/IEFixes.js?67"></script>
+    <meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+    <script type="text/javascript" src="petri-reisig-Petri-net_files/index.php"></script>    <script type="text/javascript" src="petri-reisig-Petri-net_files/wikibits.js"></script>
+    <style type="text/css">/*<![CDATA[*/
+@import "/wiki/index.php?title=MediaWiki:Monobook.css&action=raw&ctype=text/css&smaxage=18000";
+@import "/wiki/index.php?title=-&action=raw&gen=css&maxage=18000";
+/*]]>*/</style>              </head><body class="ns-0">
+    <div id="globalWrapper">
+      <div id="column-content">
+
+    <div id="content">
+	  <a name="top" id="top"></a>
+	  	  <h1 class="firstHeading">
+	  Petri net</h1>
+	  <div id="bodyContent">
+	    <h3 id="siteSub">From Scholarpedia</h3>
+	    <div id="contentSub">   
+	  <table style="background: inherit inherit inherit inherit inherit; -moz-background-clip: inherit; -moz-background-origin: inherit; -moz-background-inline-policy: inherit;" width="100%" border="0" cellpadding="0" cellspacing="0">
+	  <tbody><tr valign="bottom">
+	  <td colspan="20" align="left">
+	  Carl Adam Petri and Wolfgang Reisig (2008), Scholarpedia, 3(4):6477.
+	  </td>
+	  <td align="right">
+	  revision #37208 [<a href="http://www.scholarpedia.org/wiki/index.php?title=Petri_net&amp;action=cite&amp;rev=37208">link to/cite this article</a>]
+	  </td>
+	  </tr>
+	  </tbody></table><br></div>
+	    	    	    <!-- start content -->
+	    <p>Curator: <a href="http://www.scholarpedia.org/article/User:Petri" title="User:Petri">Dr. Carl Adam Petri, University of Hamburg, Germany</a><br>Curator: <a href="http://www.scholarpedia.org/article/User:Reisig" title="User:Reisig">Dr. Wolfgang Reisig, Humboldt-Universitaet zu Berlin   Berlin, Germany</a><br></p><a name="1"></a><div class="thumb tright"><div style="width: 402px;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig1.png" class="internal" title="Figure 1: Example of a production net."><img src="petri-reisig-Petri-net_files/400px-Petri_Fig1.png" alt="Figure 1: Example of a production net." longdesc="/article/Image:Petri_Fig1.png" width="400" height="96"></a>  <div class="thumbcaption"><div class="magnify" style="float: right;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig1.png" class="internal" title="Enlarge"><img src="petri-reisig-Petri-net_files/magnify-clip.png" alt="Enlarge" width="15" height="11"></a></div>Figure 1: Example of a production net.</div></div></div>
+<p>A <strong>Petri net</strong> is a graphical tool for the description
+and analysis of concurrent processes which arise in systems with many
+components (distributed systems). The graphics, together with the rules
+for their coarsening and refinement, were invented in August 1939 by
+the German Carl Adam Petri - at the age of 13 - for the purpose of
+describing chemical processes, such as Fig. <a href="#1">1</a>.
+</p>
+<table id="toc" class="toc"><tbody><tr><td><div id="toctitle"><h2>Contents</h2> <span class="toctoggle">[<a href="javascript:toggleToc()" class="internal" id="togglelink">hide</a>]</span></div>
+<ul>
+<li class="toclevel-1"><a href="#Anatomy_of_a_Petri_net"><span class="tocnumber">1</span> <span class="toctext">Anatomy of a Petri net</span></a></li>
+<li class="toclevel-1"><a href="#General_net_theory"><span class="tocnumber">2</span> <span class="toctext">General net theory</span></a></li>
+<li class="toclevel-1"><a href="#Marking_class.2C_safety.2C_security.2C_and_fairness"><span class="tocnumber">3</span> <span class="toctext">Marking class, safety, security, and fairness</span></a></li>
+<li class="toclevel-1"><a href="#References"><span class="tocnumber">4</span> <span class="toctext">References</span></a></li>
+<li class="toclevel-1"><a href="#Recommended_reading"><span class="tocnumber">5</span> <span class="toctext">Recommended reading</span></a></li>
+<li class="toclevel-1"><a href="#External_links"><span class="tocnumber">6</span> <span class="toctext">External links</span></a></li>
+<li class="toclevel-1"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
+</ul>
+</td></tr></tbody></table>
+<p><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+</p>
+<div class="editsection" style="float: right; margin-left: 5px;">[<a href="http://www.scholarpedia.org/wiki/index.php?title=Petri_net&amp;action=edit&amp;section=1" title="Petri net" rel="nofollow">edit</a>]</div><a name="Anatomy_of_a_Petri_net"></a><h2>Anatomy of a Petri net</h2>
+<p>The components of these nets are called <i>states</i> (for substances) and <i>transitions</i> (for reactions). The round symbols denote states <img class="tex" src="petri-reisig-Petri-net_files/fc9fd3f1638c32cdfc7a728cd842e2b6.png" alt="S"> (also called <i>places</i> or, more abstractly, <i>conditions</i>); the rectangular shapes denote transitions <img class="tex" src="petri-reisig-Petri-net_files/c48ba2366fa4ce4beda85373955bae46.png" alt="T">.
+They are interconnected by arrows which show the direction of flow. The
+activities of transitions are accordingly subdivided in <i>give</i> and <i>take</i>. The black marks (or <i>tokens</i>)
+are moved by the occurrence of transitions; the describe the present
+state-of affairs; in the picture above, they show the initial state.
+Each mark may stand for one molecule but also for 1 Mol consisting of
+over <img class="tex" src="petri-reisig-Petri-net_files/3180f2c9805952779436c8d437970c98.png" alt="6 x 10^{23}"> molecules. Note that <img class="tex" src="petri-reisig-Petri-net_files/699bb4c066aef5657f4f49b047a440e2.png" alt="CO_2"> is present twice, for the two separate roles of <img class="tex" src="petri-reisig-Petri-net_files/699bb4c066aef5657f4f49b047a440e2.png" alt="CO_2">.
+</p><p>By convention, the state symbols of regularly built nets are
+often omitted, in order to show their abstract structure more clearly,
+which may result in surprising shapes (Fig. <a href="#2">2</a>).
+</p>
+<a name="2"></a><div class="thumb tright"><div style="width: 402px;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig2.png" class="internal" title="Figure 2: "><img src="petri-reisig-Petri-net_files/400px-Petri_Fig2.png" alt="Figure 2: " longdesc="/article/Image:Petri_Fig2.png" width="400" height="133"></a>  <div class="thumbcaption"><div class="magnify" style="float: right;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig2.png" class="internal" title="Enlarge"><img src="petri-reisig-Petri-net_files/magnify-clip.png" alt="Enlarge" width="15" height="11"></a></div>Figure 2: </div></div></div>
+<a name="3"></a><div class="thumb tright"><div style="width: 402px;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig3.png" class="internal" title="Figure 3: "><img src="petri-reisig-Petri-net_files/400px-Petri_Fig3.png" alt="Figure 3: " longdesc="/article/Image:Petri_Fig3.png" width="400" height="101"></a>  <div class="thumbcaption"><div class="magnify" style="float: right;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig3.png" class="internal" title="Enlarge"><img src="petri-reisig-Petri-net_files/magnify-clip.png" alt="Enlarge" width="15" height="11"></a></div>Figure 3: </div></div></div>
+<p>Interchanging <img class="tex" src="petri-reisig-Petri-net_files/fc9fd3f1638c32cdfc7a728cd842e2b6.png" alt="S"> and <img class="tex" src="petri-reisig-Petri-net_files/c48ba2366fa4ce4beda85373955bae46.png" alt="T"> in the production net gives a totally different structure, called an <i>organization net</i> (Fig. <a href="#3">3</a>).
+Here, the transitions denote offices and the states denote channels,
+capable of holding messages (such as commands) until they are taken
+away (obeyed) by a subordinate office. The net shows an organization
+structure with two offices <img class="tex" src="petri-reisig-Petri-net_files/267207dcdda52b5b86c6ea274c2cb2b1.png" alt="A">, <img class="tex" src="petri-reisig-Petri-net_files/a1a76909549c40edd9ad1d3808a25e6f.png" alt="B"> of equal rank who can issue orders independently if channel capacity permits them to. Offices like <img class="tex" src="petri-reisig-Petri-net_files/5616208fafc6b96190c6b46e0b649a10.png" alt="D"> and <img class="tex" src="petri-reisig-Petri-net_files/200d64d1f0e26cd0518d0956eb23dc02.png" alt="F"> are rare in human organizations but they do exist, e.g. in the military.
+</p><p>The most important class of nets are <i>cyclic nets</i> in which
+each arrow lies on a directed circuit. If well structured, they express
+the idea of an infinitely repeatable process (Fig. <a href="#4">4</a>). A finite piece of their history can be described by an <i>occurrence <a href="http://www.scholarpedia.org/article/Graph_Theory" class="stub" title="Graph theory (stub)">graph</a></i> (a production net).
+</p>
+<a name="4"></a><div class="thumb tright"><div style="width: 402px;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig4.png" class="internal" title="Figure 4: "><img src="petri-reisig-Petri-net_files/400px-Petri_Fig4.png" alt="Figure 4: " longdesc="/article/Image:Petri_Fig4.png" width="400" height="125"></a>  <div class="thumbcaption"><div class="magnify" style="float: right;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig4.png" class="internal" title="Enlarge"><img src="petri-reisig-Petri-net_files/magnify-clip.png" alt="Enlarge" width="15" height="11"></a></div>Figure 4: </div></div></div>
+<p>This net has the same structure as a mechanical <a href="http://www.scholarpedia.org/article/Periodic_Orbit" title="Periodic orbit">oscillator</a> (where momentum is <i>caused by</i> the displacement of a mass owing to a retracting force).
+</p>
+<div class="editsection" style="float: right; margin-left: 5px;">[<a href="http://www.scholarpedia.org/wiki/index.php?title=Petri_net&amp;action=edit&amp;section=2" title="Petri net" rel="nofollow">edit</a>]</div><a name="General_net_theory"></a><h2>General net theory</h2>
+<p>The algebraic aspect of distributed systems was described by Petri
+in 1962 in his doctoral thesis "Communication with Automata" (Petri,
+1966), in which it was argued that the then prevailing theory of
+automata had to be replaced by a new theory which respected the results
+of modern physics, especially of <a href="http://www.scholarpedia.org/article/Special_Relativity" class="stub" title="Special relativity (stub)">Special Relativity</a> and of the Uncertainty Principle, to yield a theory of <i>distributed systems</i> which was not in contradiction with physical laws (<i>basic net theory</i>).
+</p><p>That thesis was followed by a series of papers by Petri and his
+helpers on net applications in various areas of science (economics,
+mechanics, computer science, logic, organization, biology,
+telecommunication protocols...) with a view to create a tool for
+interdisciplinary transfer of structural knowledge. The concept of
+higher-level nets was prepared by the axiomatic foundation of <i>general net theory</i> (GNT), comprising a general definition of <i>net</i>, the basic transition rule, the creation of higher level nets, and the step to any number of dimensions.
+</p><p>In detail, the GNT is founded on the following axioms:
+</p>
+<ul><li>1.1 The empty set is not a net (relevant to theorem proving)
+</li><li>1.2 <img class="tex" src="petri-reisig-Petri-net_files/fc9fd3f1638c32cdfc7a728cd842e2b6.png" alt="S"> and <img class="tex" src="petri-reisig-Petri-net_files/c48ba2366fa4ce4beda85373955bae46.png" alt="T"> are separate sets
+</li><li>1.3 There are no isolated elements in a net
+</li><li>1.4 There are no <i>short circuits</i> (both forward and backward arrows between two elements)
+</li></ul>
+<p>An <i>event</i> is a set of concurrently executable transitions. Event axioms:
+</p>
+<ul><li>2.1 (Every net can be marked so that) the class <img class="tex" src="petri-reisig-Petri-net_files/91983281b78c12572859ad7e30bb7e78.png" alt="E"> of events is not empty
+</li><li>2.2 Transitions in the same event have non-overlapping sets of connected states
+</li><li>2.3 Each transition in an event e has all incoming states marked, after e unmarked
+</li><li>2.4 Each transition in an event e has all outgoing states unmarked, after e marked
+</li></ul>
+<p><a href="http://www.scholarpedia.org/article/Iterated_Map" class="stub" title="Iterated map (stub)">Mappings</a> from one net to another are governed by the axioms
+</p>
+<ul><li>3.1 A map does not invert arrows
+</li><li>3.2 A map is <i>continuous</i> in the sense of topology: it does not destroy neighbourhood.
+</li></ul>
+<p>The <i>connectivity matrix</i> <img class="tex" src="petri-reisig-Petri-net_files/95674ea6c2e9b8501d3394ea88642943.png" alt="C"> of a basic net is an <img class="tex" src="petri-reisig-Petri-net_files/72720106838309d421abe5f051464f31.png" alt="SxT"> matrix with entries <img class="tex" src="petri-reisig-Petri-net_files/be523b30abb62895c133a2ba20699fc6.png" alt="(0,+1,-1)">
+</p><p>Meaningful sequences of nets, denoting a multi-dimesional object, are constructed thus:
+</p>
+<ul><li>4.1 <img class="tex" src="petri-reisig-Petri-net_files/c48ba2366fa4ce4beda85373955bae46.png" alt="T"> of net <img class="tex" src="petri-reisig-Petri-net_files/aa7009a249347e326a4ed69d71399e62.png" alt="N(n+1)"> is identical with <img class="tex" src="petri-reisig-Petri-net_files/fc9fd3f1638c32cdfc7a728cd842e2b6.png" alt="S"> of <img class="tex" src="petri-reisig-Petri-net_files/4021113ab077c40294c9b8ae3ea6b7c4.png" alt="Net(n)">
+</li><li>4.2 <img class="tex" src="petri-reisig-Petri-net_files/95674ea6c2e9b8501d3394ea88642943.png" alt="C"> of net <img class="tex" src="petri-reisig-Petri-net_files/aa7009a249347e326a4ed69d71399e62.png" alt="N(n+1)"> multiplied by <img class="tex" src="petri-reisig-Petri-net_files/95674ea6c2e9b8501d3394ea88642943.png" alt="C"> of <img class="tex" src="petri-reisig-Petri-net_files/4021113ab077c40294c9b8ae3ea6b7c4.png" alt="Net(n)"> yields a zero matrix
+</li></ul>
+<p>Axioms *3 describe the conceptual step from basic nets to higher level nets in which arrows can carry labels, states <img class="tex" src="petri-reisig-Petri-net_files/fc9fd3f1638c32cdfc7a728cd842e2b6.png" alt="S"> can carry any number of tokens, transitions <img class="tex" src="petri-reisig-Petri-net_files/c48ba2366fa4ce4beda85373955bae46.png" alt="T">
+can mean any composite process, and short circuits are allowed if their
+meaning is defined. The Event Axioms have to be re-defined accordingly.
+</p><p>Axioms *4 define the <i>dimensional step</i> from basic nets having only two kinds (<img class="tex" src="petri-reisig-Petri-net_files/fc9fd3f1638c32cdfc7a728cd842e2b6.png" alt="S"> and <img class="tex" src="petri-reisig-Petri-net_files/c48ba2366fa4ce4beda85373955bae46.png" alt="T">) of elements to <i>net piles</i>
+with any required number of kinds. Assume we want to express the shape
+of a cube by nets: Take the net of corners and edges, and pile up the
+net of edges and faces - consistent orientation is required. We get a
+net pile with three kinds of elements: corners <img class="tex" src="petri-reisig-Petri-net_files/028971746f5333c4acc67effeefe4f0f.png" alt="(dim 0)">, edges <img class="tex" src="petri-reisig-Petri-net_files/1ad3ffae47a3800f10b12017f5ab1b9b.png" alt="(dim 1)"> and faces <img class="tex" src="petri-reisig-Petri-net_files/e45dfb5a9355a7de4296fd6a3ab96c35.png" alt="(dim 2)">. Thus, we are prepared to tackle the ten or eleven dimensions of String Theory.
+</p>
+<div class="editsection" style="float: right; margin-left: 5px;">[<a href="http://www.scholarpedia.org/wiki/index.php?title=Petri_net&amp;action=edit&amp;section=3" title="Petri net" rel="nofollow">edit</a>]</div><a name="Marking_class.2C_safety.2C_security.2C_and_fairness"></a><h2>Marking class, safety, security, and fairness</h2>
+<p>Given an initial marking, there is often the task to enquire not
+only the future but also the past of the history of the net. Therefore,
+the <i>marking class</i> is defined as the set of markings which are
+reachable from the initial marking by forward and backward execution of
+transitions.
+</p><p>A net structure is called <i>safe</i> if there are no <i>contact situations</i> in its marking class. Contact is given when a collision of tokens threatens because axioms 2*3 and 2*4 are not satisfied.
+</p><p>A net structure is called <i>secure</i> if there are no <i>transjunctions</i>
+in its marking class.
+A transjunction is a conjunction of conditions across a transition: an
+input condition is marked and also an output condition. Tokens denoting
+electromagnetic signals might interfere.
+</p>
+<a name="5"></a><div class="thumb tright"><div style="width: 402px;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig5.png" class="internal" title="Figure 5: "><img src="petri-reisig-Petri-net_files/400px-Petri_Fig5.png" alt="Figure 5: " longdesc="/article/Image:Petri_Fig5.png" width="400" height="97"></a>  <div class="thumbcaption"><div class="magnify" style="float: right;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig5.png" class="internal" title="Enlarge"><img src="petri-reisig-Petri-net_files/magnify-clip.png" alt="Enlarge" width="15" height="11"></a></div>Figure 5: </div></div></div>
+<p>Some nets allow two or more independent processes kept apart by a mechanism of <i>mutual exclusion</i>.
+This mechanism ensures that only one of the processes can enter a
+critical phase on each repetition. The working of the mechanism is
+described below: the mutual exclusion is embodied by a <i>dead transition</i> which can never occur. Dead transitions are called <i>facts</i> because they represent factual statements about the marking class.
+</p><p>The schedule on the left can be misused by a fast competitor
+through usurping the system all for himself. To ensure a fair
+competition, the cycles must be linked by a <i>buffer</i>. A buffer of capacity 1 would enforce alternating use; in practice, larger buffers allow more freedom.
+</p>
+<a name="6"></a><div class="center"><div class="thumb tnone"><div style="width: 602px;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig6.png" class="internal" title="Figure 6: "><img src="petri-reisig-Petri-net_files/600px-Petri_Fig6.png" alt="Figure 6: " longdesc="/article/Image:Petri_Fig6.png" width="600" height="160"></a>  <div class="thumbcaption"><div class="magnify" style="float: right;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig6.png" class="internal" title="Enlarge"><img src="petri-reisig-Petri-net_files/magnify-clip.png" alt="Enlarge" width="15" height="11"></a></div>Figure 6: </div></div></div></div>
+<p>The example above (Fig. <a href="#6">6</a>) indicates the general method to define all valid logical statements about the marking class by a set of facts.
+</p><p>General net theory features the following innovations:
+</p>
+<ul><li>1 The replacement of temporal order by causal order, in keeping with the laws of Physics. Simultaneity is replaced by <i>concurrency</i> (mutual causally independent occurrence).
+</li></ul>
+<ul><li>2 Merging of discrete and continuous modeling, in keeping with
+the laws of Topology. This is done by equipping all nets with a
+topological structure: The <i>closure</i> of a state is defined as
+that state plus all transitions connected to it, irrespective of
+direction of arrows. Moreover, all rules of mathematical topology are
+to be applied by definition. As a result, every finite connected net is
+a <i>continuous space</i>.
+</li></ul>
+<ul><li>3 Derivation of the physical primitives for computation from
+the smallest structures of particle movement periodic in time (by
+re-orientation).
+</li></ul>
+<p>This highly abstract and laborious procedure, which Petri performed in cooperation with Konrad Zuse, is as follows:
+</p><p>The background of this table is an Integer Minkowski Grid,
+implemented between a pulsating light source and a mirror. The yellow
+patches are cut out and their opposite sides are glued together to form
+a torus on which certain tokens (particles) oscillate periodically in
+specific modes (Fig. <a href="#7">7</a>). <i>LT-compatible</i> means
+that the Lorentz Transformation can be applied literally to the
+patterns, while this is not immediately possible for the degenerate
+patterns. It turned out to the surprise of the inventors that those
+periodical patterns of movement corresponded one-to-one to a complete
+set of loss-free computing primitives (by changing the orientation of
+arrows). Moreover, loss-free means that they have exact reverses (each
+is even its own reverse!).
+</p>
+<a name="7"></a><div class="thumb tleft"><div style="width: 302px;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig7.png" class="internal" title="Figure 7: "><img src="petri-reisig-Petri-net_files/300px-Petri_Fig7.png" alt="Figure 7: " longdesc="/article/Image:Petri_Fig7.png" width="300" height="229"></a>  <div class="thumbcaption"><div class="magnify" style="float: right;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig7.png" class="internal" title="Enlarge"><img src="petri-reisig-Petri-net_files/magnify-clip.png" alt="Enlarge" width="15" height="11"></a></div>Figure 7: </div></div></div>
+<a name="8"></a><div class="thumb tnone"><div style="width: 307px;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig8.png" class="internal" title="Figure 8: "><img src="petri-reisig-Petri-net_files/305px-Petri_Fig8.png" alt="Figure 8: " longdesc="/article/Image:Petri_Fig8.png" width="305" height="232"></a>  <div class="thumbcaption"><div class="magnify" style="float: right;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig8.png" class="internal" title="Enlarge"><img src="petri-reisig-Petri-net_files/magnify-clip.png" alt="Enlarge" width="15" height="11"></a></div>Figure 8: </div></div></div>
+<p><br>
+</p>
+<a name="9"></a><div class="thumb tleft"><div style="width: 402px;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig9.png" class="internal" title="Figure 9: "><img src="petri-reisig-Petri-net_files/400px-Petri_Fig9.png" alt="Figure 9: " longdesc="/article/Image:Petri_Fig9.png" width="400" height="264"></a>  <div class="thumbcaption"><div class="magnify" style="float: right;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig9.png" class="internal" title="Enlarge"><img src="petri-reisig-Petri-net_files/magnify-clip.png" alt="Enlarge" width="15" height="11"></a></div>Figure 9: </div></div></div>
+<p>The detailed procedure for constructing the <i>Quine Transfer</i> which performs the conditional interchange of two bits are shown in Fig. <a href="#9">9</a>. Quine's function <img class="tex" src="petri-reisig-Petri-net_files/2240733790a690365159b6cac827dfe6.png" alt="Q(x, y, z)"> is defined as
+</p><p><img class="tex" src="petri-reisig-Petri-net_files/80363baf88d092984b680a3349f09ce6.png" alt="Q(a,b,c) =  \begin{cases}    c,  &amp; \mbox{if }b\mbox{ =1} \\   a,  &amp; \mbox{otherwise} \end{cases}">
+</p><p>Two copies of the variable <img class="tex" src="petri-reisig-Petri-net_files/abfc3dfe7a3b5bdda84444fb85b1153e.png" alt="b"> are needed in order to perform the transfer in one step.
+</p><p>There exist systematic mappings to generate <i>information flow graphs</i> from basic nets (Fig. <a href="#10"><!-- unknown reference:10 --></a>).
+They are the tool for the actual construction of nets fit for computing
+arbitrary functions from a given set of bits under physically feasible
+conditions.
+</p><p>Returning to the derivation of the smaller transfers necessary for computation in general, the <a href="http://www.scholarpedia.org/article/Synchronization" title="Synchronization">synchronization</a> of bit streams and the transfer computing <i>exclusive OR</i> (XOR) are given explicitly. The Information Graph shorthand for both is shown on bottom of the constructs:
+</p>
+<a name="Figure10"></a><div class="center"><div class="thumb tnone"><div style="width: 602px;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig10.png" class="internal" title="Figure 10: "><img src="petri-reisig-Petri-net_files/600px-Petri_Fig10.png" alt="Figure 10: " longdesc="/article/Image:Petri_Fig10.png" width="600" height="195"></a>  <div class="thumbcaption"><div class="magnify" style="float: right;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig10.png" class="internal" title="Enlarge"><img src="petri-reisig-Petri-net_files/magnify-clip.png" alt="Enlarge" width="15" height="11"></a></div>Figure 10: </div></div></div></div>
+<p>Here is a universal construct which performs bit addition modulo 2
+and bit multiplication in three steps. On the right, the general form
+of information flow graphs is demonstrated.
+</p>
+<a name="Figure11"></a><div class="center"><div class="thumb tnone"><div style="width: 502px;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig11.png" class="internal" title="Figure 11: "><img src="petri-reisig-Petri-net_files/500px-Petri_Fig11.png" alt="Figure 11: " longdesc="/article/Image:Petri_Fig11.png" width="500" height="152"></a>  <div class="thumbcaption"><div class="magnify" style="float: right;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig11.png" class="internal" title="Enlarge"><img src="petri-reisig-Petri-net_files/magnify-clip.png" alt="Enlarge" width="15" height="11"></a></div>Figure 11: </div></div></div></div>
+<p>Finally, it is pointed out that all basic computing primitives can be composed by joining <i>noisy channels</i>
+only (example: composition of XOR). As all real-world channels are
+noisy, there is ample supply of them. We hold that noise is not
+different from other physical influences, that is, caused by signals.
+Once a method is found for joining two or four noisy channels
+physically, there is no obstacle for a large-scale production of
+computing-power.
+</p>
+<a name="Figure12"></a><div class="thumb tright"><div style="width: 502px;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig12.png" class="internal" title="Figure 12: "><img src="petri-reisig-Petri-net_files/500px-Petri_Fig12.png" alt="Figure 12: " longdesc="/article/Image:Petri_Fig12.png" width="500" height="133"></a>  <div class="thumbcaption"><div class="magnify" style="float: right;"><a href="http://www.scholarpedia.org/article/Image:Petri_Fig12.png" class="internal" title="Enlarge"><img src="petri-reisig-Petri-net_files/magnify-clip.png" alt="Enlarge" width="15" height="11"></a></div>Figure 12: </div></div></div>
+<p>Since 1968, many authors have helped to develop net theory into a
+well-established body of knowledge, with many computer tools available
+for detecting the properties of nets <i>hidden</i> in the net graphics, such as behavioural invariants, or possibilities of decomposition.
+</p>
+<div class="editsection" style="float: right; margin-left: 5px;">[<a href="http://www.scholarpedia.org/wiki/index.php?title=Petri_net&amp;action=edit&amp;section=4" title="Petri net" rel="nofollow">edit</a>]</div><a name="References"></a><h2>References</h2>
+<ul><li> Petri, CA (1966) Communication with automata. DTIC Research Report AD0630125.
+</li></ul>
+<p><b>Internal references</b>
+</p>
+<ul><li> Jeff Moehlis, Kresimir Josic, Eric T. Shea-Brown (2006) <a href="http://www.scholarpedia.org/article/Periodic_orbit" title="Periodic orbit">Periodic orbit</a>. Scholarpedia, 1(7):1358.
+</li><li> Arkady Pikovsky and Michael Rosenblum (2007) <a href="http://www.scholarpedia.org/article/Synchronization" title="Synchronization">Synchronization</a>. Scholarpedia, 2(12):1459.
+</li></ul>
+<div class="editsection" style="float: right; margin-left: 5px;">[<a href="http://www.scholarpedia.org/wiki/index.php?title=Petri_net&amp;action=edit&amp;section=5" title="Petri net" rel="nofollow">edit</a>]</div><a name="Recommended_reading"></a><h2> Recommended reading </h2>
+<p>Since 1979, there is a yearly International Conference on
+Applications and Theory of Petri Nets (ICATPN) held in places all over
+the world. The proceedings are regularly published in Springer Lecture
+Notes in Computer Science (Springer LNCS). About every five years,
+Advanced Courses on Petri Nets (ACPN) are given, also with proceedings.
+</p>
+<ul><li> <a href="http://www.informatik.uni-hamburg.de/TGI/PetriNets/" class="external text" title="http://www.informatik.uni-hamburg.de/TGI/PetriNets/" rel="nofollow">Petri Nets World</a> - Online services for the Petri Net Community, contains links to literature, text books, FAQ etc.
+</li></ul>
+<div class="editsection" style="float: right; margin-left: 5px;">[<a href="http://www.scholarpedia.org/wiki/index.php?title=Petri_net&amp;action=edit&amp;section=6" title="Petri net" rel="nofollow">edit</a>]</div><a name="External_links"></a><h2> External links </h2>
+<ul><li> <a href="http://www.informatik.uni-hamburg.de/TGI/mitarbeiter/profs/petri_eng.html" class="external text" title="http://www.informatik.uni-hamburg.de/TGI/mitarbeiter/profs/petri eng.html" rel="nofollow">Carl Petri's website</a>
+</li><li> <a href="http://www2.informatik.hu-berlin.de/top/mitarbeiter/reisig/index.php?language=EN" class="external text" title="http://www2.informatik.hu-berlin.de/top/mitarbeiter/reisig/index.php?language=EN" rel="nofollow">Wolfgang Reisig's website</a>
+</li></ul>
+<div class="editsection" style="float: right; margin-left: 5px;">[<a href="http://www.scholarpedia.org/wiki/index.php?title=Petri_net&amp;action=edit&amp;section=7" title="Petri net" rel="nofollow">edit</a>]</div><a name="See_also"></a><h2>See also</h2>
+<p>Finite State Machine
+</p>
+<!-- Saved in parser cache with key scholarp_mw:pcache:idhash:6477-0!0!2000!0!!en!2 and timestamp 20090916105431 -->
+<br><table border="0" cellpadding="0"><tbody><tr><td>Carl Adam Petri, Wolfgang Reisig (2008) Petri net. Scholarpedia, 3(4):6477, (<a href="http://www.scholarpedia.org/wiki/index.php?title=Petri_net&amp;oldid=36825">go to the first approved version</a>)<br>Created: 1 February 2008,  reviewed: 17 April 2008,  accepted: 17 April 2008<br></td></tr></tbody></table><table border="0" cellpadding="0"><tbody><tr><td>Suggested by: </td><td><a href="http://www.scholarpedia.org/article/User:Nwerneck" title="User:Nwerneck">Mr. Nicolau Leal Werneck, USP, São Paulo, Brazil</a></td></tr><tr><td>Invited by: </td><td><a href="http://www.scholarpedia.org/article/User:Izhikevich" title="User:Izhikevich">Dr. Eugene M. Izhikevich, Editor-in-Chief of Scholarpedia, the peer-reviewed open-access encyclopedia</a></td></tr><tr><td>Action editor: </td><td><a href="http://www.scholarpedia.org/article/User:Izhikevich" title="User:Izhikevich">Dr. Eugene M. Izhikevich, Editor-in-Chief of Scholarpedia, the peer-reviewed open-access encyclopedia</a></td></tr><tr><td>Assistant editor: </td><td><a href="http://www.scholarpedia.org/article/User:Stevenson" title="User:Stevenson">Mr. Ian Stevenson, PhD Student, Northwestern University, Chicago, IL, USA</a> </td></tr></tbody></table><div class="printfooter">
+Retrieved from "<a href="http://www.scholarpedia.org/article/Petri_net">http://www.scholarpedia.org/article/Petri_net</a>"</div>
+	    <div id="catlinks"><p class="catlinks"><a href="http://www.scholarpedia.org/wiki/index.php?title=Special:Categories&amp;article=Petri_net" title="Special:Categories">Categories</a>: <a href="http://www.scholarpedia.org/article/Category:Scholarpedia" title="Category:Scholarpedia">Scholarpedia</a></p></div>	    <!-- end content -->
+	    <div class="visualClear"></div>
+	  </div>
+	</div>
+      </div>
+      <div id="column-one">
+	<div id="p-cactions" class="portlet">
+	  <h5>Views</h5>
+	  <ul>
+	    <li id="ca-nstab-main" class="selected"><a title="View the content page [alt-c]" accesskey="c" href="http://www.scholarpedia.org/article/Petri_net">Article</a></li><li id="ca-talk"><a title="Discussion about the content page [alt-t]" accesskey="t" href="http://www.scholarpedia.org/article/Talk:Petri_net">reviews</a></li><li id="ca-edit"><a title="You can edit this page. Please use the preview button before saving. [alt-e]" accesskey="e" href="http://www.scholarpedia.org/wiki/index.php?title=Petri_net&amp;action=edit" rel="nofollow">edit this article</a></li><li id="ca-history"><a title="Past versions of this page. [alt-h]" accesskey="h" href="http://www.scholarpedia.org/wiki/index.php?title=Petri_net&amp;action=history" rel="nofollow">revisions</a></li>	  </ul>
+	</div>
+	<div class="portlet" id="p-personal">
+	  <h5>Personal tools</h5>
+	  <div class="pBody">
+	    <ul>
+	    <li id="pt-login"><a title="You are encouraged to log in, it is not mandatory however. [alt-o]" accesskey="o" href="http://www.scholarpedia.org/wiki/index.php?title=Special:Userlogin&amp;returnto=Petri_net">Create an account or log in</a></li>	    </ul>
+	  </div>
+	</div>
+	<div class="portlet" id="p-logo">
+	  <a style="background-image: url(/wiki/skins/common/images/splogo.gif);" href="http://www.scholarpedia.org/article/Main_Page" title="Main Page"></a>
+	</div>
+
+	<div id="p-search" class="portlet">
+<!--	  <h5><label for="searchInput">search scholarpedia</label></h5> -->
+	  <div class="pBody">
+
+	    <form name="searchform" action="/article/Special:Search" id="searchform">
+
+<!-- Scholarpedia -->
+        <input name="from" value="sidebar" type="hidden">
+        <input id="searchInput" name="search" accesskey="f" value="search scholarpedia" onfocus="if(this.value=='search scholarpedia'){this.value='';}" onblur="if(this.value==''){this.value='search scholarpedia';}" type="text">
+<!--	      <input id="searchInput" name="search" type="text"
+	        accesskey="f" value="" />
+-->	          
+	      <input name="go" class="searchButton" id="searchGoButton" value="Title" type="submit">
+	      &nbsp;
+	      <input name="fulltext" class="searchButton" id="searchFullTextButton" value="Full text" type="submit">
+	    </form>
+	  </div>
+
+	</div>
+
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+		<div class="portlet" id="p-scholarpedia">
+	  <h5>Scholarpedia</h5>
+	  <div class="pBody">
+	    <ul>
+	    	      <li id="n-about"><a href="http://www.scholarpedia.org/article/Main_Page">About</a></li>
+	     	      <li id="n-news"><a href="http://www.scholarpedia.org/article/Scholarpedia:News">News &amp; press</a></li>
+	     	      <li id="n-become_an_editor"><a href="http://www.scholarpedia.org/article/Scholarpedia:Become_an_editor">Become an editor</a></li>
+	     	      <li id="n-recentchanges"><a title="The list of recent changes in the wiki. [alt-r]" accesskey="r" href="http://www.scholarpedia.org/article/Special:Recentchanges" rel="nofollow">Recent changes</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div class="portlet" id="p-encyclopedias">
+	  <h5>Encyclopedia of</h5>
+	  <div class="pBody">
+	    <ul>
+	    	      <li id="n-astroph"><a href="http://www.scholarpedia.org/article/Encyclopedia_of_astrophysics">Astrophysics</a></li>
+	     	      <li id="n-compneu"><a href="http://www.scholarpedia.org/article/Encyclopedia_of_computational_neuroscience">Computational neuroscience</a></li>
+	     	      <li id="n-compint"><a href="http://www.scholarpedia.org/article/Encyclopedia_of_computational_intelligence">Computational intelligence</a></li>
+	     	      <li id="n-nonlin"><a href="http://www.scholarpedia.org/article/Encyclopedia_of_dynamical_systems">Dynamical systems</a></li>
+	     	      <li id="n-physics"><a href="http://www.scholarpedia.org/article/Encyclopedia_of_physics">Physics</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div class="portlet" id="p-for readers">
+	  <h5>For readers</h5>
+	  <div class="pBody">
+	    <ul>
+	    	      <li id="n-journal"><a href="http://www.scholarpedia.org/article/Special:Journal">Journal</a></li>
+	     	      <li id="n-allpages"><a href="http://www.scholarpedia.org/article/Special:Allpages">All articles</a></li>
+	     	      <li id="n-randompage"><a title="Load a random page [alt-x]" accesskey="x" href="http://www.scholarpedia.org/article/Special:Random" rel="nofollow">Random article</a></li>
+	     	      <li id="n-electionforum"><a href="http://www.scholarpedia.org/article/Special:ElectionForum">Elections of authors</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div class="portlet" id="p-for authors">
+	  <h5>For authors</h5>
+	  <div class="pBody">
+	    <ul>
+	    	      <li id="n-instauthors"><a href="http://www.scholarpedia.org/article/Scholarpedia:Instructions_for_Authors">Instructions</a></li>
+	     	      <li id="n-help"><a title="The place to find out." href="http://www.scholarpedia.org/article/Help:Contents">Help</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+	
+
+	<div class="portlet" id="p-tb">
+	  <h5>Toolbox</h5>
+	  <div class="pBody">
+	    <ul>
+		  		  <li id="t-whatlinkshere"><a title="List of all wiki pages that link here [alt-j]" accesskey="j" href="http://www.scholarpedia.org/article/Special:Whatlinkshere/Petri_net">What links here</a></li>
+		  		  <li id="t-recentchangeslinked"><a title="Recent changes in pages linked from this page [alt-k]" accesskey="k" href="http://www.scholarpedia.org/article/Special:Recentchangeslinked/Petri_net">Related changes</a></li>
+		                <!--	      -->	      	      	      	      	      	      <li id="t-upload"><a title="Upload images or media files [alt-u]" accesskey="u" href="http://www.scholarpedia.org/article/Special:Upload">Upload file</a></li>	      	      <li id="t-specialpages"><a title="List of all special pages [alt-q]" accesskey="q" href="http://www.scholarpedia.org/article/Special:Specialpages">Special pages</a></li>	      	      	      <li id="t-print"><a href="http://www.scholarpedia.org/wiki/index.php?title=Petri_net&amp;printable=yes" rel="nofollow">Printable version</a></li>
+	      	    </ul> 
+	  </div> 
+	</div> 
+	 
+      </div><!-- end of the left (by default at least) column -->
+
+    
+      <div class="visualClear"></div>
+      <div id="footer">
+    <div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="petri-reisig-Petri-net_files/poweredby_mediawiki_88x31.png" alt="MediaWiki"></a></div>		<ul id="f-list">
+	  <li id="f-lastmod"> This page was last modified 16:11, 5 March 2009.</li>	  <li id="f-viewcount">This page has been accessed 11,735 times.</li>	  <li id="f-numberofwatchingusers">[2 watching user/s]</li>	  	  <li id="f-copyright"><a href="http://www.scholarpedia.org/wiki/index.php?title=Special:Copyright&amp;id=6477" title="Special:Copyright">Copyright (C)</a></li>	  <li id="f-ISSN"> ISSN 1941-6016 </li>
+	  <li id="f-about"><a href="http://www.scholarpedia.org/article/Scholarpedia:About" title="Scholarpedia:About">About Scholarpedia</a></li>	  <li id="f-disclaimer"><a href="http://www.scholarpedia.org/article/Scholarpedia:General_disclaimer" title="Scholarpedia:General disclaimer">Disclaimers</a></li>	  	  	        <li id="f-reporttime">Served in 0.138 sec.</li>
+  	</ul>
+      </div>
+    </div>
+  </body></html>

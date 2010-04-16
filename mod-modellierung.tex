@@ -1,0 +1,158 @@
+\chapter{Modellierung und Metamodellierung}\label{mod-mod}
+
+\section{Modelle, Modellierungssprachen und Ausführung von Modellen}\label{mod-modell}
+Modelle sind eine von vielen Möglichkeiten die Umwelt zu beschreiben. Diese dienen dazu, komplexe Zusammenhänge so darzustellen, dass sie einfacher und schneller von Menschen oder Maschinen verstanden werden können. Die Komplexität der Realität erlaubt es aber gleichzeitig nicht, alle Aspekte in Modellen abzubilden. Modelle sind daher vereinfachte Darstellungen realer Sachverhalte.
+
+Modelle dienen vor allem zur Dokumentation von Systemen. Ein System ist ein begrenzter Ausschnitt der realen Welt, deren Bestandteile (Akteure, Objekte, Zusammenhänge, Abläufe, usw.) in einem Modell beschrieben werden können. Das System kann auch über die Systemgrenzen hinaus beeinflusst werden (vgl. \citep{BernroiderStix2006}).
+
+Der Vorgang der Erstellung von Modellen für eine Anwendung wird als Modellierung bezeichnet. Dieser Prozess lässt sich durch die Relation $R(S,P,T,M)$ ausdrücken, wobei $S$ ein Subjekt ist, das zum Zweck $P$ (engl.: \emph{purpose}) für ein Original $T$ (engl.: \emph{prototype}) ein Modell $M$ entwirft. Zwischen $M$ und $T$ existiert eine Verkürzungsrelation in dem Sinne, dass in $M$ nur jene Details von $T$ abgebildet sind, die aus der Sicht von $S$ bezüglich $P$ relevant erscheinen (vgl. \citep{ClausSchwill2006}, S.425).
+
+Modelle in diesem Sinne werden mithilfe von formal definierten Modellierungssprachen erstellt. Eine formale Sprache definiert eine Syntax für ein Alphabet, legt also die Sprachregeln fest.
+Syntaktisch korrekte Ausdrücke sind wohlgeformt (engl.: \emph{well formed}).
+Durch Validierung des Ausdrucks anhand der syntaktischen Regeln kann überprüft werden, ob der Ausdruck wohlgeformt ist.
+Die Semantik einer Sprache definiert die inhaltliche Bedeutung syntaktisch korrekt angewandter Ausdrücke.
+Ausdrücke können jedoch auch semantisch sinnlos sein, indem sie unmögliche oder bedeutungslose Zusammenhänge beschreiben.
+Die Semantik eines Ausdrucks steht dabei im Kontext zu einer sogenannten semantischen Domäne, dessen Elemente durch den Ausdruck beschrieben werden. Die Semantik kann sich demnach durch verschiedene semantische Domänen ändern (vgl. \citep{ClausSchwill2006}, S.670-671 und (vgl. \citep{OMG2008}, S.12)).
+
+\label{def-interpreter}
+Somit eignen sich Modelle, die auf formal definierten Modellierungssprachen basieren, zur Ausführung und Interpretation. Ein Interpreter ist ein Programm, das ein in einer anderen Programmiersprache definiertes Programm einliest und sofort ausführt. Ein Interpreter analysiert hierbei schrittweise Anweisung für Anweisung und führt jede unmittelbar aus. Ein Vorteil von Interpretern ist, dass Programmteile geändert werden und danach direkt ausgeführt werden können, ohne das Programm in die Zielsprache neu übersetzen zu müssen. Programme können auch während der Laufzeit geändert werden. Ein Nachteil ist die längere Rechenzeit bei der Ausführung von Anweisungen (vgl. \citep{ClausSchwill2006}, S.325).
+
+Die formale Definition einer Modellierungssprache kann durch Metamodelle erfolgen. Der Bereich der Metamodellierung wird im nächsten Abschnitt behandelt.
+
+
+% Detailierungsgrad, ... Ab wann ist Detailierungsgrad genau genug für Interpretation bzw. Code Generierung?
+
+
+\section{Metamodellierung}\label{mod-meta}
+Ein Metamodell ist ein Modell, das die Regeln und Elemente zur Beschreibung von anderen Modellen definiert. Modelle, die mit den Regeln und Elementen eines Metamodells erstellt worden sind, sind Instanzen dieses Metamodells (vgl. \citep{RumbaughJacobsonBooch2005}, S.459).
+
+Ein Modell, dass eine Instanz eines Metamodells ist, kann selbst als Metamodell für andere Modelle verwendet werden. Dieses Prinzip kann beliebig oft rekursiv angewandt werden. Die OMG definiert eine vier-stufige Metalevel Hierarchie, wie in Abbildung \ref{fig:mod-metalevel} dargestellt und nach folgendem Schema aufgebaut (vgl. \citep{OMG20092}, S.16-17):
+
+\begin{description}
+\item[M0:] Die Ebene M0 ist die niedrigste und konkreteste Ebene. Hier finden sich die Laufzeitinstanzen
+\item[M1:] Auf der Ebene M1 existiert das Modell, aus dem Laufzeitinstanzen instantiiert werden
+\item[M2:] M2 ist die Ebene des Metamodells, das die Modellelemente und Modellierungsregeln der Ebene \emph{M1} definiert
+\item[M3:] M3 ist die höchste und abstrakteste Ebene, die Ebene des Meta-Metamodells. Höhere Ebenen werden nach der OMG nicht angegeben, da metamodellbasierte Sprachen als reflexiv
+\footnote{Reflexion ist die Möglichkeit eines Programms, seinen eigenen Status während der Laufzeit abzufragen und zu manipulieren (R.G. Gabriel et al. zitiert nach \citep{Rivard1996}).}
+definiert werden können und so die Möglichkeit haben sich selbst zu beschreiben. Die UML Infrastructure Library und die Meta Object Facility (MOF) sind solche Beispiele reflexiver, sich selbst definierender Sprachen
+\end{description}
+
+% graphic
+\img{metamodeling/mod-metalevel-omg}{fig:mod-metalevel}{Metalevel nach OMG (vgl. \citep{MDSD2007}, S.62)}{Metalevel nach OMG}
+
+
+Das Prinzip der Metaebenen oder -levels kann man in vielen Beispielen in der Informatik finden. Die Beziehung Klasse - Instanz/Objekt besitzt eine zweistufige Metalevel Hierarchie, relationale Datenbanksysteme mit Systemtabellen, Tabellen und Datensätzen eine dreistufige. Die UML benutzt die von der OMG definierte vierstufige Metalevel Hierarchie, auf deren Ebenen sich folgende Bereiche der UML wiederfinden (vgl. \citep{OMG2006}, S.8-9):
+\begin{description}
+\item[M3:] MOF (Meta Object Facility) bzw. UML Infrastructure Library
+\item[M2:] UML Superstructure Library
+\item[M1:] Benutzerdefinierte Modelle
+\item[M0:] Laufzeitinstanzen des Modells
+\end{description}
+
+Die OMG hat mit der Meta Object Facility (MOF) einen Standard geschaffen, der als Meta-Metamodell zur Spezifikation von Modellierungssprachen verwendet werden kann (vgl. \citep{RumbaughJacobsonBooch2005}, S.464). MOF basierte Modelle können in das, mit dem Standard im Zusammenhang stehende, XML Metadata Interchange (XMI) Format übergeführt werden und mit anderen Tools ausgetauscht werden.
+
+\section{Unified Modeling Language}
+
+\subsection{Einführung}
+Die Unified Modeling Language (UML) ist eine visuelle Modellierungssprache, die für die Dokumentation, Visualisierung, Spezifikation und Konstruktion von Softwaresystemen eingesetzt werden kann. Sie wurde speziell zur Unterstützung objektorientierter Entwicklungsprozesse geschaffen.
+
+Mit der UML können die statische Struktur und das dynamische Verhalten von Softwaresystemen beschrieben werden. Dafür werden verschiedene Arten von Diagrammen zur Verfügung gestellt.
+
+Die UML ist in erster Linie eine Modellierungssprache, kann aber auch als Programmiersprache eingesetzt werden. Dezidierte Programmiersprachen unterstützen jedoch durch spezielle Sprachkonstrukte den Entwicklungsprozess besser. UML Modelle können aber mithilfe von Codegeneratoren in ausführbare Programme überführt werden und entsprechen somit einer Programmiersprache (vgl. \citep{RumbaughJacobsonBooch2005}, S.3).
+
+
+\subsection{Geschichte}
+Die Modellierungssprache UML wurde entwickelt, um mehrere Ansätze objektorientierter Entwicklungsmethoden zu vereinheitlichen. Diese Entwicklungsmethoden entstanden mit der zunehmenden Popularität objektorientierter Sprachen. Eine der ersten, generell anerkannten objektorientierten Sprachen war Simula-67 aus dem Jahr 1967, aber eine weite Verbreitung erfuhr erst Smalltalk in den frühen 1980er Jahren. Ab diesem Zeitpunkt entstanden mehrere Methoden zur Unterstützung der Entwicklung objektorientierter Programme.
+
+Im Jahre 1994 arbeiteten James Rumbaugh, Grady Booch und Ivar Jacobson bei der Rational Software Corporation gemeinsam an der Zusammenführung der von ihnen entwickelten Methoden, die zu diesem Zeitpunkt auch zu den meistverbreitetsten gehörten. 1995 wurde ein erster Entwurf der Unified Modeling Language veröffentlicht. 1996 veröffentlichte die OMG ein \emph{Request for Proposal} (RFP) für einen standardisierten Ansatz objektorientierter Modellierung. Gemeinsam mit Autoren anderer Unternehmen wurde von Booch, Jacobson und Rumbaugh im September 1997 ein überarbeiteter Entwurf bei der OMG eingereicht und von dieser im November 1997 einstimmig akzeptiert. Es wurde eine breite Unterstützung von Herstellern von Modellierungswerkzeugen sowie von AnwenderInnen und ForscherInnen der Methoden angekündigt. Die UML hat seitdem andere bis dahin verwendete Methoden weitgehend verdrängt (vgl. \citep{RumbaughJacobsonBooch2005}, S.4-6).
+
+Die Erfahrungen durch den Einsatz der UML in den folgenden Jahren führte zur Entwicklung der Version 2.0, die im Jahr 2004 veröffentlicht wurde. Die wichtigsten Änderungen sind  (vgl. \citep{RumbaughJacobsonBooch2005}, S.6-7):
+\begin{itemize}
+\item Sequenzdiagramme basieren auf dem Message Sequence Chart Standard der International Telecommunication Union (ITU).
+\item Die Konzepte der Aktivitätsmodellierung wurden von den Konzepten der Zustandsmodellierung getrennt und Notierungskonzepte aus der Geschäftsprozess-Modellierung eingeführt.
+\item Vereinheitlichung der Aktivitätsmodellierung mit der Aktionsmodellierung aus der UML Version 1.5.
+\item Änderungen bezüglich der Kompositions- und Kollaborationsdiagramme.
+\item Angleichung des UML Core an die MOF.
+\item Restrukturierung des UML Metamodells zur Vermeidung redundanter Konstrukte.
+\item Verfügbarkeit von Profilen für domänen- und technologiespezfischen Erweiterungen der UML.
+\end{itemize}
+Die aktuelle Version trägt die Versionsnummer 2.2 und ist im Februar 2009 erschienen (vgl. \citep{OMG2009}).
+
+
+\subsection{Aufbau}
+
+\subsubsection{UML Infrastructure}
+Das \emph{core package} stellt einen Metasprachenkern zur Verfügung, der von verschiedenen Metasprachen wie UML und MOF verwendet werden kann. Die \emph{Infrastructure Library} stellt damit eine architektonische Angleichung zwischen UML, MOF und XMI sicher. Das \emph{Core Package} ist der zentrale Bestandteil aller Metasprachen im OMG Umfeld und wird als der architektonische Kern der \emph{Model Driven Architecture}\footnote{Die Model Driven Architecture beschreibt eine Methode zur Entwicklung von Softwaresystemen, die durchgängig auf Modellen basiert. MDA setzt hierbei auf etablierte OMG Standards auf. Eine zentrale Rolle spielen UML und MOF. MDA trennt die Business-Logik von der Plattform in Form von \emph{Platform Independent Models} (PIM) die über Transformationen in \emph{Platform Specific Models} (PSM) übergeführt werden und so im Zielsystem implementiert werden (vgl. \citep{MDSD2007}, S.377ff).} (MDA) Initiative der OMG angesehen.
+
+Um eine Wiederverwertung der Elemente des Core Package zu unterstützen, sind diese in Pakete und Unterpakete organisiert, die einzeln importiert werden können. Um eine Metasprache wie UML zu erstellen, werden die Metaklassen des Core Package instantiiert.  Das Core Package ist reflexiv definiert, beschreibt sich also selbst und hängt nicht von einem abstrakteren Metamodell ab (vgl. \citep{OMG20092}, S.11-13).
+
+Das Paket \emph{Profiles} verwendet Elemente aus dem Core Package und definiert einen Erweiterungsmechanismus für Metamodelle, um diese bestimmten Domänen, Technologien oder Plattformen anzupassen. Profile sind dem Erweiterungsmechanismus der MOF angeglichen, aber einfacher und leichtgewichtiger implementiert (vgl. \citep{OMG20092}, S.13-14).
+
+% UML vs MOF
+
+\subsubsection{UML Superstructure}
+Die UML Superstructure definiert das eigentliche UML Metamodell. Es besteht wiederum aus mehreren Unterpaketen, die den einzelnen Arten von Diagrammen entsprechen (vgl. \citep{OMG20092}, S.14-15).
+
+\subsubsection{Language Units}
+Die einzelnen Diagrammenarten der UML Superstructure sind als sogenannte Language Units organisiert, die eine Sammlung zusammengehöriger Modellierungskonzepte darstellen, wie beispielsweise Aktivitätsdiagramme und Klassendiagramme (vgl. \citep{OMG2009}, S.2).
+
+
+\subsubsection{Compliance Level}\label{mod-uml-compliance}
+Die UML definiert vier Compliance Levels, die angeben, wie weit das UML Metamodell in einem Framework implementiert ist. Compliance Levels geben auch den Grad der Interoperabilität zwischen Werkzeugen von Toolherstellern an. Die Einhaltung eines Compliance Levels gibt Aufschluss über die Kompatibilität zu einem anderen Werkzeug. Der Level Null (L0) ist die niedrigste Stufe und entspricht der UML Infrastructure. Der Level Drei (L3) entspricht der kompletten Implementierung des UML Metamodells (vgl. \citep{OMG2009}, S.2).
+
+\subsection{Diagramme der UML}
+
+Die UML unterscheidet zwischen folgenden Diagrammarten (vgl. \citep{PilonePitman2005}, S.5-7):
+
+\subsubsection{Strukturdiagramme}
+\begin{description}
+\item[Klassendiagramme:] Engl.: \emph{Class Diagrams}. Klassendiagramme stellen die am meisten verwendete Diagrammart in UML dar. Sie erfassen die Details über Klassen und Interfaces im System und deren statischen Beziehungen.
+\item[Objektdiagramme:] Engl.: \emph{Object Diagrams}. Objektdiagramme nutzen ebenso dieselbe Notation wie Klassendiagramme. Sie stellen konkrete Objekte als Instanzen von Klassen zu einem bestimmten Zeitpunkt der Laufzeit dar.
+\item[Packetdiagramme:] Engl. \emph{Package Diagrams}. Paketdiagramme sind spezielle Klassendiagramme, die dieselbe Notation nutzen und die Gruppierung von Klassen und Interfaces in Paketen darstellen.
+\item[Komponentendiagramme:] Engl.: \emph{Component Diagrams}. Komponentendiagramme stellen die Organisation und Abhängigkeiten von Komponenten in einem System dar.
+\item[Kompositionsstrukturdiagramme:] Engl.: \emph{Composite Structure Diagrams}. Kompositionsstrukturdiagramme sind neu in UML2.0. Sie verbinden Klassendiagramme mit Komponentendiagrammen, jedoch ohne die Detaillierungstiefe beider Diagrammarten. Sie dienen dazu, komplexe Zusammenhänge bzw. Patterns darzustellen.
+\item[Verteilungsdiagramme:] Engl.: \emph{Deployment Diagrams}. Verteilungsdiagramme zeigen, wie Softwaresysteme über verschiedene Hardware verteilt sind und stellen Laufzeitkonfigurationen dar.
+\end{description}
+
+\subsubsection{Verhaltensdiagramme}
+\begin{description}
+\item[Anwendungsfalldiagramme:] Engl.: \emph{Use Case Diagrams}. Anwendungsfalldiagramme stellen die funktionalen Anforderungen eines Systems unabhängig von der Implementierung dar.
+\item[Aktivitätsdiagramme:] Engl.: \emph{Activity Diagrams}. Aktivitätsdiagramme sind der zentrale Inhalt dieser Diplomarbeit. Sie stellen ein Systemverhalten in Form einer Komposition von Aktionen und Kontrollknoten, verbunden durch Kanten, dar.
+\item[Zustandsdiagramme:] Engl.: \emph{State Machine Diagrams}. Zustandsdiagramme stellen die Zustandsübergänge von einzelnen Klassen oder ganzen Systemen dar.
+\item[Interaktionsdiagramme:] Engl.: \emph{Interaction Diagrams}. Interaktionsdiagramme ist eine Kategorie von Diagrammarten, die die Kommunikation zwischen Objekten darstellen. Sie Umfassen Sequenzdiagramme, Interaktions\-über\-sichts\-diagramme, Kommunikationsdiagramme und Zeitdiagramme.
+\item[Sequenzdiagramme:] Engl. \emph{Sequence Diagrams}. Sequenzdiagramme haben die Nachrichten, die zwischen Objekten ausgetauscht werden, zum Fokus. Sie sind die häufigste Form von Interaktionsdiagrammen.
+\item[Kommunikationsdiagramme:] Engl.: \emph{Communication Diagrams}. Kommunikationsdiagramme sind Spezialfälle von Interaktionsdiagrammen und stellen die Kommunikation von Objekten dar. Der Schwerpunkt liegt dabei mehr auf den Objekten selbst als auf den Nachrichten, die diese austauschen.
+\item[Interaktionsübersichtsdiagramme:] Engl.: \emph{Interaction overview Diagrams}. Interaktionsübersichtsdiagramme sind vereinfachte Formen von Aktivitäts\-diagrammen. Anstelle der Darstellung von Aktionen werden Sequenzdiagramme dargestellt. Der Fokus liegt hierbei auf die Darstellung des Elemente und Nachrichten in Aktivitäten.
+\item[Zeitdiagramme:] Engl.: \emph{Timing Diagrams}. Zeitdiagramme sind Spezialfälle von Interaktionsdiagrammen und haben die zeitliche Abfolge von Nachrichten zwischen Objekten zum Inhalt.
+\end{description}
+
+
+
+
+
+
+
+
+
+
+%    - Metamodellierung
+%    - MOF
+%    - UML
+%        - Infrastructure
+%        - Superstructure
+%        - Compliance Levels
+%        - MOF und UML
+%    - Modellaustausch mit dem XML Model Interchage Format
+%    - Model Driven Architecture
+%    - Model Driven Software Development
+%    - Eclipse Modeling Framework
+
+
+
+
+
+
+
+
+
+% END OF DOCUMENT

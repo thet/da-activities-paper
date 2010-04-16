@@ -1,0 +1,73 @@
+\chapter{Gegenstand der Diplomarbeit}
+
+
+% Ausgangslage
+\section{Ausgangslage}
+Eine der Anforderungen an moderne betriebliche Informationssysteme ist die Unterstützung von Geschäftsprozessen in Organisationen.
+
+In der Literatur existiert eine Vielzahl von Geschäftsprozessdefinitionen. Schwickert und Fischer haben daraus eine umfassende Definition abgeleitet:
+
+"Der Prozeß ist eine logisch zusammenhängende Kette von Teilprozessen, die auf das Erreichen eines bestimmten Zieles ausgerichtet sind. Ausgelöst durch ein definiertes Ereignis wird ein Input durch den Einsatz materieller und immaterieller Güter unter Beachtung bestimmter Regeln und der verschiedenen unternehmensinternen und -externen Faktoren zu einem Output transformiert. Der Prozeß ist in ein System von umliegenden Prozessen eingegliedert, kann jedoch als eine selbständige, von anderen Prozessen isolierte Einheit, die unabhänig von Abteilungs- und Funktionsgrenzen ist, betrachtet werden" (\citep{SchwickertFischer1996}, S.10-11).
+
+Geschäftsprozesse können mithilfe einer Modellierungssprache in Modellen abgebildet werden. Modelle sind vereinfachte Abbildungen realer Zusammenhänge für einen bestimmten Zweck (Siehe dazu auch \rref{mod-modell}). Modelle, die auf einer formalen Modellierungssprache basieren und in Relation zu einer semantischen Domäne definiert sind können für eine Automatisierung durch Codegenerierung, Ausführung von kompilierten Modellen oder Interpretation\footnote{"Ein Interpreter ist ein Stück Software, das ein Modell zur Laufzeit auswertet und dabei die Operationen ausführt, die in dem Modell beschrieben sind" (\citep{MDSD2007}, S.174). Das Interpretieren von Anweisungen einer formalen Sprache entspricht der Zuordnung von syntaktischen Elementen der Sprache zu Elementen der semantischen Domäne (vgl. \citep{OMG2008}, S.12).} durch Maschinen verwendet werden (vgl. \citep{OMG2008}, S.12). Interpretierte Modelle erlauben innerhalb gewisser Grenzen für zukünftige Programmschritte eine Änderung der Modelle zur Laufzeit.
+
+Der de-facto Software-Mo\-del\-lier\-ungs\-standard \emph{Unified Modeling Language} (UML) der \emph{Object Management Group} (OMG) definiert mit den Aktivitätsdiagrammen Elemente zur modellhaften Darstellung dynamischen Verhaltens, die auch für die Modellierung von Geschäftsprozessen verwendet werden können.
+
+Aktivitäten im Sinne der UML sind abgrenzbare Tätigkeiten, die von sogenannten Ereignissen (Events) ausgelöst werden und einen Eingangszustand (Input) in einen Ausgangszustand (Output) überführen. Eine Aktivität stellt eine Verhaltensbeschreibung dar, die aus einer oder mehreren Aktionen besteht. Der Knotentyp Aktion ist ein einzelner Tätigkeitsschritt, dessen Granularität nicht weiter erhöht wird. Eine Aktivität ist ein gerichteter Graph mit Knoten und Kanten, die miteinander verbunden sind. Neben Aktionen gibt es noch weitere Knoten, die den Ablauf steuern, wie zum Beispiel Verzweigungen (Fork), Zusammenführungen (Join und Merge) und Entscheidungen (Decision). % (vgl. \citep{PilonePitman2005}, S.104)
+
+
+% Problemstellung
+\section{Problemstellung}
+Geschäftsprozesse werden in der Regel von AnalystInnen und ManagerInnen mit tiefem Verständnis betrieblicher Zusammenhänge definiert und in Modellen abgebildet. Diese Modelle können zur Dokumentation betrieblicher Abläufe dienen, zur Analyse von Optimierungspotentialen herangezogen werden und bei EDV-basierten Integrationen in ein betriebliches Informationssystem für die automatisierten Unterstützung von Geschäftsprozessen verwendet werden (Siehe auch Kapitel \rref{state-of-art}).
+
+Aufgrund fehlender Unterstützung durch geeignete Werkzeuge war es bisher meist notwendig die in Modellen abgebildeten Zusammenhänge und Sachverhalte manuell in Programmcode zu übersetzen. Bei einer solchen Vorgehensweise kann es aber zu folgenden Problemen kommen:
+
+\begin{enumerate}
+\item Wenn neue Anforderungen an den Ablauf der Geschäftsprozesse entstehen, müssen die geänderten oder neu erstellten Modelle mühsam in das Informationssystem integriert werden. Es entsteht auch die Gefahr, dass die Modelle mit der Umsetzung in der Software nicht mehr übereinstimmen beziehungsweise nicht mehr synchron sind.
+\item Es kann eine semantische Lücke zwischen der Intention der Modellierenden und der Interpretation der technischen Umsetzenden entstehen und Geschäftsprozesse können falsch implementiert werden.
+\item Ein weiteres Problem tritt auf, wenn Ausnahmen zu den modellierten und in Software umgesetzten Geschäftsprozessen auftauchen und für solche Ausnahmen keine geeigneten Mechanismen vorgesehen sind. In diesem Fall steht die von der Software geforderte Handlung dem eigentlichen Geschäftsprozess im Wege.
+\end{enumerate}
+
+Die Interpretation von Geschäftsprozessmodellen kann diese Probleme wie folgt lösen:
+\begin{enumerate}
+\item Durch die direkte Interpretation von Modellen, die zuvor validiert, getestet und simuliert werden können, tritt das Problem der Synchronisation nicht auf. Das geänderte Verhalten kann direkt nach Freigabe implementiert werden. Durch die Interpretation von Modellen kann ein Neustart des Systems entfallen.
+\item Eine semantische Lücke tritt nicht auf, da Modelle nach streng vorgegebenen Regeln erstellt werden und validiert, getestet und simuliert werden können. TechnikerInnen und AnalystInnen verwenden die selben Modelle, die sie gemeinsam und iterativ erstellen können, wobei dieser Punkt auch ohne ausführbare Modelle möglich ist.
+\item Interpretierte Modelle können in gewissen Grenzen für zukünftige Prozessschritte ad-hoc geändert werden.
+\end{enumerate}
+
+
+% Zielsetzung und Anforderungen
+\section{Zielsetzung und Anforderungen}
+
+Diese Diplomarbeit umfasst die Konzeption und Erstellung einer Activity Model Runtime Engine für Python (AMREP).
+
+Eine Activity Engine erlaubt die Integration von Aktivitäten in ein Softwaresystem. Eine Activity Model Runtime Engine interpretiert die in Modellen definierten Aktivitäten zur Laufzeit (Executable Model) und erlaubt darüber hinaus das Verändern der Modelle zur Laufzeit, um sie an unvorhergesehene Anforderungen anzupassen. Eine Activity Engine unterstützt somit Ad-Hoc-Workflows, dessen Regeln während des Ablaufs geändert werden können.
+
+Als Grundlage dient die Spezifikation der Aktivitätsmodellierung von UML2. Grund hierfür ist, dass Aktivitätsdiagramme sich in andere UML Standards integrieren lassen, für dynamische Systeme im Allgemeinen und nicht nur für Geschäftsprozesse definiert sind, dass sie eine breite Akzeptanz in der Industrie genießen und durchgängig formalisiert sind (siehe auch \rref{mod-sum}).
+
+
+% Use Case
+\section{Use Case \emph{PatientInnenversorgung in einem Krankenhaus}}\label{intro-usecase}
+Es wird von einem Use Case ausgegangen, anhand dessen die Funktionalität von AMREP definiert und bewiesen wird. Dieser Use Case dient zur Illustration der in späteren Kapiteln vorgestellten Diagrammtypen. Er ist ein fiktiver und stark vereinfachter Ablauf zur Therapie von PatientInnen in einem Krankenhaus. Der Ablauf ist hier in natürlicher Sprache beschrieben:
+
+\begin{description}
+\item[Start:] Der Prozessablauf beginnt und ein/e PatientIn trifft im Krankenhaus ein.
+\item[Vorbedingung:] Wenn der Prozess angestoßen wird, muss die Vorbedingung "PatientIn ist eingetroffen" erfüllt sein.
+\item[Erstdiagnose:] Als erste Aktion wird eine schnelle Erstdiagnose erstellt. Die Diagnose wird anhand des Gesundheitszustandes des/der Patienten/Patientin erstellt. Der Gesundheitszustand kann einen Wert zwischen 0\% (PatientIn ist tot) und 100\% (PatientIn ist gesund) einnehmen. Ist der Gesundheitszustand unter 30\% handelt es sich um eine akute Krankheit oder Verletzung, ansonsten wird die Diagnose "normaler Gesundheitszustand" gefällt.
+\item[Akuttherapie:] Ist das Ergebnis der Erstdiagnose, dass der/die PatientIn eine akute Verletzung hat, wird eine Akuttherapie durchgeführt, die beispielsweise lebenserhaltende und stabilisierende Funktion hat. Danach wird der/die PatientIn zur Datenaufnahme weiter geschickt.
+\item[Ohne Akuttherapie:] Lautet das Ergebnis der Erstdiagnose, dass der/die PatientIn keine akute Verletzung hat, wird er/sie gleich nach der Erstdiagnose zur Datenaufnahme weiter geschickt.
+\item[Datenaufnahme:] In der Datenaufnahme werden Basisdaten wie Name abgefragt und gespeichert.
+\item[Datenüberprüfung und Diagnose:] Nach der Datenaufnahme sollen die Überprüfung der Daten und die normale Diagnose parallel erfolgen.
+\item[Normale Therapie:] Erst wenn Datenüberprüfung und Diagnose durchgeführt wurden, soll eine normale Therapie durchgeführt werden.
+\item[Gesundheitszustand zu schlecht:] Hat der/die PatientIn nach der Therapie den Gesundheitszustand 90\% nicht erreicht, so muss er/sie nochmals die Therapie durchlaufen.
+\item[Ende:] Der Prozess wird beendet.
+\item[Nachbedingung:] Bei Beendigung des Prozesses muss die Nachbedingung "Gesundheitszustand besser oder gleich 90\%" erfüllt sein.
+\end{description}
+
+Mithilfe dieses Usecases werden die Anforderungen an AMREP getestet. Der Usecase bildet wesentliche Eigenschaften der Prozessmodellierung ab: Es sind Aktionen vorhanden, es werden Entscheidungen anhand von Zuständen getroffen und alternative Pfade gewählt, es gibt Parallelisierungen, Synchronisationen und Zusammenführungen. Um die Möglichkeit der Änderung des Modells zur Laufzeit zu beweisen, wird der Schritt "Gesundheitszustand zu schlecht" im Test vorerst nicht abgebildet und zur Laufzeit nach Beendigung des Prozessschrittes "Normale Therapie" hinzugefügt.
+
+% Dieser Use Case ist wie erwähnt ein fiktives und stark vereinfachtes Beispiel. Ein Problem tritt jedoch auf, wenn der Patient nach dem Prozessschritt "normale Therapie" bei Beendigung des Prozesses den Gesundheitswert von 90\% nicht erreicht. Dafür wird im Beispiel zur Verwendung der AMREP der Prozess zur Laufzeit geändert und eine Schleife eingeführt, die den Patienten solange die normale Therapie durchlaufen lässt, bis er den erforderten Gesundheitswert erreicht hat.
+
+
+
+% END OF DOCUMENT
